@@ -6,7 +6,7 @@
 
 <template>
   <div id="app">
-    <g8-tree-view :item="item"></g8-tree-view>
+    <g8-tree-view class="g8-tree-view" :item="item"></g8-tree-view>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ import {G8TreeItem} from '@/components/types';
 })
 export default class App extends Vue {
   item: G8TreeItem = {
-    key: 'item 1',
+    key: 'item-1',
     name: 'item 1',
   };
 }
