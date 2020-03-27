@@ -8,16 +8,17 @@
   <li class="g8-tree__node" :class="{'g8-tree__node_expended':isOpen}">
     <div class="g8-tree__node_label"
          :class="{'g8-tree__branch_label': isFolder}"
-         @click.stop="clicked"
-         @dblclick.stop="dblClicked">
+         @click.stop="clicked(item.key)"
+         @dblclick.stop="dblClicked(item.key)">
       <span class="g8-tree__toggle"></span>
       <span class="g8-tree__node_label_text">{{ item.name }}</span>
       <span class="g8-tree__node_tags">
       <span class="g8-tree__node_tag"
             v-for="(tag, idx) in item.tags"
             :key="idx"
-            @click.stop="tagClicked(tag,idx)"
-            @dblclick.stop="tagDblClicked(tag,idx)">{{ tag.label }}</span>
+            @click.stop="tagClicked(item.key,tag,idx)"
+            @dblclick.stop="tagDblClicked(item.key,tag,idx)"
+      >{{ tag.label }}</span>
       </span>
     </div>
     <ul v-if="isFolder" class="g8-tree__branch">
@@ -44,24 +45,23 @@ export default class G8TreeView extends Vue {
     return this.item.children && this.item.children.length;
   }
 
-  clicked(evt: Event) {
-    console.log('click', evt);
+  clicked(key: string) {
     if (this.isFolder) {
       this.isOpen = !this.isOpen;
     }
-    this.$emit('click', evt);
+    this.$emit('click', key);
   }
 
-  dblClicked(evt: Event) {
-    this.$emit('dblclick', evt);
+  dblClicked(key: string) {
+    this.$emit('dblclick', key);
   }
 
-  tagClicked(tag: G8TreeItemTag, index: number) {
-    console.log('tagClicked', tag, `idx: ${index}`);
+  tagClicked(key: string, tag: G8TreeItemTag, index: number) {
+    this.$emit('tagClicked', {key, tag, index});
   }
 
-  tagDblClicked(tag: G8TreeItemTag, index: number) {
-    console.log('tagDblClicked', tag, `idx: ${index}`);
+  tagDblClicked(key: string, tag: G8TreeItemTag, index: number) {
+    this.$emit('tagDblClicked', {key, tag, index});
   }
 }
 </script>
