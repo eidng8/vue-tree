@@ -1,7 +1,11 @@
 {
   "name": "vue-tree",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.1",
+  "repository": "git@github.com:eidng8/vue-tree.git",
+  "bugs": "git@github.com:eidng8/vue-tree/issues",
+  "author": "eidng8 <cheung.jackey@gmail.com>",
+  "license": "GPL-3.0",
+  "main": "lib/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

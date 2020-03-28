@@ -5,7 +5,7 @@
  */
 
 export interface G8TreeItem {
-  key: string;
+  key: number | string;
 
   name: string;
 

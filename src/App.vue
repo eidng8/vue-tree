@@ -6,7 +6,19 @@
 
 <template>
   <div id="app">
-    <g8-tree-view class="g8-tree-view" :item="item"></g8-tree-view>
+    <ul class="g8-tree-view">
+      <g8-tree-view
+        :item="item"
+        @click="itemClicked=$event"
+        @dblclick="itemDblClicked=$event"
+        @tag-clicked="tagClicked=`${$event.node},${$event.tag},${$event.index}`"
+        @tag-dbl-clicked="tagDblClicked=`${$event.node},${$event.tag},${$event.index}`"
+      ></g8-tree-view>
+    </ul>
+    <input id="itemClicked" :value="itemClicked"/>
+    <input id="itemDblClicked" :value="itemDblClicked"/>
+    <input id="tagClicked" :value="tagClicked"/>
+    <input id="tagDblClicked" :value="tagDblClicked"/>
   </div>
 </template>
 
@@ -22,9 +34,43 @@ import {G8TreeItem} from '@/components/types';
 })
 export default class App extends Vue {
   item: G8TreeItem = {
-    key: 'item-1',
-    name: 'item 1',
+    key: 'root',
+    name: 'root name',
+    tags: [{key: 'root tag', label: 'root label'}],
+    children: [
+      {
+        key: 'item-1',
+        name: 'item 1',
+        tags: [
+          {key: 1, label: 'tag1.1'},
+          {key: 1, label: 'tag1.2'},
+        ],
+      },
+      {
+        key: 'item-2',
+        name: 'item 2',
+        tags: [{key: 2, label: 'tag1.1'}],
+        children: [
+          {
+            key: 'item-2.1',
+            name: 'item 2.1',
+            tags: [
+              {key: '2.1.1', label: 'tag2.1.1'},
+              {key: '2.1.2', label: 'tag2.1.2'},
+            ],
+          },
+        ],
+      },
+    ],
   };
+
+  itemClicked = '';
+
+  itemDblClicked = '';
+
+  tagClicked = '';
+
+  tagDblClicked = '';
 }
 </script>
 
