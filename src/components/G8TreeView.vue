@@ -25,6 +25,8 @@
       <g8-tree-view v-for="(child, index) in item.children"
                     :key="index"
                     :item="child"
+                    @click="$emit('click',$event)"
+                    @dblclick="$emit('dblclick',$event)"
                     @tag-clicked="$emit('tag-clicked', $event)"
                     @tag-dbl-clicked="$emit('tag-dbl-clicked',$event)"
       ></g8-tree-view>
@@ -73,6 +75,7 @@ export default class G8TreeView extends Vue {
 .g8-tree-view {
   margin: 0;
   padding: 0;
+  user-select: none;
 
   > .g8-tree__node {
     padding-left: 0;
@@ -101,6 +104,11 @@ export default class G8TreeView extends Vue {
 .g8-tree__toggle {
   font-size: .8rem;
   width: 1rem;
+  text-align: center;
+
+  &:before {
+    content: '\2022';
+  }
 }
 
 .g8-tree__branch_label {

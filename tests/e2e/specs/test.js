@@ -4,8 +4,11 @@
  * Author: eidng8
  */
 
-const firstNode = '.g8-tree-view>.g8-tree__node:first-child';
-const firstLabel = `${firstNode}>.g8-tree__node_label:first-child`;
+const root = '.g8-tree-view>.g8-tree__node';
+const rootLabel = `${root}>.g8-tree__node_label`;
+const branch2 = `${root}>.g8-tree__branch`;
+const label2 = `${branch2}>.g8-tree__node:nth-child(2)>.g8-tree__node_label`;
+const leaf = '.g8-tree__branch .g8-tree__branch';
 
 module.exports = {
   'basic tests': browser => {
@@ -16,24 +19,47 @@ module.exports = {
       .elementPresent('.g8-tree-view')
       .assert // the root node's text is correct
       .containsText('.g8-tree__node_label_text', 'root name')
-      .click(firstLabel)
-      .assert // clicking the toggle expands the node
-      .cssClassPresent(firstNode, 'g8-tree__node_expended')
+
+      .click(rootLabel)
+      .assert // clicking the toggle expands the root
+      .cssClassPresent(root, 'g8-tree__node_expended')
       .assert // click event is fired
       .value('#itemClicked', 'root')
-      .moveToElement(firstLabel, 1, 1)
+
+      .click(label2)
+      .assert // clicking the toggle expands the first branch
+      .elementPresent('.g8-tree__branch .g8-tree__node_expended')
+      .assert // click event is fired
+      .value('#itemClicked', 'item-2')
+      .moveToElement(rootLabel, 1, 1)
       .doubleClick()
       .assert // double clicking won't collapse the node
-      .cssClassPresent(firstNode, 'g8-tree__node_expended')
+      .cssClassPresent(root, 'g8-tree__node_expended')
       .assert // double click event is fired
       .value('#itemDblClicked', 'root')
-      .click(firstLabel)
+
+      .click(`${leaf} .g8-tree__node_label`)
+      .assert // click event is fired
+      .value('#itemClicked', 'item-2.1')
+      .moveToElement(`${leaf} .g8-tree__node_label`, 1, 1)
+      .doubleClick()
+      .assert // click event is fired
+      .value('#itemDblClicked', 'item-2.1')
+      .click(`${leaf} .g8-tree__node_tag:last-child`)
+      .assert // click event is fired
+      .value('#tagClicked', 'item-2.1,2.1.2,1')
+      .moveToElement(`${leaf} .g8-tree__node_tag`, 1, 1)
+      .doubleClick()
+      .assert // click event is fired
+      .value('#tagDblClicked', 'item-2.1,2.1.1,0')
+
+      .click(rootLabel)
       .assert.not // clicking the toggle collapses the node
-      .cssClassPresent(firstNode, 'g8-tree__node_expended')
-      .click(`${firstLabel} .g8-tree__node_tag`)
+      .cssClassPresent(root, 'g8-tree__node_expended')
+      .click(`${rootLabel} .g8-tree__node_tag`)
       .assert // tag-click event is fired
       .value('#tagClicked', 'root,root tag,0')
-      .moveToElement(`${firstLabel} .g8-tree__node_tag`, 1, 1)
+      .moveToElement(`${rootLabel} .g8-tree__node_tag`, 1, 1)
       .doubleClick()
       .assert // tag-dbl-click event is fired
       .value('#tagDblClicked', 'root,root tag,0')
