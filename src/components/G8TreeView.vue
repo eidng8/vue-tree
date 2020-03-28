@@ -13,12 +13,12 @@
       <span class="g8-tree__toggle"></span>
       <span class="g8-tree__node_label_text">{{ item.name }}</span>
       <span class="g8-tree__node_tags">
-      <span class="g8-tree__node_tag"
-            v-for="(tag, idx) in item.tags"
-            :key="idx"
-            @click.stop="tagClicked(item.key,tag,idx)"
-            @dblclick.stop="tagDblClicked(item.key,tag,idx)"
-      >{{ tag.label }}</span>
+        <span class="g8-tree__node_tag"
+              v-for="(tag, idx) in item.tags"
+              :key="idx"
+              @click.stop="tagClicked(item.key,tag,idx)"
+              @dblclick.stop="tagDblClicked(item.key,tag,idx)"
+        >{{ tag.label }}</span>
       </span>
     </div>
     <ul v-if="isFolder" class="g8-tree__branch">
@@ -57,11 +57,11 @@ export default class G8TreeView extends Vue {
   }
 
   tagClicked(key: string, tag: G8TreeItemTag, index: number) {
-    this.$emit('tagClicked', {key, tag, index});
+    this.$emit('tag-clicked', {key, tag, index});
   }
 
   tagDblClicked(key: string, tag: G8TreeItemTag, index: number) {
-    this.$emit('tagDblClicked', {key, tag, index});
+    this.$emit('tag-dbl-clicked', {key, tag, index});
   }
 }
 </script>
