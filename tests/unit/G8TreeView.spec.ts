@@ -8,6 +8,24 @@ import {mount, shallowMount} from '@vue/test-utils';
 import G8TreeView from '@/components/G8TreeView.vue';
 import {G8TreeItem} from '@/components/types';
 
+const tree = {
+  item: {
+    key: 'root',
+    name: 'root name',
+    tags: [{key: 'root tag', label: 'root label'}],
+    children: [
+      {
+        key: 'item-1',
+        name: 'item 1',
+        tags: [
+          {key: 1, label: 'tag1.1'},
+          {key: 1, label: 'tag1.2'},
+        ],
+      },
+    ],
+  },
+};
+
 describe('Tree View', () => {
   it('renders different props', () => {
     expect.assertions(6);
@@ -43,32 +61,14 @@ describe('Tree View', () => {
   });
 
   it('renders hierarchy', async () => {
-    const propsData = {
-      item: {
-        key: 'item-1',
-        name: 'item 1',
-        tags: [{key: 1, label: 'tag1'}],
-        children: [
-          {
-            key: 'item-1_1',
-            name: 'item 1.1',
-            tags: [
-              {key: 1.1, label: 'tag1.1'},
-              {key: 1.2, label: 'tag1.2'},
-            ],
-          },
-        ],
-      },
-    };
-
-    const wrapper = mount(G8TreeView, {propsData});
-    expect(wrapper.props('item')).toEqual(propsData.item);
+    const wrapper = mount(G8TreeView, {propsData: tree});
+    expect(wrapper.props('item')).toEqual(tree.item);
 
     const labels = wrapper.findAll('.g8-tree__node_label_text');
     expect(wrapper.find('.g8-tree__node_expended').exists()).toBeFalsy();
     expect(labels.length).toBe(2);
-    expect(labels.at(0).text()).toBe('item 1');
-    expect(labels.at(1).text()).toBe('item 1.1');
+    expect(labels.at(0).text()).toBe('root name');
+    expect(labels.at(1).text()).toBe('item 1');
     wrapper.find('.g8-tree__node_label').trigger('click');
     await wrapper.vm.$nextTick();
     expect(wrapper.find('.g8-tree__node_expended').exists()).toBeTruthy();
