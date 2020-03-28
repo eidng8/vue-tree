@@ -9,6 +9,8 @@ export interface G8TreeItem {
 
   name: string;
 
+  checked?: boolean;
+
   tags?: G8TreeItemTag[];
 
   children?: G8TreeItem[];
@@ -18,4 +20,6 @@ export interface G8TreeItemTag {
   key: number | string;
 
   label: string;
+
+  hint?: string;
 }
