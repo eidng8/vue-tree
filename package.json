@@ -1,5 +1,6 @@
 {
   "name": "vue-tree",
+  "version": "0.0.1",
   "repository": "git@github.com:eidng8/vue-tree.git",
   "bugs": "git@github.com:eidng8/vue-tree/issues",
   "author": "eidng8 <cheung.jackey@gmail.com>",
@@ -8,6 +9,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vue-tree ./src/index.ts",
+    "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e --headless",
     "test:e2e:visual": "vue-cli-service test:e2e",
