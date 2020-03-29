@@ -4,14 +4,14 @@
  * Author: eidng8
  */
 
-import G8TreeView from '@/components/G8TreeView.vue';
+import G8TreeView from './components/G8TreeView.vue';
 import {
   G8ClickEvent,
   G8StateChangeEvent,
   G8TagClickEvent,
   G8TreeItem,
   G8TreeItemTag,
-} from '@/components/types';
+} from './components/types';
 
 export {
   G8TreeView,

@@ -5,7 +5,7 @@
  */
 
 import {mount, shallowMount} from '@vue/test-utils';
-import G8TreeView from '@/components/G8TreeView.vue';
+import {G8TreeView} from '../../src';
 
 const tree = {
   item: {

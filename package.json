@@ -1,14 +1,15 @@
 {
   "name": "g8-vue-tree",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "repository": "git@github.com:eidng8/vue-tree.git",
   "bugs": "git@github.com:eidng8/vue-tree/issues",
   "author": "eidng8 <cheung.jackey@gmail.com>",
   "license": "GPL-3.0",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib ./src/index.ts",
+    "build": "vue-cli-service build --target lib --mode production",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e --headless",

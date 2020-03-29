@@ -25,8 +25,7 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import G8TreeView from '@/components/G8TreeView.vue';
-import {G8TreeItem} from '@/components/types';
+import {G8TreeView, G8TreeItem} from './';
 
 @Component({
   components: {

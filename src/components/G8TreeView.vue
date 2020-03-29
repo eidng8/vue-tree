@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
-import {G8StateChangeEvent, G8TreeItem} from '@/components/types';
+import {G8StateChangeEvent, G8TreeItem} from './types';
 
 @Component({
   name: 'g8-tree-view',
