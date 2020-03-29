@@ -238,7 +238,7 @@ $g8-tree-fg: #333 !default;
   font-weight: normal;
   max-width: 6rem;
   border-radius: .2rem;
-  background-color: $g8-tree-bg;
+  background: $g8-tree-bg;
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
@@ -263,6 +263,37 @@ $g8-tree-fg: #333 !default;
   &:hover,
   &:focus {
     background: lighten($g8-tree-bg, 10%);
+  }
+}
+
+.g8-tree-view.g8-tree__dark {
+  color: $g8-tree-bg;
+
+  .g8-tree__checker {
+    &:before {
+      background: lighten($g8-tree-fg, 10%);
+    }
+
+    &:hover,
+    &:focus {
+      &:before {
+        background: lighten($g8-tree-fg, 20%);
+      }
+    }
+  }
+
+  .g8-tree__node_tag {
+    background: lighten($g8-tree-fg, 10%);
+
+    &:hover,
+    &:focus {
+      background: lighten($g8-tree-fg, 20%);
+    }
+  }
+
+  &.g8-tree__highlight_hover .g8-tree__node_label:hover,
+  &.g8-tree__highlight_hover .g8-tree__node_label:focus {
+    background: $g8-tree-fg;
   }
 }
 </style>
