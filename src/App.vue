@@ -8,7 +8,7 @@
   <div id="app">
     <ul class="g8-tree-view g8-tree__highlight_hover">
       <g8-tree-view
-        checker="radio"
+        checker="1"
         :item="item"
         @click="itemClicked=$event"
         @dblclick="itemDblClicked=$event"
@@ -59,6 +59,10 @@ export default class App extends Vue {
               {key: '2.1.1', label: 'tag2.1.1'},
               {key: '2.1.2', label: 'tag2.1.2'},
             ],
+          },
+          {
+            key: 'item-2.2',
+            name: 'item 2.2',
           },
         ],
       },
