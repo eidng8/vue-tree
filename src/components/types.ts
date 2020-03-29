@@ -33,12 +33,12 @@ export interface G8TreeItemTag {
 export type G8ClickEvent = string;
 
 export type G8TagClickEvent = {
-  node: number | string,
-  tag: number | string,
-  index: number
+  node: number | string;
+  tag: number | string;
+  index: number;
 };
 
 export type G8StateChangeEvent = {
-  node: number | string,
-  state: boolean,
+  node: number | string;
+  state: boolean;
 }
