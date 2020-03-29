@@ -5,13 +5,45 @@
  */
 
 import Vue from 'vue';
-import {
-  G8ClickEvent,
-  G8StateChangeEvent,
-  G8TagClickEvent,
-  G8TreeItem,
-  G8TreeItemTag,
-} from './src';
+
+declare interface G8TreeItem {
+  key: number | string;
+
+  name: string;
+
+  checked?: boolean;
+
+  /**
+   * Intermediate check box state. Active while some of the children were
+   * checked, but not all were checked.
+   */
+  ints?: boolean;
+
+  tags?: G8TreeItemTag[];
+
+  children?: G8TreeItem[];
+}
+
+declare interface G8TreeItemTag {
+  key: number | string;
+
+  label: string;
+
+  hint?: string;
+}
+
+declare type G8ClickEvent = string;
+
+declare type G8TagClickEvent = {
+  node: number | string;
+  tag: number | string;
+  index: number;
+};
+
+declare type G8StateChangeEvent = {
+  node: number | string;
+  state: boolean;
+}
 
 declare class G8TreeView extends Vue {
   item: G8TreeItem;
