@@ -267,7 +267,7 @@ $g8-tree-fg: #333 !default;
 }
 
 .g8-tree-view.g8-tree__dark {
-  color: $g8-tree-bg;
+  color: darken($g8-tree-bg, 20%);
 
   .g8-tree__checker {
     &:before {
@@ -283,11 +283,11 @@ $g8-tree-fg: #333 !default;
   }
 
   .g8-tree__node_tag {
-    background: lighten($g8-tree-fg, 10%);
+    background: lighten($g8-tree-fg, 5%);
 
     &:hover,
     &:focus {
-      background: lighten($g8-tree-fg, 20%);
+      background: lighten($g8-tree-fg, 10%);
     }
   }
 
