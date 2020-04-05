@@ -5,7 +5,8 @@
   "bugs": "git@github.com:eidng8/vue-tree/issues",
   "author": "eidng8 <cheung.jackey@gmail.com>",
   "license": "GPL-3.0",
-  "main": "./src/index.ts",
+  "main": "./dist/g8-vue-tree.common.js",
+  "type": "./lib/src/index.d.ts",
   "scripts": {
     "build": "vue-cli-service build --target lib --mode production",
     "serve": "vue-cli-service serve",
