@@ -1,5 +1,6 @@
-lib
-tests/e2e/reports
+/dist
+/lib
+/tests/e2e/reports
 
 # local env files
 .env.local

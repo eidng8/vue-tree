@@ -1,12 +1,12 @@
 {
   "name": "g8-vue-tree",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "repository": "git@github.com:eidng8/vue-tree.git",
   "bugs": "git@github.com:eidng8/vue-tree/issues",
   "author": "eidng8 <cheung.jackey@gmail.com>",
   "license": "GPL-3.0",
-  "main": "./dist/g8-vue-tree.common.js",
-  "type": "./lib/src/index.d.ts",
+  "main": "./dist/g8-vue-tree.umd.min.js",
+  "typings": "./typings/index.d.ts",
   "scripts": {
     "build": "vue-cli-service build --target lib --mode production",
     "serve": "vue-cli-service serve",
