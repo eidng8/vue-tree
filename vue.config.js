@@ -5,7 +5,7 @@
  */
 
 module.exports = {
-  configWebpack: config => {
-    config.sourceMap = 'production' !== process.env.NODE_ENV;
+  configureWebpack: config => {
+    config.devtool = undefined;
   },
 };
