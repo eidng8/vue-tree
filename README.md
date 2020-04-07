@@ -1,5 +1,8 @@
 # vue-tree
 
+[![Master](https://travis-ci.com/eidng8/vue-tree.svg?branch=master)](https://travis-ci.com/eidng8/vue-tree)
+[![Dev](https://travis-ci.com/eidng8/vue-tree.svg?branch=dev)](https://travis-ci.com/eidng8/vue-tree)
+
 ## Project setup
 ```
 npm install
