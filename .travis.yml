@@ -3,6 +3,7 @@ node_js:
   - 12
 addons:
   chrome: stable
+  firefox: latest
 cache:
   directories:
     - node_modules
@@ -10,7 +11,7 @@ install:
   - npm install
 script:
   - npm run test:unit -- --coverage --coverageReporters=lcov
-  - npm run test:e2e
+  - npm run test:e2e -- --env firefox,chrome
 after_success:
   - npm install coveralls
   - cat ./coverage/lcov.info | coveralls

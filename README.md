@@ -1,7 +1,12 @@
 # vue-tree
 
-[![Master](https://travis-ci.com/eidng8/vue-tree.svg?branch=master)](https://travis-ci.com/eidng8/vue-tree)
-[![Dev](https://travis-ci.com/eidng8/vue-tree.svg?branch=dev)](https://travis-ci.com/eidng8/vue-tree)
+## Master Branch
+[![Build Status](https://travis-ci.com/eidng8/vue-tree.svg?branch=master)](https://travis-ci.com/eidng8/vue-tree)
+
+## Dev Branch
+[![Build Status](https://travis-ci.com/eidng8/vue-tree.svg?branch=dev)](https://travis-ci.com/eidng8/vue-tree)
+[![Coverage Status](https://coveralls.io/repos/github/eidng8/vue-tree/badge.svg?branch=dev)](https://coveralls.io/github/eidng8/vue-tree?branch=dev)
+
 
 ## Project setup
 ```
