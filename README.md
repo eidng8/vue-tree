@@ -1,29 +1,20 @@
 # vue-tree
 
-## Project setup
-```
-npm install
-```
+## Master Branch
+[![Build Status](https://travis-ci.com/eidng8/vue-tree.svg?branch=master)](https://travis-ci.com/eidng8/vue-tree)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Dev Branch
+[![Build Status](https://travis-ci.com/eidng8/vue-tree.svg?branch=dev)](https://travis-ci.com/eidng8/vue-tree)
+[![Coverage Status](https://coveralls.io/repos/github/eidng8/vue-tree/badge.svg?branch=dev)](https://coveralls.io/github/eidng8/vue-tree?branch=dev)
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Run your unit tests
-```
-npm run test:unit
-```
+## Performance Consideration
 
-### Lints and fixes files
-```
-npm run lint
-```
+The DOM structure of this component doesn't change once rendered.
+Comparing to others using `v-if`, which generate sub-nodes while expanded.
+While working on long list of items, lags will be obvious.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* This component will have a lag when once it is being rendered. After it is
+rendered, sub-trees are controlled by CSS, no DOM structure happens.
+* `v-if` components will lag whenever sub-trees are expanded, every time they
+are expanded.
