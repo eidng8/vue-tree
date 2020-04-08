@@ -6,6 +6,8 @@
 
 module.exports = {
   configureWebpack: config => {
-    config.devtool = undefined;
+    if ('production' == process.env.NODE_ENV) {
+      config.devtool = undefined;
+    }
   },
 };

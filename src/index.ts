@@ -12,6 +12,7 @@ import {
   G8TreeItem,
   G8TreeItemTag,
 } from './components/types';
+import './components/tree-view.scss';
 
 export {
   G8TreeView,
