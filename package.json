@@ -7,8 +7,15 @@
   "license": "GPL-3.0",
   "main": "./dist/g8-vue-tree.umd.min.js",
   "typings": "./typings/index.d.ts",
+  "files": [
+    "/dist/*.js",
+    "/dist/*.css",
+    "/src/index.ts",
+    "/src/components",
+    "/typings"
+  ],
   "scripts": {
-    "build": "vue-cli-service build --target lib --mode production",
+    "build": "vue-cli-service build --target lib --mode production ./src/index.ts",
     "serve": "vue-cli-service serve",
     "start": "npm run serve",
     "test": "npm run test:unit && npm run test:e2e",
