@@ -20,11 +20,12 @@ script:
 after_success:
   - npm install coveralls
   - cat ./coverage/lcov.info | coveralls
-  - npm run build
-  - export PACKAGE_VERSION=$(node -p "require('./package.json').version")
-  - export PACKAGE=$(npm pack --silent)
-  - git tag $PACKAGE_VERSION
 
+before_deploy:
+  - npm run build
+  #  - export PACKAGE_VERSION=$(node -p "require('./package.json').version")
+  - export PACKAGE=$(npm pack --silent)
+#  - git tag $PACKAGE_VERSION
 deploy:
   - provider: releases
     skip_cleanup: true
@@ -34,7 +35,7 @@ deploy:
     on:
       repo: eidng8/vue-tree
       branch: master
-      #tags: true
+      tags: true
   - provider: npm
     skip_cleanup: true
     email: cheung.jackey@gmail.com
@@ -42,5 +43,4 @@ deploy:
       secure: 2mIMc5dD88yzeeAhV1D8uTFJIJhYKgTMPH36K3HbLvMHUtSYRQBOob9H075iEsQ3Ta1Liuk27T93Q0atVsybUj1ufWo0Hzal0iYd4s1aj08hTsiIahD0EPf+dmSRaUELXqjFofXgboRugpxDeyTvOjCTjKT+eF3c1c+X7AFiPMmVzLJmx3eFRb8y3F9yUJ5nVz8NyvjJzv6Me6sf59O8a04awqL9okaSmJcdj79/7lkUzWAQ00LNKHXU+eP5C65VMciqu02PCRIk+C2nNOfw7IH5cRW3ZPzngPu6HAPgeUP0CloRU8yM8qU1LF9A/1IE09fRvctZnOCR2zt3EigmrmWVPPqiYBy2G95NQCJfGlAfynWVl+r/aMHmtABb818OBUyOXBxhEISrW9jJVm3z1N4gqYr+/Yfc62jkCGwUQHhDBOgOuNQv+G/8dN/FzRqRbCm/rXLcP4HaRfFu+CDkf+MFKu5jF5R7QFydRG3XVCOv73mpt/AFewJUJs7+IY/jPQ7J4JMeVhDYo3l31iC1mPE4+ylk9skq6Ss5v17N7/uahE8odV9tUyx0vDUTXfzjtIp6EH+y59HFNHn6dO2wAnQyozGvcDiQazt8jgcEcEAsRiVjrfVYO+UxBLTV2keXkvE4rzdAJZXJZblwRuyC5yFmBlUNGY38bpVBZZYTB+g=
     on:
       repo: eidng8/vue-tree
-      branch: master
       #tags: true
