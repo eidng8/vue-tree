@@ -22,9 +22,9 @@ after_success:
   - cat ./coverage/lcov.info | coveralls
   - |
     if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
-      npm run build
-      git tag $(node -p "require('./package.json').version")
-      export PACKAGE=$(npm pack --silent)
+    npm run build
+    git tag $(node -p "require('./package.json').version")
+    export PACKAGE=$(npm pack --silent)
     fi
 
 deploy:
