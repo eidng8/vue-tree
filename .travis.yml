@@ -20,16 +20,13 @@ script:
 after_success:
   - npm install coveralls
   - cat ./coverage/lcov.info | coveralls
-  - export BUILT=no
-
-before_deploy:
   - |
-    if [[ "${BUILT}" == "no" ]]; then
+    if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
       npm run build
       git tag $(node -p "require('./package.json').version")
       export PACKAGE=$(npm pack --silent)
-      export BUILT=yes
     fi
+
 deploy:
   - provider: releases
     skip_cleanup: true
