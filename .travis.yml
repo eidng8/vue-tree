@@ -21,10 +21,11 @@ script:
   - npm run test:e2e
   #  - chmod u+x ./release.sh
   #  - ./release.sh
-  - export TRAVIS_TAG=${TRAVIS_TAG:-$(node -p "require('./package.json').version")-$(date +'%Y.%m.%d')-$(git log --format=%h -1)}
-  - "[[ ${TRAVIS_EVENT_TYPE} == push ]] && git tag ${TRAVIS_TAG} && git describe --tags"
 
 before_deploy:
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(node -p "require('./package.json').version")-$(date +'%Y.%m.%d')-$(git log --format=%h -1)}
+  - echo ${TRAVIS_TAG}
+  - "[[ ${TAGGED} != 1 ]] && git tag ${TRAVIS_TAG} && export TAGGED=1"
   - "[[ ! -e dist ]] && npm run build && export PACKAGE=$(npm pack --silent)"
 deploy:
   - provider: releases
@@ -35,7 +36,7 @@ deploy:
     on:
       repo: eidng8/vue-tree
       branch: master
-      tags: true
+      #tags: true
       condition: ${TRAVIS_EVENT_TYPE} == push
   - provider: npm
     skip_cleanup: true
