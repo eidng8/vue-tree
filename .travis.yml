@@ -41,5 +41,3 @@ deploy:
     on:
       repo: eidng8/vue-tree
       #tags: true
-after_deploy:
-  - git checkout dev && git rebase master && git push origin
