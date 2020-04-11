@@ -19,15 +19,13 @@ script:
   - npm install coveralls
   - cat ./coverage/lcov.info | coveralls
   - npm run test:e2e
-#  - chmod u+x ./release.sh
-#  - ./release.sh
+  #  - chmod u+x ./release.sh
+  #  - ./release.sh
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(node -p "require('./package.json').version")-$(date +'%Y.%m.%d')-$(git log --format=%h -1)}
+  - "[[ ${TRAVIS_EVENT_TYPE} == push ]] && git tag ${TRAVIS_TAG} && git describe --tags"
 
 before_deploy:
-  - export TRAVIS_TAG=${TRAVIS_TAG:-$(node -p "require('./package.json').version")-$(date +'%Y.%m.%d')-$(git log --format=%h -1)}
-  - "[[ ! -e dist ]] && git tag ${TRAVIS_TAG}"
-  - git describe --tags
-  - npm run build
-  - export PACKAGE=$(npm pack --silent)
+  - "[[ ! -e dist ]] && npm run build && export PACKAGE=$(npm pack --silent)"
 deploy:
   - provider: releases
     skip_cleanup: true
@@ -52,4 +50,4 @@ deploy:
 after_deploy:
   # I want to make sure the dev is at the tip of every release.
   # Just save me some key stroke to manually do it, or I may forget to do.
-  - git checkout -t origin/dev && git rebase master && git push
+  - "git checkout -b origin/dev && git rebase master && git push"
