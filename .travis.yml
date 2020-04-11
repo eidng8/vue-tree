@@ -25,8 +25,8 @@ script:
 before_deploy:
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(node -p "require('./package.json').version")-$(date +'%Y.%m.%d')-$(git log --format=%h -1)}
   - echo ${TRAVIS_TAG}
-  - "[[ ${TAGGED} != 1 ]] && git tag ${TRAVIS_TAG} && export TAGGED=1"
-  - "[[ ! -e dist ]] && npm run build && export PACKAGE=$(npm pack --silent)"
+  - "if [[ ${TAGGED} != 1 ]]; then git tag ${TRAVIS_TAG} && export TAGGED=1; fi"
+  - "if [[ ! -e dist ]]; then npm run build && export PACKAGE=$(npm pack --silent); fi"
 deploy:
   - provider: releases
     skip_cleanup: true
