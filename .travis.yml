@@ -41,3 +41,7 @@ deploy:
     on:
       repo: eidng8/vue-tree
       #tags: true
+after_deploy:
+  # I want to make sure the dev is at the tip of every release.
+  # Just save me some key stroke to manually do it, or I may forget to do.
+  - git checkout -t origin/dev && git rebase master && git push
