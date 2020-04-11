@@ -24,7 +24,7 @@ script:
 
 before_deploy:
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(node -p "require('./package.json').version")-$(date +'%Y.%m.%d')-$(git log --format=%h -1)}
-  - [[ ! -e dist ]] && git tag ${TRAVIS_TAG}
+  - "[[ ! -e dist ]] && git tag ${TRAVIS_TAG}"
   - git describe --tags
   - npm run build
   - export PACKAGE=$(npm pack --silent)
