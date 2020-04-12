@@ -1,16 +1,10 @@
 # vue-tree
 
+[![Master Build](https://travis-ci.com/eidng8/vue-tree.svg?branch=master)](https://travis-ci.com/eidng8/vue-tree)
+[![Master Coverage](https://coveralls.io/repos/github/eidng8/vue-tree/badge.svg?branch=master)](https://coveralls.io/github/eidng8/vue-tree?branch=master)
+
 A Vue.js tree view component with stable DOM tree. By stable, it means the
 DOM structure will not change once it is rendered.
-
-
-## Master Branch
-[![Build](https://travis-ci.com/eidng8/vue-tree.svg?branch=master)](https://travis-ci.com/eidng8/vue-tree)
-[![Coverage](https://coveralls.io/repos/github/eidng8/vue-tree/badge.svg?branch=master)](https://coveralls.io/github/eidng8/vue-tree?branch=master)
-
-## Dev Branch
-[![Build](https://travis-ci.com/eidng8/vue-tree.svg?branch=dev)](https://travis-ci.com/eidng8/vue-tree)
-[![Coverage](https://coveralls.io/repos/github/eidng8/vue-tree/badge.svg?branch=dev)](https://coveralls.io/github/eidng8/vue-tree?branch=dev)
 
 
 ## Performance Consideration

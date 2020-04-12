@@ -26,7 +26,7 @@
         >{{ tag.label }}</label>
       </span>
     </div>
-    <ul v-if="hasChild" class="g8-tree__branch">
+    <ul v-if="expanded || item.rendered" class="g8-tree__branch">
       <g8-tree-view v-for="(child, index) in item.children"
                     :key="index"
                     :item="child"
@@ -45,9 +45,7 @@
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {G8StateChangeEvent, G8TreeItem} from './types';
 
-@Component({
-  name: 'g8-tree-view',
-})
+@Component({name: 'g8-tree-view'})
 export default class G8TreeView extends Vue {
   @Prop() item!: G8TreeItem;
 
@@ -67,6 +65,10 @@ export default class G8TreeView extends Vue {
     return this.item.children && this.item.children.length;
   }
 
+  created() {
+    console.log(`created: ${this.item.name}`);
+  }
+
   setState(state: boolean) {
     this.item.checked = this.checked = state;
     this.$children.forEach(c => (c as G8TreeView).setState(state));
@@ -75,6 +77,7 @@ export default class G8TreeView extends Vue {
 
   clicked() {
     if (this.hasChild) {
+      this.item.rendered = true;
       this.expanded = !this.expanded;
     }
     this.$emit('click', this.item.key);

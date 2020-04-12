@@ -17,6 +17,8 @@ export interface G8TreeItem {
    */
   ints?: boolean;
 
+  rendered?: boolean;
+
   tags?: G8TreeItemTag[];
 
   children?: G8TreeItem[];
