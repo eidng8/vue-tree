@@ -66,7 +66,7 @@ export default class G8TreeView extends Vue {
   }
 
   created() {
-    console.log(`created: ${this.item.name}`);
+    // console.log(`created: ${this.item.name}`);
   }
 
   setState(state: boolean) {
