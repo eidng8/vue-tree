@@ -1,9 +1,9 @@
 {
   "name": "g8-vue-tree",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "repository": "git@github.com:eidng8/vue-tree.git",
   "bugs": "git@github.com:eidng8/vue-tree/issues",
-  "author": "eidng8 <cheung.jackey@gmail.com>",
+  "author": "eidng8",
   "license": "GPL-3.0",
   "main": "./dist/g8-vue-tree.umd.min.js",
   "typings": "./typings/index.d.ts",
@@ -14,12 +14,17 @@
     "/src/components",
     "/typings"
   ],
+  "keywords": [
+    "typescript",
+    "vue"
+  ],
   "scripts": {
     "build": "vue-cli-service build --target lib --mode production ./src/index.ts",
     "serve": "vue-cli-service serve",
     "start": "npm run serve",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "vue-cli-service test:unit",
+    "test:cover": "npm run test:unit -- --coverage",
     "test:e2e": "vue-cli-service test:e2e --headless",
     "test:e2e:visual": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"

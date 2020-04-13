@@ -6,6 +6,7 @@
 
 <template>
   <div id="app">
+    <button @click="populate()">populate tree</button>
     <ul class="g8-tree-view g8-tree__highlight_hover">
       <g8-tree-view
         checker="1"
@@ -25,7 +26,7 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import {G8TreeView, G8TreeItem} from './';
+import {G8TreeItem, G8TreeView} from './';
 
 @Component({
   components: {
@@ -35,37 +36,7 @@ import {G8TreeView, G8TreeItem} from './';
 export default class App extends Vue {
   item: G8TreeItem = {
     key: 'root',
-    name: 'root name',
-    tags: [{key: 'root tag', label: 'root label'}],
-    children: [
-      {
-        key: 'item-1',
-        name: 'item 1',
-        tags: [
-          {key: 1, label: 'tag1.1'},
-          {key: 1, label: 'tag1.2', hint: '2nd tag in the 2nd branch'},
-        ],
-      },
-      {
-        key: 'item-2',
-        name: 'item 2',
-        tags: [{key: 2, label: 'tag1.1'}],
-        children: [
-          {
-            key: 'item-2.1',
-            name: 'item 2.1',
-            tags: [
-              {key: '2.1.1', label: 'tag2.1.1'},
-              {key: '2.1.2', label: 'tag2.1.2'},
-            ],
-          },
-          {
-            key: 'item-2.2',
-            name: 'item 2.2',
-          },
-        ],
-      },
-    ],
+    name: 'Click the button above to populate me.',
   };
 
   itemClicked = '';
@@ -75,6 +46,34 @@ export default class App extends Vue {
   tagClicked = '';
 
   tagDblClicked = '';
+
+  populate() {
+    const total = 1000;
+    this.item = {
+      key: 'root',
+      name: 'root name',
+      tags: [{key: 'root tag', label: 'root label'}],
+      children: [],
+    };
+    for (let i = 1; i < total; i++) {
+      const child: G8TreeItem = {
+        key: `key-${i}`,
+        name: `name ${i}`,
+        tags: [{key: `tag-${i}`, label: `tag ${i}`}],
+        children: [],
+      };
+      for (let j = 1; j < total; j++) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        child.children!.push({
+          key: `key-${i}.${j}`,
+          name: `name ${i}.${j}`,
+          tags: [{key: `tag-${i}.${j}`, label: `tag ${i}.${j}`}],
+        });
+      }
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      this.item.children!.push(child);
+    }
+  }
 }
 </script>
 
