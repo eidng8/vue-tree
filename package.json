@@ -3,7 +3,7 @@
   "version": "0.0.21",
   "repository": "git@github.com:eidng8/vue-tree.git",
   "bugs": "git@github.com:eidng8/vue-tree/issues",
-  "author": "eidng8 <cheung.jackey@gmail.com>",
+  "author": "eidng8",
   "license": "GPL-3.0",
   "main": "./dist/g8-vue-tree.umd.min.js",
   "typings": "./typings/index.d.ts",
@@ -13,6 +13,10 @@
     "/src/index.ts",
     "/src/components",
     "/typings"
+  ],
+  "keywords": [
+    "typescript",
+    "vue"
   ],
   "scripts": {
     "build": "vue-cli-service build --target lib --mode production ./src/index.ts",
