@@ -18,8 +18,17 @@ module.exports = {
       .assert // the tree view is rendered
       .elementPresent('.g8-tree-view')
       .assert // the root node's text is correct
-      .containsText('.g8-tree__node_label_text', 'root name')
+      .containsText(
+        '.g8-tree__node_label_text',
+        'Click the button above to populate me.',
+      )
 
+      .click('button')
+      .assert // root node's text has changed
+      .containsText(
+        '.g8-tree__node_label_text',
+        'root name',
+      )
       .click(rootLabel)
       .assert // clicking the toggle expands the root
       .cssClassPresent(root, 'g8-tree__node_expended')
@@ -30,7 +39,7 @@ module.exports = {
       .assert // clicking the toggle expands the first branch
       .elementPresent('.g8-tree__branch .g8-tree__node_expended')
       .assert // click event is fired
-      .value('#itemClicked', 'item-2')
+      .value('#itemClicked', 'key-2')
       .moveToElement(rootLabel, 1, 1)
       .doubleClick()
       .assert // double clicking won't collapse the node
@@ -40,18 +49,18 @@ module.exports = {
 
       .click(`${leaf} .g8-tree__node_label`)
       .assert // click event is fired
-      .value('#itemClicked', 'item-2.1')
+      .value('#itemClicked', 'key-2.1')
       .moveToElement(`${leaf} .g8-tree__node_label`, 1, 1)
       .doubleClick()
       .assert // click event is fired
-      .value('#itemDblClicked', 'item-2.1')
+      .value('#itemDblClicked', 'key-2.1')
       .click(`${leaf} .g8-tree__node_tag:last-child`)
       .assert // click event is fired
-      .value('#tagClicked', 'item-2.1,2.1.2,1')
+      .value('#tagClicked', 'key-2.1,tag-2.1,0')
       .moveToElement(`${leaf} .g8-tree__node_tag`, 1, 1)
       .doubleClick()
       .assert // click event is fired
-      .value('#tagDblClicked', 'item-2.1,2.1.1,0')
+      .value('#tagDblClicked', 'key-2.1,tag-2.1,0')
 
       .click(rootLabel)
       .assert.not // clicking the toggle collapses the node

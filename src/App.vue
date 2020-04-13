@@ -65,9 +65,9 @@ export default class App extends Vue {
       for (let j = 1; j < total; j++) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         child.children!.push({
-          key: `key-${i}`,
-          name: `name ${i}`,
-          tags: [{key: `tag-${i}`, label: `tag ${i}`}],
+          key: `key-${i}.${j}`,
+          name: `name ${i}.${j}`,
+          tags: [{key: `tag-${i}.${j}`, label: `tag ${i}.${j}`}],
         });
       }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
