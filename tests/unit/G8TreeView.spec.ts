@@ -78,34 +78,34 @@ describe('Tree View', () => {
       .toBe('tag2');
   });
 
-  it('renders hierarchy', async () => {
-    expect.assertions(4);
-    const wrapper = mount(G8TreeView, {propsData: tree});
-    expect(wrapper.props('item')).toEqual(tree.item);
-    const labels = wrapper.findAll('.g8-tree__node_label_text');
-    expect(labels.length).toBe(5);
-    expect(labels.at(0).text()).toBe('root name');
-    expect(labels.at(1).text()).toBe('item 1');
-  });
-
-  it('expends/collapses branches on click', async () => {
-    expect.assertions(5);
-    // initially no branch were expanded
+  it('expends/collapses and renders branches on click', async () => {
+    expect.assertions(11);
+    // initially no branch were expanded nor rendered
     const wrapper = mount(G8TreeView, {propsData: tree});
     expect(wrapper.find('.g8-tree__node_expended').exists()).toBeFalsy();
-    expect(wrapper.findAll('.g8-tree__branch').length).toBe(2);
-    // click the first branch to expand it
+    expect(wrapper.findAll('.g8-tree__branch').length).toBe(0);
+    expect(wrapper.findAll('.g8-tree__node_label_text').length).toBe(1);
+    // click the first branch to expand it and render the sub-tree
     wrapper.find('.g8-tree__node_label').trigger('click');
-    await wrapper.vm.$nextTick();
-    expect(wrapper.findAll('.g8-tree__node_expended').length).toBe(1);
-    // click the second branch to expand it
+    await wrapper.vm.$nextTick(() => {
+      expect(wrapper.findAll('.g8-tree__node_expended').length).toBe(1);
+      const labels = wrapper.findAll('.g8-tree__node_label_text');
+      expect(labels.length).toBe(3);
+      expect(labels.at(0).text()).toBe('root name');
+      expect(labels.at(1).text()).toBe('item 1');
+    });
+    // click the second branch to expand it and render the sub-tree
     wrapper.findAll('.g8-tree__branch .g8-tree__node_label').trigger('click');
-    await wrapper.vm.$nextTick();
-    expect(wrapper.findAll('.g8-tree__node_expended').length).toBe(2);
+    await wrapper.vm.$nextTick(() => {
+      expect(wrapper.findAll('.g8-tree__node_expended').length).toBe(2);
+      expect(wrapper.findAll('.g8-tree__node_label_text').length).toBe(5);
+    });
     // click branches to collapse them all
     wrapper.findAll('.g8-tree__node_label').trigger('click');
-    await wrapper.vm.$nextTick();
-    expect(wrapper.find('.g8-tree__node_expended').exists()).toBeFalsy();
+    await wrapper.vm.$nextTick(() => {
+      expect(wrapper.find('.g8-tree__node_expended').exists()).toBeFalsy();
+      expect(wrapper.findAll('.g8-tree__node_label_text').length).toBe(5);
+    });
   });
 
   it('emits click events', async () => {

@@ -24,6 +24,7 @@
     "start": "npm run serve",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "vue-cli-service test:unit",
+    "test:cover": "npm run test:unit -- --coverage",
     "test:e2e": "vue-cli-service test:e2e --headless",
     "test:e2e:visual": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
