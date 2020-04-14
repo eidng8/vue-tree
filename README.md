@@ -40,8 +40,8 @@ before importing the scss file.
 /* index.scss */
 
 /* define these two variables before importing the scss file */
-$g8-tree-bg: #ccc !default;
-$g8-tree-fg: #333 !default;
+$g8-tree-bg: #ccc;
+$g8-tree-fg: #333;
 
 @import "~vue-tree/src/components/tree-view.scss";
 ```
