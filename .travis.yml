@@ -14,14 +14,19 @@ cache:
     - node_modules
 install:
   - npm install
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 script:
+  - if [[ ${BUNDLE_ANALYZER_TOKEN} != "" ]]; then npm install --no-save @bundle-analyzer/webpack-plugin; fi
   - npm run test:unit -- --coverage
   - npm install coveralls
   - cat ./coverage/lcov.info | coveralls
   - npm run test:e2e
-  #- git checkout dev
-  #- git rebase master
-  #- git push
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 before_deploy:
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(node -p "require('./package.json').version")-$(date +'%Y.%m.%d')-$(git log --format=%h -1)}
