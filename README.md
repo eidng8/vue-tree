@@ -1,8 +1,10 @@
 # vue-tree
 
 [![Master Build](https://travis-ci.com/eidng8/vue-tree.svg?branch=master)](https://travis-ci.com/eidng8/vue-tree)
-[![Master Coverage](https://coveralls.io/repos/github/eidng8/vue-tree/badge.svg?branch=master)](https://coveralls.io/github/eidng8/vue-tree?branch=master)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/92ebfb84dd8b69b595c1/test_coverage)](https://codeclimate.com/github/eidng8/vue-tree/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/92ebfb84dd8b69b595c1/maintainability)](https://codeclimate.com/github/eidng8/vue-tree/maintainability)
 [![Known Vulnerabilities](https://snyk.io/test/github/eidng8/vue-tree/badge.svg?targetFile=package.json)](https://snyk.io/test/github/eidng8/vue-tree?targetFile=package.json)
+[![Dev Coverage](https://coveralls.io/repos/github/eidng8/vue-tree/badge.svg?branch=dev)](https://coveralls.io/github/eidng8/vue-tree?branch=dev)
 
 A Vue.js tree view component with stable DOM tree. By stable, it means the
 DOM structure will not change once it is rendered.
