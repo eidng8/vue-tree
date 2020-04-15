@@ -11,22 +11,26 @@
       <g8-tree-view
         checker="1"
         :item="item"
-        @click="itemClicked=$event"
-        @dblclick="itemDblClicked=$event"
-        @tag-clicked="tagClicked=`${$event.node},${$event.tag},${$event.index}`"
-        @tag-dbl-clicked="tagDblClicked=`${$event.node},${$event.tag},${$event.index}`"
+        @click="itemClicked = $event"
+        @dblclick="itemDblClicked = $event"
+        @tag-clicked="
+          tagClicked = `${$event.node},${$event.tag},${$event.index}`
+        "
+        @tag-dbl-clicked="
+          tagDblClicked = `${$event.node},${$event.tag},${$event.index}`
+        "
       ></g8-tree-view>
     </ul>
-    <input id="itemClicked" :value="itemClicked"/>
-    <input id="itemDblClicked" :value="itemDblClicked"/>
-    <input id="tagClicked" :value="tagClicked"/>
-    <input id="tagDblClicked" :value="tagDblClicked"/>
+    <input id="itemClicked" :value="itemClicked" />
+    <input id="itemDblClicked" :value="itemDblClicked" />
+    <input id="tagClicked" :value="tagClicked" />
+    <input id="tagDblClicked" :value="tagDblClicked" />
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
-import {G8TreeItem, G8TreeView} from './';
+import { Component, Vue } from 'vue-property-decorator';
+import { G8TreeItem, G8TreeView } from './';
 
 @Component({
   components: {
@@ -52,14 +56,14 @@ export default class App extends Vue {
     this.item = {
       key: 'root',
       name: 'root name',
-      tags: [{key: 'root tag', label: 'root label'}],
+      tags: [{ key: 'root tag', label: 'root label' }],
       children: [],
     };
     for (let i = 1; i < total; i++) {
       const child: G8TreeItem = {
         key: `key-${i}`,
         name: `name ${i}`,
-        tags: [{key: `tag-${i}`, label: `tag ${i}`}],
+        tags: [{ key: `tag-${i}`, label: `tag ${i}` }],
         children: [],
       };
       for (let j = 1; j < total; j++) {
@@ -67,7 +71,7 @@ export default class App extends Vue {
         child.children!.push({
           key: `key-${i}.${j}`,
           name: `name ${i}.${j}`,
-          tags: [{key: `tag-${i}.${j}`, label: `tag ${i}.${j}`}],
+          tags: [{ key: `tag-${i}.${j}`, label: `tag ${i}.${j}` }],
         });
       }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
