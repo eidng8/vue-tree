@@ -4,13 +4,29 @@
  * Author: eidng8
  */
 
-import {Vue} from 'vue-property-decorator';
-import {G8StateChangeEvent, G8TreeItem} from '.';
+import { Vue } from 'vue-property-decorator';
+import { G8StateChangeEvent, G8TreeItem } from '.';
 
-export declare class G8TreeView extends Vue {
+declare class G8TreeView extends Vue {
+  /**
+   * The tree data to be rendered.
+   */
   item: G8TreeItem;
+
+  /**
+   * Whether to add a checkbox before each item, allowing multiple nodes to
+   * be checked.
+   */
   checker: boolean;
+
+  /**
+   * Whether the node is expanded.
+   */
   expanded: boolean;
+
+  /**
+   * Whether the node is checked.
+   */
   checked: boolean;
   /**
    * Intermediate check box state. Active while some of the children were
@@ -18,17 +34,50 @@ export declare class G8TreeView extends Vue {
    */
   ints: boolean;
 
+  /**
+   * Whether the current node has any child.
+   */
   get hasChild(): number | undefined;
 
+  /**
+   * Handles the click event of checkboxes. Sets whether the current node is
+   * checked. Also set propagates the state to all immediate children.
+   * This method emits the `state-changed` event.
+   * @param state
+   */
   setState(state: boolean): void;
 
+  /**
+   * Handles click event of nodes, expanding/collapsing sub-tree if
+   * applicable. This method emits the `click` event.
+   */
   clicked(): void;
 
+  /**
+   * Handles double click event of nodes, emitting the `dblclick` event.
+   */
   dblClicked(): void;
 
+  /**
+   * Handles double click event of tags, emitting the `tag-clicked` event.
+   * @param tag
+   * @param index
+   */
   tagClicked(tag: number | string, index: number): void;
 
+  /**
+   * Handles double click event of tags, emitting the `tag-dbl-clicked`
+   * event.
+   * @param tag
+   * @param index
+   */
   tagDblClicked(tag: number | string, index: number): void;
 
+  /**
+   * Handles `state-changed` events emitted by children, updating the check
+   * state of current node according. This method also bubbles up the
+   * `state-changed` event.
+   * @param evt
+   */
   childrenStateChanged(evt: G8StateChangeEvent): void;
 }

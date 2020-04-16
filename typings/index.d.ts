@@ -4,48 +4,111 @@
  * Author: eidng8
  */
 
-import {G8TreeView as VueTree} from './vue-tree';
+import { G8TreeView as VueTree } from './vue-tree';
 
-export as namespace G8TreeView;
+/**
+ * A tree view component with stable DOM structure. Stable means its structure
+ * will not change once rendered. This component uses CSS to toggle sub-tree.
+ * To improve performance, sub-trees are not rendered until they are first
+ * expanded. Once expanded, further collapse/expand action won't cause the
+ * sub-tree to be rendered again. Currently there is an
+ * [issue](https://github.com/eidng8/vue-tree/issues/24) about performance
+ * problem of large tree data set.
+ */
+declare class G8TreeView extends VueTree {}
 
-export class G8TreeView extends VueTree {
-}
-
-export interface G8TreeItem {
+/**
+ * Tree data
+ */
+declare interface G8TreeItem {
+  /**
+   * Item key, serves as identifier
+   */
   key: number | string;
 
+  /**
+   * Item name (its label)
+   */
   name: string;
 
+  /**
+   * Checkbox state
+   */
   checked?: boolean;
 
   /**
-   * Intermediate check box state. Active while some of the children were
-   * checked, but not all were checked.
+   * Intermediate check box state. `true` while some of the children were
+   * checked, but not all.
    */
-  ints?: boolean;
+  intermediate?: boolean;
 
+  /**
+   * Tags attached to the item
+   */
   tags?: G8TreeItemTag[];
 
+  /**
+   * List of child items
+   */
   children?: G8TreeItem[];
 }
 
-export interface G8TreeItemTag {
+/**
+ * Item tag data, rendered using `<label>` tag.
+ */
+declare interface G8TreeItemTag {
+  /**
+   * Tag key, serves as identifier
+   */
   key: number | string;
 
+  /**
+   * Tag label
+   */
   label: string;
 
+  /**
+   * The `<label>` tag's `title` attribute
+   */
   hint?: string;
 }
 
-export type G8ClickEvent = string;
+/**
+ * `key` of the item clicked
+ */
+declare type G8ClickEvent = string | number;
 
-export type G8TagClickEvent = {
+/**
+ * The tag being clicked
+ */
+declare type G8TagClickEvent = {
+  /**
+   * The item's `key`
+   */
   node: number | string;
+
+  /**
+   * The tag's `key`
+   */
   tag: number | string;
+
+  /**
+   * Index of the tag in the array
+   */
   index: number;
 };
 
-export type G8StateChangeEvent = {
+/**
+ * The node and its new checkbox state
+ */
+declare type G8StateChangeEvent = {
+  /**
+   * The item's `key`
+   */
   node: number | string;
+
+  /**
+   * Whether it is checked
+   */
   state: boolean;
-}
+};

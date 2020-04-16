@@ -7,48 +7,32 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
   extends: [
     'plugin:vue/essential',
     '@vue/standard',
-    '@vue/typescript/recommended'
+    '@vue/typescript/recommended',
+    'plugin:prettier/recommended',
   ],
   parserOptions: {
-    ecmaVersion: 2020
+    ecmaVersion: 2020,
   },
   rules: {
-    'comma-dangle': [
-      'error',
-      'always-multiline',
-    ],
-    'eqeqeq': 'off',
-    'space-before-function-paren': [
+    eqeqeq: 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
       'error',
       {
-        'anonymous': 'always',
-        'named': 'never',
-        'asyncArrow': 'always',
+        args: 'after-used',
       },
     ],
-    'object-curly-spacing': [
-      'error',
-      'never',
-    ],
-    'operator-linebreak': [
-      'error',
-      'before',
-    ],
-    'semi': [
-      'error',
-      'always',
-    ],
-    'yoda': [
+    yoda: [
       'error',
       'always',
       {
-        'exceptRange': true,
-        'onlyEquality': true,
+        exceptRange: true,
+        onlyEquality: true,
       },
     ],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -64,5 +48,12 @@ module.exports = {
         jest: true,
       },
     },
-  ]
+    {
+      files: ['*.js'],
+      rules: {
+        'no-unused-vars': 2,
+        '@typescript-eslint/no-unused-vars': 'off',
+      },
+    },
+  ],
 };

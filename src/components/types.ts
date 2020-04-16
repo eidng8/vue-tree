@@ -15,7 +15,7 @@ export interface G8TreeItem {
    * Intermediate check box state. Active while some of the children were
    * checked, but not all were checked.
    */
-  ints?: boolean;
+  intermediate?: boolean;
 
   rendered?: boolean;
 
@@ -32,7 +32,7 @@ export interface G8TreeItemTag {
   hint?: string;
 }
 
-export type G8ClickEvent = string;
+export type G8ClickEvent = string | number;
 
 export type G8TagClickEvent = {
   node: number | string;
@@ -43,4 +43,4 @@ export type G8TagClickEvent = {
 export type G8StateChangeEvent = {
   node: number | string;
   state: boolean;
-}
+};
