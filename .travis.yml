@@ -26,13 +26,13 @@ script:
   - cat ./coverage/lcov.info | coveralls
   - npm run test:e2e
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT || echo code climate error is ignored.
 
 before_deploy:
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(node -p "require('./package.json').version")-$(date +'%Y.%m.%d')-$(git log --format=%h -1)}
   - echo ${TRAVIS_TAG}
-  - "if [[ ${TAGGED} != 1 ]]; then git tag ${TRAVIS_TAG} && export TAGGED=1; fi"
-  - "if [[ ! -e dist ]]; then npm run build && export PACKAGE=$(npm pack --silent); fi"
+  - 'if [[ ${TAGGED} != 1 ]]; then git tag ${TRAVIS_TAG} && export TAGGED=1; fi'
+  - 'if [[ ! -e dist ]]; then npm run build && export PACKAGE=$(npm pack --silent); fi'
 deploy:
   - provider: releases
     skip_cleanup: true
