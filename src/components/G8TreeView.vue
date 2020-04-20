@@ -14,27 +14,30 @@
     >
       <span class="g8-tree__toggle"></span>
       <span
-        class="g8-tree__checker"
-        :class="{ 'g8-tree__checked': checked, 'g8-tree__checked_some': ints }"
         v-if="checker"
-        @click.stop="setState(!checked)"
+        class="g8-tree__checker"
+        @click.stop="setState(!item.checked)"
+        :class="{
+          'g8-tree__checked': item.checked,
+          'g8-tree__checked_some': item.intermediate,
+        }"
       ></span>
-      <span class="g8-tree__node_label_text">{{ item.name }}</span>
+      <span class="g8-tree__node_label_text">{{ item[itemLabel] }}</span>
       <span class="g8-tree__node_tags">
         <label
           class="g8-tree__node_tag"
-          v-for="(tag, idx) in item.tags"
+          v-for="(tag, idx) in item[tagsKey]"
           :key="idx"
-          :title="tag.hint"
-          @click.stop="tagClicked(tag.key, idx)"
-          @dblclick.stop="tagDblClicked(tag.key, idx)"
-          >{{ tag.label }}</label
+          :title="tag[tagHint]"
+          @click.stop="tagClicked(tag, idx)"
+          @dblclick.stop="tagDblClicked(tag, idx)"
+          >{{ tag[tagLabel] }}</label
         >
       </span>
     </div>
     <ul v-if="expanded || item.rendered" class="g8-tree__branch">
       <g8-tree-view
-        v-for="(child, index) in item.children"
+        v-for="(child, index) in item[childrenKey]"
         :key="index"
         :item="child"
         :checker="checker"
@@ -50,7 +53,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { G8StateChangeEvent, G8TreeItem } from './types';
+import { G8TreeItem, G8TreeItemTag } from './types';
 
 /**
  * A tree view component with stable DOM structure. Stable means its structure
@@ -63,8 +66,24 @@ import { G8StateChangeEvent, G8TreeItem } from './types';
  */
 @Component({ name: 'g8-tree-view' })
 export default class G8TreeView extends Vue {
+  @Prop({ default: 'name' }) itemLabel!: string;
+
+  @Prop({ default: 'tags' }) tagsKey!: string;
+
+  @Prop({ default: 'children' }) childrenKey!: string;
+
+  @Prop({ default: 'label' }) tagLabel!: string;
+
+  @Prop({ default: 'hint' }) tagHint!: string;
+
   /**
-   * The tree data to be rendered.
+   * The tree data to be rendered. Please note that data passed ***may*** be
+   * mutated by this component to reflect various state of tree nodes. Mutated
+   * fields include:
+   *
+   * * checked
+   * * intermediate
+   * * rendered
    */
   @Prop() item!: G8TreeItem;
 
@@ -72,7 +91,7 @@ export default class G8TreeView extends Vue {
    * Whether to add a checkbox before each item, allowing multiple nodes to
    * be checked.
    */
-  @Prop() checker!: boolean;
+  @Prop({ default: false }) checker!: boolean;
 
   /**
    * Whether the node is expanded.
@@ -80,21 +99,11 @@ export default class G8TreeView extends Vue {
   expanded = false;
 
   /**
-   * Whether the node is checked.
-   */
-  checked = false;
-
-  /**
-   * Intermediate check box state. Active while some of the children were
-   * checked, but not all were checked.
-   */
-  ints = false;
-
-  /**
    * Whether the current node has any child.
    */
-  get hasChild() {
-    return this.item.children && this.item.children.length;
+  get hasChild(): boolean {
+    const children = this.item[this.childrenKey] as G8TreeItem[] | null;
+    return children != null && children.length > 0;
   }
 
   /**
@@ -104,13 +113,13 @@ export default class G8TreeView extends Vue {
    * @param state
    */
   setState(state: boolean) {
-    this.item.checked = this.checked = state;
+    this.item.checked = state;
     this.$children.forEach(c => (c as G8TreeView).setState(state));
     /**
      * Checkbox state of the node has changed.
      * @param {G8StateChangeEvent} state
      */
-    this.$emit('state-changed', { node: this.item.key, state: this.checked });
+    this.$emit('state-changed', this.item);
   }
 
   /**
@@ -126,7 +135,7 @@ export default class G8TreeView extends Vue {
      * A tree node has been clicked.
      * @param {G8ClickEvent} key the item's `key`
      */
-    this.$emit('click', this.item.key);
+    this.$emit('click', this.item);
   }
 
   /**
@@ -137,7 +146,7 @@ export default class G8TreeView extends Vue {
      * A tree node has been double clicked.
      * @param {G8ClickEvent} key the item's `key`
      */
-    this.$emit('dblclick', this.item.key);
+    this.$emit('dblclick', this.item);
   }
 
   /**
@@ -145,12 +154,12 @@ export default class G8TreeView extends Vue {
    * @param tag
    * @param index
    */
-  tagClicked(tag: number | string, index: number) {
+  tagClicked(tag: G8TreeItemTag, index: number) {
     /**
      * A tree node tag has been clicked.
      * @param {G8TagClickEvent} key
      */
-    this.$emit('tag-clicked', { node: this.item.key, tag, index });
+    this.$emit('tag-clicked', { node: this.item, tag, index });
   }
 
   /**
@@ -159,28 +168,31 @@ export default class G8TreeView extends Vue {
    * @param tag
    * @param index
    */
-  tagDblClicked(tag: number | string, index: number) {
+  tagDblClicked(tag: G8TreeItemTag, index: number) {
     /**
      * A tree node tag has been double clicked.
      * @param {G8TagClickEvent} key
      */
-    this.$emit('tag-dbl-clicked', { node: this.item.key, tag, index });
+    this.$emit('tag-dbl-clicked', {
+      node: this.item,
+      tag,
+      index,
+    });
   }
 
   /**
    * Handles `state-changed` events emitted by children, updating the check
    * state of current node according. This method also bubbles up the
    * `state-changed` event.
-   * @param evt
+   * @param node
    */
-  childrenStateChanged(evt: G8StateChangeEvent) {
+  childrenStateChanged(node: G8TreeItem) {
     let checked = 0;
     const children: G8TreeItem[] = this.item.children as G8TreeItem[];
     for (const child of children) {
       if (child.intermediate) {
         this.item.intermediate = true;
-        this.ints = true;
-        this.$emit('state-changed', evt);
+        this.$emit('state-changed', node);
         return;
       }
       if (child.checked) {
@@ -188,20 +200,15 @@ export default class G8TreeView extends Vue {
       }
     }
     if (children.length == checked) {
-      this.ints = false;
-      this.checked = true;
       this.item.intermediate = false;
       this.item.checked = true;
     } else if (0 == checked) {
-      this.ints = false;
-      this.checked = false;
       this.item.intermediate = false;
       this.item.checked = false;
     } else {
-      this.ints = true;
       this.item.intermediate = true;
     }
-    this.$emit('state-changed', evt);
+    this.$emit('state-changed', node);
   }
 }
 </script>

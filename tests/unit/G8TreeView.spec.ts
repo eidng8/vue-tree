@@ -4,38 +4,27 @@
  * Author: eidng8
  */
 
-import {mount, shallowMount} from '@vue/test-utils';
-import {G8TreeView} from '../../src';
+import { mount, shallowMount } from '@vue/test-utils';
+import { G8TreeView } from '../../src';
 
 const tree = {
   item: {
-    key: 'root',
     name: 'root name',
-    tags: [{key: 'root tag', label: 'root label'}],
+    tags: [{ label: 'root label' }],
     children: [
       {
-        key: 'item-1',
         name: 'item 1',
-        tags: [
-          {key: 1, label: 'tag1.1'},
-          {key: 1, label: 'tag1.2'},
-        ],
+        tags: [{ label: 'tag1.1' }, { label: 'tag1.2' }],
       },
       {
-        key: 'item-2',
         name: 'item 2',
-        tags: [{key: 2, label: 'tag1.1'}],
+        tags: [{ label: 'tag1.1' }],
         children: [
           {
-            key: 'item-2.1',
             name: 'item 2.1',
-            tags: [
-              {key: '2.1.1', label: 'tag2.1.1'},
-              {key: '2.1.2', label: 'tag2.1.2'},
-            ],
+            tags: [{ label: 'tag2.1.1' }, { label: 'tag2.1.2' }],
           },
           {
-            key: 'item-2.2',
             name: 'item 2.2',
           },
         ],
@@ -49,39 +38,37 @@ describe('Tree View', () => {
     expect.assertions(6);
     let propsData = {
       item: {
-        key: 'Hello',
         name: 'name',
-        tags: [{key: 1, label: 'tag1'}],
+        tags: [{ label: 'tag1' }],
       },
     };
-    let wrapper = shallowMount(G8TreeView, {propsData});
-    expect(wrapper.props('item'))
-      .toEqual({key: 'Hello', name: 'name', tags: [{key: 1, label: 'tag1'}]});
-    expect(wrapper.find('.g8-tree__node_label_text').text())
-      .toBe('name');
-    expect(wrapper.find('.g8-tree__node_tag').text())
-      .toBe('tag1');
+    let wrapper = shallowMount(G8TreeView, { propsData });
+    expect(wrapper.props('item')).toEqual({
+      name: 'name',
+      tags: [{ label: 'tag1' }],
+    });
+    expect(wrapper.find('.g8-tree__node_label_text').text()).toBe('name');
+    expect(wrapper.find('.g8-tree__node_tag').text()).toBe('tag1');
 
     propsData = {
       item: {
-        key: 'wow',
         name: 'signal',
-        tags: [{key: 2, label: 'tag2'}],
+        tags: [{ label: 'tag2' }],
       },
     };
-    wrapper = shallowMount(G8TreeView, {propsData});
-    expect(wrapper.props('item'))
-      .toEqual({key: 'wow', name: 'signal', tags: [{key: 2, label: 'tag2'}]});
-    expect(wrapper.find('.g8-tree__node_label_text').text())
-      .toBe('signal');
-    expect(wrapper.find('.g8-tree__node_tag').text())
-      .toBe('tag2');
+    wrapper = shallowMount(G8TreeView, { propsData });
+    expect(wrapper.props('item')).toEqual({
+      name: 'signal',
+      tags: [{ label: 'tag2' }],
+    });
+    expect(wrapper.find('.g8-tree__node_label_text').text()).toBe('signal');
+    expect(wrapper.find('.g8-tree__node_tag').text()).toBe('tag2');
   });
 
   it('expends/collapses and renders branches on click', async () => {
     expect.assertions(11);
     // initially no branch were expanded nor rendered
-    const wrapper = mount(G8TreeView, {propsData: tree});
+    const wrapper = mount(G8TreeView, { propsData: tree });
     expect(wrapper.find('.g8-tree__node_expended').exists()).toBeFalsy();
     expect(wrapper.findAll('.g8-tree__branch').length).toBe(0);
     expect(wrapper.findAll('.g8-tree__node_label_text').length).toBe(1);
@@ -109,48 +96,56 @@ describe('Tree View', () => {
   });
 
   it('emits click events', async () => {
-    expect.assertions(1);
-    const wrapper = mount(G8TreeView, {propsData: tree});
+    expect.assertions(3);
+    const wrapper = mount(G8TreeView, { propsData: tree });
     wrapper.find('.g8-tree__node_label').trigger('click');
     await wrapper.vm.$nextTick();
-    expect(wrapper.emitted('click')).toEqual([['root']]);
+    const emitted = wrapper.emitted('click');
+    expect(emitted).toBeInstanceOf(Array);
+    expect(emitted.length).toBe(1);
+    expect(emitted[0][0]).toBe(tree.item);
   });
 
   it('emits double click events', async () => {
-    expect.assertions(1);
-    const wrapper = mount(G8TreeView, {propsData: tree});
+    expect.assertions(3);
+    const wrapper = mount(G8TreeView, { propsData: tree });
     wrapper.find('.g8-tree__node_label').trigger('dblclick');
     await wrapper.vm.$nextTick();
-    expect(wrapper.emitted('dblclick')).toEqual([['root']]);
+    const emitted = wrapper.emitted('dblclick');
+    expect(emitted).toBeInstanceOf(Array);
+    expect(emitted.length).toBe(1);
+    expect(emitted[0][0]).toBe(tree.item);
   });
 
   it('emits tag click events', async () => {
-    expect.assertions(1);
-    const wrapper = mount(G8TreeView, {propsData: tree});
+    expect.assertions(6);
+    const wrapper = mount(G8TreeView, { propsData: tree });
     wrapper.findAll('.g8-tree__node_tag').trigger('click');
     await wrapper.vm.$nextTick();
-    expect(wrapper.emitted('tag-clicked')).toEqual([
-      [{node: 'root', tag: 'root tag', index: 0}],
-      [{node: 'item-1', tag: 1, index: 0}],
-      [{node: 'item-1', tag: 1, index: 1}],
-      [{node: 'item-2', tag: 2, index: 0}],
-      [{node: 'item-2.1', tag: '2.1.1', index: 0}],
-      [{node: 'item-2.1', tag: '2.1.2', index: 1}],
-    ]);
+    const emitted = wrapper.emitted('tag-clicked');
+    expect(emitted).toBeInstanceOf(Array);
+    expect(emitted.length).toBe(6);
+    expect(emitted[0][0]).toBe(tree.item.children[0].tags[0]);
+    expect(emitted[1][0]).toBe(tree.item.children[0].tags[1]);
+    expect(emitted[2][0]).toBe(tree.item.children[1].tags[1]);
+    // @ts-ignore
+    expect(emitted[2][0]).toBe(tree.item.children[1].children[0].tags[0]);
+    // @ts-ignore
+    expect(emitted[2][0]).toBe(tree.item.children[1].children[0].tags[1]);
   });
 
   it('emits tag double click events', async () => {
     expect.assertions(1);
-    const wrapper = mount(G8TreeView, {propsData: tree});
+    const wrapper = mount(G8TreeView, { propsData: tree });
     wrapper.findAll('.g8-tree__node_tag').trigger('dblclick');
     await wrapper.vm.$nextTick();
     expect(wrapper.emitted('tag-dbl-clicked')).toEqual([
-      [{node: 'root', tag: 'root tag', index: 0}],
-      [{node: 'item-1', tag: 1, index: 0}],
-      [{node: 'item-1', tag: 1, index: 1}],
-      [{node: 'item-2', tag: 2, index: 0}],
-      [{node: 'item-2.1', tag: '2.1.1', index: 0}],
-      [{node: 'item-2.1', tag: '2.1.2', index: 1}],
+      [{ node: 'root', tag: 'root tag', index: 0 }],
+      [{ node: 'item-1', tag: 1, index: 0 }],
+      [{ node: 'item-1', tag: 1, index: 1 }],
+      [{ node: 'item-2', tag: 2, index: 0 }],
+      [{ node: 'item-2.1', tag: '2.1.1', index: 0 }],
+      [{ node: 'item-2.1', tag: '2.1.2', index: 1 }],
     ]);
   });
 
@@ -158,7 +153,7 @@ describe('Tree View', () => {
     expect.assertions(1);
     const data = JSON.parse(JSON.stringify(tree));
     data.checker = true;
-    const wrapper = mount(G8TreeView, {propsData: data});
+    const wrapper = mount(G8TreeView, { propsData: data });
     // check root node = checks all
     wrapper.find('.g8-tree__checker').trigger('click');
     await wrapper.vm.$nextTick();
@@ -169,27 +164,29 @@ describe('Tree View', () => {
     expect.assertions(1);
     const data = JSON.parse(JSON.stringify(tree));
     data.checker = true;
-    const wrapper = mount(G8TreeView, {propsData: data});
+    const wrapper = mount(G8TreeView, { propsData: data });
     // check 2nd branch = set root to intermediate state
     const checkers = wrapper.findAll('.g8-tree__checker');
     checkers.at(1).trigger('click');
     await wrapper.vm.$nextTick();
-    expect(wrapper.find('.g8-tree__checker').classes())
-      .toContain('g8-tree__checked_some');
+    expect(wrapper.find('.g8-tree__checker').classes()).toContain(
+      'g8-tree__checked_some',
+    );
   });
 
   it('toggles parent intermediate check state 2', async () => {
     expect.assertions(2);
     const data = JSON.parse(JSON.stringify(tree));
     data.checker = true;
-    const wrapper = mount(G8TreeView, {propsData: data});
+    const wrapper = mount(G8TreeView, { propsData: data });
     wrapper.find('.g8-tree__checker').trigger('click');
     // uncheck 2nd branch = set root to intermediate state
     const checkers = wrapper.findAll('.g8-tree__checker');
     checkers.at(1).trigger('click');
     await wrapper.vm.$nextTick();
-    expect(wrapper.find('.g8-tree__checker').classes())
-      .toContain('g8-tree__checked_some');
+    expect(wrapper.find('.g8-tree__checker').classes()).toContain(
+      'g8-tree__checked_some',
+    );
     expect(wrapper.findAll('.g8-tree__checked').length).toBe(4);
   });
 
@@ -197,7 +194,7 @@ describe('Tree View', () => {
     expect.assertions(6);
     const data = JSON.parse(JSON.stringify(tree));
     data.checker = true;
-    const wrapper = mount(G8TreeView, {propsData: data});
+    const wrapper = mount(G8TreeView, { propsData: data });
     const checkers = wrapper.findAll('.g8-tree__checker');
     // check last node = set root & 2nd branch to intermediate
     checkers.at(checkers.length - 1).trigger('click');
