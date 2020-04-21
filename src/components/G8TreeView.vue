@@ -16,10 +16,10 @@
       <span
         v-if="checker"
         class="g8-tree__checker"
-        @click.stop="setState(!item.checked)"
+        @click.stop="setState(!checked)"
         :class="{
-          'g8-tree__checked': item.checked,
-          'g8-tree__checked_some': item.intermediate,
+          'g8-tree__checked': checked,
+          'g8-tree__checked_some': intermediate,
         }"
       ></span>
       <span class="g8-tree__node_label_text">{{ item[itemLabel] }}</span>
@@ -77,6 +77,12 @@ export default class G8TreeView extends Vue {
   @Prop({ default: 'hint' }) tagHint!: string;
 
   /**
+   * Whether to add a checkbox before each item, allowing multiple nodes to
+   * be checked.
+   */
+  @Prop({ default: false }) checker!: boolean;
+
+  /**
    * The tree data to be rendered. Please note that data passed ***may*** be
    * mutated by this component to reflect various state of tree nodes. Mutated
    * fields include:
@@ -88,15 +94,22 @@ export default class G8TreeView extends Vue {
   @Prop() item!: G8TreeItem;
 
   /**
-   * Whether to add a checkbox before each item, allowing multiple nodes to
-   * be checked.
-   */
-  @Prop({ default: false }) checker!: boolean;
-
-  /**
    * Whether the node is expanded.
    */
   expanded = false;
+
+  /**
+   * Whether the node is checked. This must be a member field in order for
+   * binding to work.
+   */
+  checked = false;
+
+  /**
+   * Intermediate check box state. Active while some of the children were
+   * checked, but not all were checked. This must be a member field in order for
+   * binding to work.
+   */
+  intermediate = false;
 
   /**
    * Whether the current node has any child.
@@ -106,6 +119,15 @@ export default class G8TreeView extends Vue {
     return children != null && children.length > 0;
   }
 
+  // noinspection JSUnusedGlobalSymbols
+  /**
+   * Vue life cycle hook {@link https://vuejs.org/v2/api/#created}.
+   */
+  created() {
+    this.checked = true == this.item.checked;
+    this.intermediate = true == this.item.intermediate;
+  }
+
   /**
    * Handles the click event of checkboxes. Sets whether the current node is
    * checked. Also set propagates the state to all immediate children.
@@ -113,8 +135,18 @@ export default class G8TreeView extends Vue {
    * @param state
    */
   setState(state: boolean) {
-    this.item.checked = state;
-    this.$children.forEach(c => (c as G8TreeView).setState(state));
+    this.checked = this.item.checked = state;
+    if (this.$children && this.$children.length) {
+      // descend to all descendant sub-components and update their states,
+      // also triggers their `state-changed` event.
+      this.$children.forEach(c => {
+        (c as G8TreeView).setState(state);
+      });
+    } else if (this.item.children && this.item.children.length) {
+      // descend to all descendant's data and update their states,
+      // this is necessary because sub-components have not been created yet.
+      this.item.children.forEach(c => (c.checked = state));
+    }
     /**
      * Checkbox state of the node has changed.
      * @param {G8StateChangeEvent} state
@@ -191,7 +223,7 @@ export default class G8TreeView extends Vue {
     const children: G8TreeItem[] = this.item.children as G8TreeItem[];
     for (const child of children) {
       if (child.intermediate) {
-        this.item.intermediate = true;
+        this.intermediate = this.item.intermediate = true;
         this.$emit('state-changed', node);
         return;
       }
@@ -200,12 +232,17 @@ export default class G8TreeView extends Vue {
       }
     }
     if (children.length == checked) {
+      this.intermediate = false;
       this.item.intermediate = false;
+      this.checked = true;
       this.item.checked = true;
     } else if (0 == checked) {
+      this.intermediate = false;
       this.item.intermediate = false;
+      this.checked = false;
       this.item.checked = false;
     } else {
+      this.intermediate = true;
       this.item.intermediate = true;
     }
     this.$emit('state-changed', node);

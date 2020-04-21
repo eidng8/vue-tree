@@ -11,13 +11,13 @@
       <g8-tree-view
         checker="1"
         :item="item"
-        @click="itemClicked = $event"
-        @dblclick="itemDblClicked = $event"
+        @click="itemClicked = $event.name"
+        @dblclick="itemDblClicked = $event.name"
         @tag-clicked="
-          tagClicked = `${$event.node},${$event.tag},${$event.index}`
+          tagClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
         "
         @tag-dbl-clicked="
-          tagDblClicked = `${$event.node},${$event.tag},${$event.index}`
+          tagDblClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
         "
       ></g8-tree-view>
     </ul>
@@ -52,18 +52,18 @@ export default class App extends Vue {
   tagDblClicked = '';
 
   populate() {
-    const total = 1000;
+    const total = 100;
     this.item = {
       key: 'root',
       name: 'root name',
-      tags: [{ key: 'root tag', label: 'root label' }],
+      tags: [{ label: 'root label' }],
       children: [],
     };
     for (let i = 1; i < total; i++) {
       const child: G8TreeItem = {
         key: `key-${i}`,
         name: `name ${i}`,
-        tags: [{ key: `tag-${i}`, label: `tag ${i}` }],
+        tags: [{ label: `tag ${i}` }],
         children: [],
       };
       for (let j = 1; j < total; j++) {
@@ -71,7 +71,7 @@ export default class App extends Vue {
         child.children!.push({
           key: `key-${i}.${j}`,
           name: `name ${i}.${j}`,
-          tags: [{ key: `tag-${i}.${j}`, label: `tag ${i}.${j}` }],
+          tags: [{ label: `tag ${i}.${j}` }],
         });
       }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

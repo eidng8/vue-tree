@@ -11,7 +11,7 @@ export interface G8TreeItem {
   /**
    * Just to allow accessing data via index syntax.
    */
-  [key: string]: any;
+  [key: string]: unknown;
 
   /**
    * Item name, serves as label, will be rendered as node label.
