@@ -4,11 +4,11 @@
  * Author: eidng8
  */
 
-import { shallowMount } from '@vue/test-utils';
+import { mount, shallowMount } from '@vue/test-utils';
 import { G8TreeView } from '../../src';
 
 describe('Tree View props', () => {
-  it('renders props', () => {
+  it('renders using default props', () => {
     expect.assertions(3);
     const propsData = {
       item: {
@@ -55,5 +55,40 @@ describe('Tree View props', () => {
     expect(wrapper.findAll('.g8-tree__node').length).toBe(1);
     expect(wrapper.findAll('.g8-tree__node_tag').length).toBe(1);
     expect(wrapper.find('.g8-tree__branch').exists()).toBeFalsy();
+  });
+
+  it('renders using custom props', async () => {
+    expect.assertions(4);
+    const propsData = {
+      itemLabel: 'text',
+      tagsKey: 'badges',
+      childrenKey: 'sub',
+      tagLabel: 'text',
+      tagHint: 'tip',
+      item: {
+        text: 'node1',
+        badges: [{ text: 'tag1', tip: 'tip1' }],
+        sub: [
+          {
+            text: 'node1.1',
+            badges: [{ text: 'tag1.1' }],
+            sub: [{ text: 'node1.1.1' }],
+          },
+          {
+            text: 'node1.2',
+            badges: [{ text: 'tag1.2' }],
+          },
+        ],
+      },
+    };
+    const wrapper = mount(G8TreeView, { propsData });
+    expect(wrapper.props('item')).toEqual(propsData.item);
+    expect(wrapper.find('.g8-tree__node_label_text').text()).toBe('node1');
+    expect(wrapper.find('.g8-tree__node_tag').attributes('title')).toBe('tip1');
+    wrapper.find('.g8-tree__node_label').trigger('click');
+    await wrapper.vm.$nextTick();
+    expect(
+      wrapper.find('.g8-tree__branch .g8-tree__node_label_text').text(),
+    ).toBe('node1.1');
   });
 });

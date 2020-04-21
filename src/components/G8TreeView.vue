@@ -41,6 +41,11 @@
         :key="index"
         :item="child"
         :checker="checker"
+        :item-label="itemLabel"
+        :tags-key="tagsKey"
+        :children-key="childrenKey"
+        :tag-label="tagLabel"
+        :tag-hint="tagHint"
         @click="$emit('click', $event)"
         @dblclick="$emit('dblclick', $event)"
         @state-changed="childrenStateChanged($event)"
@@ -66,14 +71,29 @@ import { G8TreeItem, G8TreeItemTag } from './types';
  */
 @Component({ name: 'g8-tree-view' })
 export default class G8TreeView extends Vue {
+  /**
+   * Key of the field in `item` that holds node label.
+   */
   @Prop({ default: 'name' }) itemLabel!: string;
 
+  /**
+   * Key of the field in `item` that holds tags array.
+   */
   @Prop({ default: 'tags' }) tagsKey!: string;
 
+  /**
+   * Key of the field in `item` that holds child nodes array.
+   */
   @Prop({ default: 'children' }) childrenKey!: string;
 
+  /**
+   * Key of the field in tags list of `item` that holds tag label.
+   */
   @Prop({ default: 'label' }) tagLabel!: string;
 
+  /**
+   * Key of the field in tags list of `item` that holds tag tooltip.
+   */
   @Prop({ default: 'hint' }) tagHint!: string;
 
   /**
