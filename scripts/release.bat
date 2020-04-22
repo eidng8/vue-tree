@@ -14,7 +14,9 @@ git reset --hard --quiet
 git clean -fdx --quiet
 git pull
 bash.exe -lc github_changelog_generator
+node scripts\make-release-note.js
 git add CHANGELOG.md
+git add RELEASE.md
 git commit -m "update changelog [ci skip]"
 git push
 
