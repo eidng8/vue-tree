@@ -11,6 +11,7 @@ if not "%BRANCH%"=="master" (
 )
 
 git reset --hard --quiet
+git clean -fdx --quiet
 git pull
 bash.exe -lc github_changelog_generator
 git add CHANGELOG.md
