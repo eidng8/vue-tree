@@ -17,15 +17,12 @@ jobs:
   include:
     - addons:
         chrome: stable
-        firefox: latest-esr
-    - os: osx
-      addons:
-        chrome: stable
-        firefox: latest-esr
+    #- os: osx
+    #  addons:
+    #    chrome: stable
     - os: windows
       addons:
         chrome: stable
-        firefox: latest-esr
 
 cache:
   directories:

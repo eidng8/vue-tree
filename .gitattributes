@@ -1,0 +1,8 @@
+###################################################
+# normalize line endings
+###################################################
+*	text=auto
+
+# windows files
+*.bat   eol=crlf
+*.cmd   eol=crlf
