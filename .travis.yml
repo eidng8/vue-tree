@@ -21,7 +21,15 @@ jobs:
         - npm install
       script:
         - npm run test:unit
-        - npm run test:e2e
+
+    - stage: test
+      os: osx
+      addons:
+        chrome: stable
+      install:
+        - npm install
+      script:
+        - npm run test:unit
 
     - stage: test
       os: linux
@@ -45,7 +53,8 @@ jobs:
         - ./cc-test-reporter after-build --exit-code ${TRAVIS_TEST_RESULT}
 
     - stage: deploy
-      if: branch = master AND os = linux
+      if: branch = master
+      os: linux
       install:
         - npm install
       script:
@@ -63,7 +72,8 @@ jobs:
           tags: true
 
     - stage: deploy
-      if: branch = master AND os = linux
+      if: branch = master
+      os: linux
       script: skip
       deploy:
         provider: npm
