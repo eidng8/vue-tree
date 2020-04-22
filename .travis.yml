@@ -54,9 +54,9 @@ jobs:
 
     - stage: deploy
       os: linux
-      install:
+      script: skip
+      before_deploy:
         - npm install
-      script:
         - npm install --no-save @bundle-analyzer/webpack-plugin
         - npm run build
         - export PACKAGE=$(npm pack --silent)
