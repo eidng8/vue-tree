@@ -1,6 +1,8 @@
 @ECHO OFF
 SETLOCAL EnableDelayedExpansion
 
+set CWD=%cd%
+
 cd /d "%~dp0"
 cd ..
 
@@ -31,6 +33,8 @@ goto END
 
 :ERR
 pause
+cd "%CWD%"
 exit 1
 
 :END
+cd "%CWD%"
