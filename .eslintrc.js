@@ -4,6 +4,20 @@
  * Author: eidng8
  */
 
+const rules = {
+  eqeqeq: 'off',
+  yoda: [
+    'error',
+    'always',
+    {
+      exceptRange: true,
+      onlyEquality: true,
+    },
+  ],
+  'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+  'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+};
+
 module.exports = {
   root: true,
   env: {
@@ -13,19 +27,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
   },
-  rules: {
-    eqeqeq: 'off',
-    yoda: [
-      'error',
-      'always',
-      {
-        exceptRange: true,
-        onlyEquality: true,
-      },
-    ],
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-  },
+  rules,
   overrides: [
     {
       files: [
@@ -37,15 +39,14 @@ module.exports = {
       },
     },
     {
-      files: ['*.{tsx?,vue}'],
+      files: ['*.{ts?(x),vue}'],
       extends: [
         'plugin:vue/essential',
         '@vue/standard',
         '@vue/typescript/recommended',
         'plugin:prettier/recommended',
       ],
-      rules: {
-        eqeqeq: 'off',
+      rules: Object.assign({}, rules, {
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': [
           'error',
@@ -53,17 +54,7 @@ module.exports = {
             args: 'after-used',
           },
         ],
-        yoda: [
-          'error',
-          'always',
-          {
-            exceptRange: true,
-            onlyEquality: true,
-          },
-        ],
-        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-      },
+      }),
     },
   ],
 };
