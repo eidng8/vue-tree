@@ -48,7 +48,9 @@ function updateReleaseNotes(log) {
   // extract current version log to release notes
   const match = /## \[.+?## \[/ms.exec(log)[0];
   const note = path.resolve(path.join(__dirname, '../RELEASE.md'));
-  fs.writeFileSync(note, match.substr(0, match.length - 4), {
+  const text =
+    `# Release version ${version}\n\n` + match.substr(0, match.length - 4);
+  fs.writeFileSync(note, text, {
     encoding: 'utf-8',
     flag: 'w+',
   });

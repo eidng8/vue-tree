@@ -25,7 +25,7 @@ for /f "tokens=*" %%v in ('node scripts\make-release-note.js') do set version=%%
 git add CHANGELOG.md || goto ERR
 git add RELEASE.md || goto ERR
 git commit -m "Release %VERSION%" || goto ERR
-git tag -s --file=RELEASE.md "%VERSION%"
+git tag -s --file=RELEASE.md "Release-v%VERSION%"
 git push --follow-tags || goto ERR
 
 goto END
