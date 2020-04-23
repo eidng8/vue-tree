@@ -6,7 +6,7 @@ branches:
   only:
     - master
     - dev
-    - /Release v\d+\.\d+\.\d+/
+    - /Release-v\d+\.\d+\.\d+/
 
 cache:
   directories:
