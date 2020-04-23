@@ -9,24 +9,12 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: [
-    'plugin:vue/essential',
-    '@vue/standard',
-    '@vue/typescript/recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['plugin:prettier/recommended'],
   parserOptions: {
     ecmaVersion: 2020,
   },
   rules: {
     eqeqeq: 'off',
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        args: 'after-used',
-      },
-    ],
     yoda: [
       'error',
       'always',
@@ -49,11 +37,31 @@ module.exports = {
       },
     },
     {
-      files: ['*.js'],
+      files: ['*.{tsx?,vue}'],
+      extends: [
+        'plugin:vue/essential',
+        '@vue/standard',
+        '@vue/typescript/recommended',
+        'plugin:prettier/recommended',
+      ],
       rules: {
-        'no-unused-vars': 2,
-        '@typescript-eslint/no-unused-vars': 'off',
-        '@typescript-eslint/no-var-requires': 'off',
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': [
+          'error',
+          {
+            args: 'after-used',
+          },
+        ],
+        yoda: [
+          'error',
+          'always',
+          {
+            exceptRange: true,
+            onlyEquality: true,
+          },
+        ],
+        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
       },
     },
   ],
