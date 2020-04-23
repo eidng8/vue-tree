@@ -10,6 +10,9 @@ if exist release rd /s /q release
 mkdir release
 cd release
 git clone --branch master "https://github.com/eidng8/vue-tree.git"
+cd vue-tree
+git config user.email "cheung.jackey@gmail.com"
+git config user.name eidng8
 
 set RELEASE=%1
 if "%RELEASE%"=="" set RELEASE=patch
@@ -28,13 +31,13 @@ goto END
 
 :ERR
 echo Error occurred!
-cd ..
+cd ..\..
 rd /s /q release
 cd "%CWD%"
 pause
 exit 1
 
 :END
-cd ..
+cd ..\..
 rd /s /q release
 cd "%CWD%"
