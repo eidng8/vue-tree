@@ -144,8 +144,8 @@ export default class G8TreeView extends Vue {
    * Vue life cycle hook {@link https://vuejs.org/v2/api/#created}.
    */
   created() {
-    this.checked = true == this.item.checked;
-    this.intermediate = true == this.item.intermediate;
+    this.checked = this.item.checked as boolean;
+    this.intermediate = this.item.intermediate as boolean;
   }
 
   /**
