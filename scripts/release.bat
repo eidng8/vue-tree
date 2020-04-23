@@ -6,7 +6,7 @@ set CWD=%cd%
 cd /d "%~dp0"
 cd ..
 
-for /f %%i in ('git rev-parse --abbrev-ref HEAD') do set BRANCH=%%i
+for /f %%t in ('git rev-parse --abbrev-ref HEAD') do set BRANCH=%%t
 if not "%BRANCH%"=="master" (
   echo You are not on master branch.
   goto ERR
@@ -18,10 +18,10 @@ git pull || goto ERR
 
 set RELEASE=%1
 if "%RELEASE%"=="" set RELEASE=patch
-npm --no-git-tag-version version "%RELEASE%" || goto ERR
+call npm --no-git-tag-version version "%RELEASE%" || goto ERR
 
 bash.exe -lc github_changelog_generator || goto ERR
-FOR /F "tokens=*" %%F IN ('node scripts\make-release-note.js') DO SET VERSION=%%F
+for /f "tokens=*" %%v in ('node scripts\make-release-note.js') do set version=%%v
 git add CHANGELOG.md || goto ERR
 git add RELEASE.md || goto ERR
 git commit -m "Release %VERSION%" || goto ERR
