@@ -4,40 +4,30 @@
  * Author: eidng8
  */
 
+const rules = {
+  eqeqeq: 'off',
+  yoda: [
+    'error',
+    'always',
+    {
+      exceptRange: true,
+      onlyEquality: true,
+    },
+  ],
+  'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+  'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+};
+
 module.exports = {
   root: true,
   env: {
     node: true,
   },
-  extends: [
-    'plugin:vue/essential',
-    '@vue/standard',
-    '@vue/typescript/recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['plugin:prettier/recommended'],
   parserOptions: {
     ecmaVersion: 2020,
   },
-  rules: {
-    eqeqeq: 'off',
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        args: 'after-used',
-      },
-    ],
-    yoda: [
-      'error',
-      'always',
-      {
-        exceptRange: true,
-        onlyEquality: true,
-      },
-    ],
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-  },
+  rules,
   overrides: [
     {
       files: [
@@ -49,12 +39,22 @@ module.exports = {
       },
     },
     {
-      files: ['*.js'],
-      rules: {
-        'no-unused-vars': 2,
-        '@typescript-eslint/no-unused-vars': 'off',
-        '@typescript-eslint/no-var-requires': 'off',
-      },
+      files: ['*.{ts?(x),vue}'],
+      extends: [
+        'plugin:vue/essential',
+        '@vue/standard',
+        '@vue/typescript/recommended',
+        'plugin:prettier/recommended',
+      ],
+      rules: Object.assign({}, rules, {
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': [
+          'error',
+          {
+            args: 'after-used',
+          },
+        ],
+      }),
     },
   ],
 };
