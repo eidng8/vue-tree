@@ -48,8 +48,13 @@ function updateReleaseNotes(log) {
   // extract current version log to release notes
   const match = /## \[.+?## \[/ms.exec(log)[0];
   const note = path.resolve(path.join(__dirname, '../RELEASE.md'));
-  const text =
-    `# Release version ${version}\n\n` + match.substr(0, match.length - 4);
+  const text = `# Vue-Tree v${version}
+
+A Vue tree view component with stable DOM structure.
+Released under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
+
+
+${match.substr(0, match.length - 4)}`;
   fs.writeFileSync(note, text, {
     encoding: 'utf-8',
     flag: 'w+',

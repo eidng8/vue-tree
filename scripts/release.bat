@@ -6,22 +6,18 @@ set CWD=%cd%
 cd /d "%~dp0"
 cd ..
 
-for /f %%t in ('git rev-parse --abbrev-ref HEAD') do set BRANCH=%%t
-if not "%BRANCH%"=="master" (
-  echo You are not on master branch.
-  goto ERR
-)
-
-git reset --hard --quiet origin || goto ERR
-git clean -fdx --quiet || goto ERR
-git pull || goto ERR
+if exist release rd /s /q release
+mkdir release
+cd release
+git clone --branch master "https://github.com/eidng8/vue-tree.git"
 
 set RELEASE=%1
 if "%RELEASE%"=="" set RELEASE=patch
 call npm --no-git-tag-version version "%RELEASE%" || goto ERR
 
 bash.exe -lc github_changelog_generator || goto ERR
-for /f "tokens=*" %%v in ('node scripts\make-release-note.js') do set version=%%v
+for /f "tokens=*" %%v in ('node scripts\make-release-note.js') do set VERSION=%%v
+
 git add . || goto ERR
 git commit -m "Release %VERSION%" || goto ERR
 git tag --sign --file=RELEASE.md "Release-v%VERSION%"
@@ -31,9 +27,14 @@ goto END
 
 
 :ERR
-pause
+echo Error occurred!
+cd ..
+rd /s /q release
 cd "%CWD%"
+pause
 exit 1
 
 :END
+cd ..
+rd /s /q release
 cd "%CWD%"
