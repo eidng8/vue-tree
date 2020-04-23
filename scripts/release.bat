@@ -13,16 +13,17 @@ if not "%BRANCH%"=="master" (
 git reset --hard --quiet || goto ERR
 git clean -fdx --quiet || goto ERR
 git pull || goto ERR
-bash.exe -lc github_changelog_generator || goto ERR
-node scripts\make-release-note.js || goto ERR
-git add CHANGELOG.md || goto ERR
-git add RELEASE.md || goto ERR
-git commit -m "update changelog [ci skip]" || goto ERR
-git push || goto ERR
 
 set RELEASE=%1
 if "%RELEASE%"=="" set RELEASE=patch
-npm version "%RELEASE%" || goto ERR
+npm --no-git-tag-version version "%RELEASE%" || goto ERR
+
+bash.exe -lc github_changelog_generator || goto ERR
+FOR /F "tokens=*" %%F IN ('node scripts\make-release-note.js') DO SET VERSION=%%F
+git add CHANGELOG.md || goto ERR
+git add RELEASE.md || goto ERR
+git commit -m "Release %VERSION%" || goto ERR
+git tag -s --file=RELEASE.md "%VERSION%"
 git push --follow-tags || goto ERR
 
 goto END

@@ -1,4 +1,5 @@
 user=eidng8
 project=vue-tree
-unreleased=false
-since-tag=0.0.25-2020.04.16-4b5ea82
+issues-wo-labels=false
+pr-wo-labels=false
+configure-sections={"enhancements":{"prefix":"#### Implemented enhancements","labels":["enhancement"]},"features":{"prefix":"#### Implemented features","labels":["feature"]},"bugs":{"prefix":"#### Fixed bugs","labels":["bug"]},"documentation":{"prefix":"#### Improved documentation","labels":["documentation"]}}
