@@ -1,4 +1,8 @@
-# Release version 0.0.26
+# Vue-Tree v0.0.26
+
+A Vue tree view component with stable DOM structure.
+Released under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
+
 
 ## [0.0.26](https://github.com/eidng8/vue-tree/tree/0.0.26) (2020-04-23 UTC)
 
