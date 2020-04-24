@@ -97,18 +97,3 @@ declare type G8TagClickEvent = {
    */
   index: number;
 };
-
-/**
- * The node and its new checkbox state
- */
-declare type G8StateChangeEvent = {
-  /**
-   * The item's `key`
-   */
-  node: number | string;
-
-  /**
-   * Whether it is checked
-   */
-  state: boolean;
-};

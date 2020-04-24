@@ -8,8 +8,10 @@ A Vue tree view component with stable DOM structure. By stable, it means the DOM
 
 The DOM structure of this component doesn't change once rendered. Comparing to others using `v-if`, which generate sub-nodes while expanded. While working on long list of items, lags will be obvious.
 
-- This component will have a lag when once it is being rendered. After it is rendered, sub-trees are controlled by CSS, no DOM structure happens.
+- This component will have a lag when it is being rendered for the first time. After it is rendered, sub-trees are controlled by CSS, no DOM structure change.
 - `v-if` components will lag whenever sub-trees are expanded, every time they are expanded.
+
+There is an [issue](https://github.com/eidng8/vue-tree/issues/24) for this. Check out more detail there.
 
 ## Theming
 
@@ -21,7 +23,7 @@ The bundled style sheet can be imported from `'g8-vue-tree/dist/g8-vue-tree.css'
 </ul>
 ```
 
-If you want to change the color of the component, just defined two variables before importing the scss file.
+If you want to change the color of the component, just define two variables before importing the scss file.
 
 ```scss
 /* index.scss */
@@ -35,17 +37,55 @@ $g8-tree-fg: #333;
 
 ## Props
 
-| Prop name | Description | Type | Values | Default |
-| --- | --- | --- | --- | --- |
-| item | The tree data to be rendered. | G8TreeItem | - |  |
-| checker | Whether to add a checkbox before each item, allowing multiple nodes to<br>be checked. | boolean | - | false |
+| Prop name | Description | Type | Default |
+| --- | --- | :-: | :-: |
+| itemLabel | Key of the field in `item` that holds node label. | string | 'name' |
+| tagsKey | Key of the field in `item` that holds tags array. | string | 'tags' |
+| childrenKey | Key of the field in `item` that holds child nodes array. | string | 'children' |
+| tagLabel | Key of the field in tags list of `item` that holds tag label. | string | 'label' |
+| tagHint | Key of the field in tags list of `item` that holds tag tooltip. | string | 'hint' |
+| handleRightClick <a id="handleRightClick"></a> | Whether to intercept right mouse click. | boolean | false |
+| checker | Whether to add a checkbox before each item,<br>allowing multiple nodes tobe checked. | boolean | false |
+| item | The tree data to be rendered.<br>Please note that data passed **_may_** be mutated by this<br>component to reflect various states of tree nodes.<br>Mutated fields include:<br>- checked<br>- intermediate<br>- rendered | [G8TreeItem](#G8TreeItem) |  |
 
 ## Events
 
 | Event name | Type | Description |
-| --- | --- | --- |
-| click | G8ClickEvent | A tree node has been clicked. |
-| dblclick | G8ClickEvent | A tree node has been double clicked. |
-| tag-clicked | G8TagClickEvent | A tree node tag has been clicked. |
-| tag-dbl-clicked | G8TagClickEvent | A tree node tag has been double clicked. |
-| state-changed | G8StateChangeEvent | Checkbox state of the node has changed. |
+| --- | :-: | --- |
+| click | [G8TreeItem](#G8TreeItem) | A tree node has been clicked. |
+| middle-click | [G8TreeItem](#G8TreeItem) | A tree node has been clicked with middle mouse button. |
+| right-click | [G8TreeItem](#G8TreeItem) | A tree node has been clicked with right mouse button.<br>Only available if [handleRightClick](#handleRightClick) is `true` |
+| dblclick | [G8TreeItem](#G8TreeItem) | A tree node has been double clicked. |
+| tag-click | [G8TagClickEvent](#G8TagClickEvent) | A tree node tag has been clicked. |
+| tag-middle-click | [G8TagClickEvent](#G8TagClickEvent) | A tree node tag has been clicked. |
+| tag-right-click | [G8TagClickEvent](#G8TagClickEvent) | A tree node has been clicked with right mouse button.<br>Only available if [handleRightClick](#handleRightClick) is `true` |
+| tag-dblclick | [G8TagClickEvent](#G8TagClickEvent) | A tree node tag has been double clicked. |
+| state-changed | [G8TreeItem](#G8TreeItem) | Checkbox state of the node has changed. |
+
+## Types
+
+#### G8TreeItem
+
+| Field name | Type | Description |
+| --- | :-: | --- |
+| name | string | Item name, serves as label, will be rendered as node label. |
+| checked | boolean | Whether current node is checked. |
+| intermediate | boolean | Intermediate check box state. Active while some of the children were checked, but not all. |
+| rendered | boolean | Whether the sub-tree of this node has been rendered. |
+| tags | [G8TreeItemTag](#G8TreeItemTag)\[] | List of tags. |
+| children | [G8TreeItem](#G8TreeItem)\[] | List of child nodes. |
+
+#### G8TreeItemTag
+
+| Field name |  Type  | Description                                        |
+| ---------- | :----: | -------------------------------------------------- |
+| label      | string | Tag label.                                         |
+| hint       | string | Tag tooltip. Visible when mouse hovers on the tag. |
+
+#### G8TagClickEvent
+
+| Field name | Type | Description |
+| --- | :-: | --- |
+| node | [G8TreeItem](#G8TreeItem) | Key of the node that triggered the event. |
+| tag | [G8TreeItemTag](#G8TreeItemTag) | The tag that triggered the event. |
+| index | number | Numeric index of the entry in the tag list. |
