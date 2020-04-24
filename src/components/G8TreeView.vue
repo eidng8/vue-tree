@@ -50,6 +50,7 @@
         :children-key="childrenKey"
         :tag-label="tagLabel"
         :tag-hint="tagHint"
+        :handle-right-click="handleRightClick"
         @click="$emit('click', $event)"
         @click.middle.stop="$emit('middle-click', $event)"
         @click.right="$emit('right-click', $event)"
