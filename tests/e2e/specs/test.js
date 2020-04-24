@@ -36,7 +36,7 @@ module.exports = {
       .click(rootLabel)
       .assert.cssClassPresent(root, 'g8-tree__node_expended')
       .assert // click event is fired
-      .value('#itemClicked', 'root name')
+      .containsText('#itemClicked', '[click] root name')
       .assert // check state is propagated from root node
       .cssClassPresent(`${label2}>.g8-tree__checker`, 'g8-tree__checked')
 
@@ -44,14 +44,14 @@ module.exports = {
       .click(label2)
       .assert.elementPresent('.g8-tree__branch .g8-tree__node_expended')
       .assert // click event is fired
-      .value('#itemClicked', 'name 2')
+      .containsText('#itemClicked', '[click] name 2')
 
       // double clicking won't collapse the node
       .moveToElement(rootLabel, 1, 1)
       .doubleClick()
       .assert.cssClassPresent(root, 'g8-tree__node_expended')
       .assert // double click event is fired
-      .value('#itemDblClicked', 'root name')
+      .containsText('#itemDblClicked', '[dblclick] root name')
 
       // root node's intermediate state changes to true, if child is unchecked
       .click(`${label2}>.g8-tree__checker`)
@@ -62,24 +62,24 @@ module.exports = {
 
       // click event is fired on leaf node
       .click(`${leaf} .g8-tree__node_label`)
-      .assert.value('#itemClicked', 'name 2.1')
+      .assert.containsText('#itemClicked', '[click] name 2.1')
 
       // double click event is fired on leaf node
       .moveToElement(`${leaf} .g8-tree__node_label`, 1, 1)
       .doubleClick()
       .assert // click event is fired
-      .value('#itemDblClicked', 'name 2.1')
+      .containsText('#itemDblClicked', '[dblclick] name 2.1')
 
       // click event is fired on leaf tag
       .click(`${leaf} .g8-tree__node_tag:last-child`)
       .assert // click event is fired
-      .value('#tagClicked', 'name 2.1,tag 2.1,0')
+      .containsText('#tagClicked', '[tag-click] name 2.1,tag 2.1,0')
 
       // double click event is fired on leaf tag
       .moveToElement(`${leaf} .g8-tree__node_tag`, 1, 1)
       .doubleClick()
       .assert // click event is fired
-      .value('#tagDblClicked', 'name 2.1,tag 2.1,0')
+      .containsText('#tagDblClicked', '[tag-dblclick] name 2.1,tag 2.1,0')
 
       // clicking the toggle collapses the node
       .click(rootLabel)
@@ -88,13 +88,13 @@ module.exports = {
       // click event is fired on root tag
       .click(`${rootLabel} .g8-tree__node_tag`)
       .assert // tag-click event is fired
-      .value('#tagClicked', 'root name,root label,0')
+      .containsText('#tagClicked', '[tag-click] root name,root label,0')
 
       // double click event is fired on root tag
       .moveToElement(`${rootLabel} .g8-tree__node_tag`, 1, 1)
       .doubleClick()
-      .assert // tag-dbl-click event is fired
-      .value('#tagDblClicked', 'root name,root label,0')
+      .assert // tag-dblclick event is fired
+      .containsText('#tagDblClicked', '[tag-dblclick] root name,root label,0')
 
       .end();
   },

@@ -6,25 +6,44 @@
 
 <template>
   <div id="app">
-    <button @click="populate()">populate tree</button>
-    <ul class="g8-tree-view g8-tree__highlight_hover">
-      <g8-tree-view
-        checker="1"
-        :item="item"
-        @click="itemClicked = $event.name"
-        @dblclick="itemDblClicked = $event.name"
-        @tag-clicked="
-          tagClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
-        "
-        @tag-dbl-clicked="
-          tagDblClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
-        "
-      ></g8-tree-view>
-    </ul>
-    <input id="itemClicked" :value="itemClicked" />
-    <input id="itemDblClicked" :value="itemDblClicked" />
-    <input id="tagClicked" :value="tagClicked" />
-    <input id="tagDblClicked" :value="tagDblClicked" />
+    <div>
+      <span id="itemClicked">[click] {{ itemClicked }}</span>
+      <span id="itemMiddleClicked">[middle-click] {{ itemMiddleClicked }}</span>
+      <span id="itemRightClicked">[right-click] {{ itemRightClicked }}</span>
+      <span id="itemDblClicked">[dblclick] {{ itemDblClicked }}</span>
+      <span id="tagClicked">[tag-click] {{ tagClicked }} </span>
+      <span id="tagMiddleClicked"
+        >[tag-middle-click] {{ tagMiddleClicked }}
+      </span>
+      <span id="tagRightClicked">[tag-right-click] {{ tagRightClicked }} </span>
+      <span id="tagDblClicked">[tag-dblclick] {{ tagDblClicked }}</span>
+    </div>
+    <div>
+      <button @click="populate()">populate tree</button>
+      <ul class="g8-tree-view g8-tree__highlight_hover">
+        <g8-tree-view
+          checker="1"
+          :item="item"
+          :handle-right-click="true"
+          @click="itemClicked = $event.name"
+          @middle-click="itemMiddleClicked = $event.name"
+          @right-click="itemRightClicked = $event.name"
+          @dblclick="itemDblClicked = $event.name"
+          @tag-click="
+            tagClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
+          "
+          @tag-middle-click="
+            tagMiddleClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
+          "
+          @tag-right-click="
+            tagRightClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
+          "
+          @tag-dblclick="
+            tagDblClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
+          "
+        ></g8-tree-view>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -45,9 +64,17 @@ export default class App extends Vue {
 
   itemClicked = '';
 
+  itemMiddleClicked = '';
+
+  itemRightClicked = '';
+
   itemDblClicked = '';
 
   tagClicked = '';
+
+  tagMiddleClicked = '';
+
+  tagRightClicked = '';
 
   tagDblClicked = '';
 
@@ -82,11 +109,32 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
+html,
+body {
+  margin: 0;
+  padding: 0 3px;
+  height: 100%;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+
+  > div:last-child {
+    flex: 1;
+    overflow: auto;
+  }
+}
+
+span[id] {
+  margin: 5px;
+  padding: 0 2px;
+  border: 1px solid;
+  display: inline-block;
 }
 </style>

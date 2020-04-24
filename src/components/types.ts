@@ -30,7 +30,7 @@ export interface G8TreeItem {
   intermediate?: boolean;
 
   /**
-   * Whether the immediate sub-tree of this node has been rendered.
+   * Whether the sub-tree of this node has been rendered.
    */
   rendered?: boolean;
 
@@ -61,31 +61,21 @@ export interface G8TreeItemTag {
 }
 
 /**
- * Mouse click event of tree node
- */
-export type G8ClickEvent = string | number;
-
-/**
  * Mouse click event of tag
  */
 export type G8TagClickEvent = {
   /**
    * Key of the node that triggered the event.
    */
-  node: number | string;
+  node: G8TreeItem;
 
   /**
-   * Key of the tag that triggered the event.
+   * The tag that triggered the event.
    */
-  tag: number | string;
+  tag: G8TreeItemTag;
 
   /**
-   * Numeric index of the item in the tag list.
+   * Numeric index of the entry in the tag list.
    */
   index: number;
 };
-
-/**
- * Tree node state changed event
- */
-export type G8StateChangeEvent = G8TreeItem;

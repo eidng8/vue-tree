@@ -10,6 +10,8 @@
       class="g8-tree__node_label"
       :class="{ 'g8-tree__branch_label': hasChild }"
       @click.stop="clicked()"
+      @click.middle.stop="middleClicked()"
+      @click.right="rightClicked($event)"
       @dblclick.stop="dblClicked()"
     >
       <span class="g8-tree__toggle"></span>
@@ -30,6 +32,8 @@
           :key="idx"
           :title="tag[tagHint]"
           @click.stop="tagClicked(tag, idx)"
+          @click.middle.stop="tagMiddleClicked(tag, idx)"
+          @click.right="tagRightClicked($event, tag, idx)"
           @dblclick.stop="tagDblClicked(tag, idx)"
           >{{ tag[tagLabel] }}</label
         >
@@ -47,10 +51,14 @@
         :tag-label="tagLabel"
         :tag-hint="tagHint"
         @click="$emit('click', $event)"
+        @click.middle.stop="$emit('middle-click', $event)"
+        @click.right="$emit('right-click', $event)"
         @dblclick="$emit('dblclick', $event)"
         @state-changed="childrenStateChanged($event)"
-        @tag-clicked="$emit('tag-clicked', $event)"
-        @tag-dbl-clicked="$emit('tag-dbl-clicked', $event)"
+        @tag-click="$emit('tag-click', $event)"
+        @tag-middle-click="$emit('tag-middle-click', $event)"
+        @tag-right-click="$emit('tag-right-click', $event)"
+        @tag-dblclick="$emit('tag-dblclick', $event)"
       ></g8-tree-view>
     </ul>
   </li>
@@ -97,6 +105,11 @@ export default class G8TreeView extends Vue {
   @Prop({ default: 'hint' }) tagHint!: string;
 
   /**
+   * Whether to intercept right mouse click.
+   */
+  @Prop({ default: false }) handleRightClick!: boolean;
+
+  /**
    * Whether to add a checkbox before each item, allowing multiple nodes to
    * be checked.
    */
@@ -104,12 +117,12 @@ export default class G8TreeView extends Vue {
 
   /**
    * The tree data to be rendered. Please note that data passed ***may*** be
-   * mutated by this component to reflect various state of tree nodes. Mutated
+   * mutated by this component to reflect various states of tree nodes. Mutated
    * fields include:
    *
-   * * checked
-   * * intermediate
-   * * rendered
+   * - checked
+   * - intermediate
+   * - rendered
    */
   @Prop() item!: G8TreeItem;
 
@@ -169,7 +182,7 @@ export default class G8TreeView extends Vue {
     }
     /**
      * Checkbox state of the node has changed.
-     * @param {G8StateChangeEvent} state
+     * @param {G8TreeItem} state
      */
     this.$emit('state-changed', this.item);
   }
@@ -185,9 +198,36 @@ export default class G8TreeView extends Vue {
     }
     /**
      * A tree node has been clicked.
-     * @param {G8ClickEvent} key the item's `key`
+     * @param {G8TreeItem} item
      */
     this.$emit('click', this.item);
+  }
+
+  /**
+   * Handles middle click event of nodes, emitting the `middle-click` event.
+   */
+  middleClicked() {
+    /**
+     * A tree node has been clicked with middle mouse button.
+     * @param {G8TreeItem} item
+     */
+    this.$emit('middle-click', this.item);
+  }
+
+  /**
+   * Handles right click event of nodes, emitting the `right-click` event if
+   * needed.
+   */
+  rightClicked(event: MouseEvent) {
+    if (!this.handleRightClick) return;
+    event.preventDefault();
+    event.stopPropagation();
+    /**
+     * A tree node has been clicked with right mouse button. Only available if
+     * {@see handleRightClick} is `true`.
+     * @param {G8TreeItem} item
+     */
+    this.$emit('right-click', this.item);
   }
 
   /**
@@ -196,27 +236,55 @@ export default class G8TreeView extends Vue {
   dblClicked() {
     /**
      * A tree node has been double clicked.
-     * @param {G8ClickEvent} key the item's `key`
+     * @param {G8TreeItem} item
      */
     this.$emit('dblclick', this.item);
   }
 
   /**
-   * Handles double click event of tags, emitting the `tag-clicked` event.
+   * Handles double click event of tags, emitting the `tag-click` event.
    * @param tag
    * @param index
    */
   tagClicked(tag: G8TreeItemTag, index: number) {
     /**
      * A tree node tag has been clicked.
-     * @param {G8TagClickEvent} key
+     * @param {G8TagClickEvent} event
      */
-    this.$emit('tag-clicked', { node: this.item, tag, index });
+    this.$emit('tag-click', { node: this.item, tag, index });
   }
 
   /**
-   * Handles double click event of tags, emitting the `tag-dbl-clicked`
-   * event.
+   * Handles middle click event of tags, emitting the `tag-middle-click` event.
+   * @param tag
+   * @param index
+   */
+  tagMiddleClicked(tag: G8TreeItemTag, index: number) {
+    /**
+     * A tree node tag has been clicked.
+     * @param {G8TagClickEvent} event
+     */
+    this.$emit('tag-middle-click', { node: this.item, tag, index });
+  }
+
+  /**
+   * Handles right click event of tags, emitting the `tag-right-click` event if
+   * needed.
+   */
+  tagRightClicked(event: MouseEvent, tag: G8TreeItemTag, index: number) {
+    if (!this.handleRightClick) return;
+    event.preventDefault();
+    event.stopPropagation();
+    /**
+     * A tree node has been clicked with right mouse button.. Only available if
+     * {@see handleRightClick} is `true`.
+     * @param {G8TagClickEvent} event
+     */
+    this.$emit('tag-right-click', { node: this.item, tag, index });
+  }
+
+  /**
+   * Handles double click event of tags, emitting the `tag-dblclick` event.
    * @param tag
    * @param index
    */
@@ -225,7 +293,7 @@ export default class G8TreeView extends Vue {
      * A tree node tag has been double clicked.
      * @param {G8TagClickEvent} key
      */
-    this.$emit('tag-dbl-clicked', {
+    this.$emit('tag-dblclick', {
       node: this.item,
       tag,
       index,

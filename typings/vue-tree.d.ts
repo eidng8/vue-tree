@@ -5,7 +5,7 @@
  */
 
 import { Vue } from 'vue-property-decorator';
-import { G8StateChangeEvent, G8TreeItem } from '.';
+import { G8TreeItem } from '.';
 
 declare class G8TreeView extends Vue {
   /**
@@ -66,7 +66,7 @@ declare class G8TreeView extends Vue {
   tagClicked(tag: number | string, index: number): void;
 
   /**
-   * Handles double click event of tags, emitting the `tag-dbl-clicked`
+   * Handles double click event of tags, emitting the `tag-dblclicked`
    * event.
    * @param tag
    * @param index
@@ -79,5 +79,5 @@ declare class G8TreeView extends Vue {
    * `state-changed` event.
    * @param evt
    */
-  childrenStateChanged(evt: G8StateChangeEvent): void;
+  childrenStateChanged(evt: G8TreeItem): void;
 }

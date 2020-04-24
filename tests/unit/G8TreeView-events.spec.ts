@@ -52,6 +52,24 @@ describe('Tree View events', () => {
     expect(emitted[0][0]).toStrictEqual(propsData.item);
   });
 
+  it('emits middle click events', async () => {
+    expect.assertions(3);
+    wrapper.find('.g8-tree__node_label').trigger('mouseup', { button: 1 });
+    await wrapper.vm.$nextTick();
+    const emitted = wrapper.emitted('middle-click');
+    expect(emitted).toBeInstanceOf(Array);
+    expect(emitted.length).toBe(1);
+    expect(emitted[0][0]).toStrictEqual(propsData.item);
+  });
+
+  it('does not emit right click event', async () => {
+    expect.assertions(1);
+    wrapper.find('.g8-tree__node_label').trigger('contextmenu');
+    await wrapper.vm.$nextTick();
+    const emitted = wrapper.emitted('right-click');
+    expect(emitted).toBeUndefined();
+  });
+
   it('emits double click events', async () => {
     expect.assertions(3);
     wrapper.find('.g8-tree__node_label').trigger('dblclick');
@@ -67,7 +85,7 @@ describe('Tree View events', () => {
     const tags = wrapper.findAll('.g8-tree__node_tag');
     tags.trigger('click');
     await wrapper.vm.$nextTick();
-    const emitted = wrapper.emitted('tag-clicked');
+    const emitted = wrapper.emitted('tag-click');
     expect(emitted).toBeInstanceOf(Array);
     expect(emitted.length).toBe(1);
     expect(emitted[0][0].node).toStrictEqual(propsData.item);
@@ -75,11 +93,65 @@ describe('Tree View events', () => {
     expect(emitted[0][0].index).toStrictEqual(0);
   });
 
+  it('emits tag middle click events', async () => {
+    expect.assertions(5);
+    const tags = wrapper.findAll('.g8-tree__node_tag');
+    tags.trigger('mouseup', { button: 1 });
+    await wrapper.vm.$nextTick();
+    const emitted = wrapper.emitted('tag-middle-click');
+    expect(emitted).toBeInstanceOf(Array);
+    expect(emitted.length).toBe(1);
+    expect(emitted[0][0].node).toStrictEqual(propsData.item);
+    expect(emitted[0][0].tag).toStrictEqual(propsData.item.tags![0]);
+    expect(emitted[0][0].index).toStrictEqual(0);
+  });
+
+  it('does not emit tag right click events', async () => {
+    expect.assertions(1);
+    const tags = wrapper.findAll('.g8-tree__node_tag');
+    tags.trigger('contextmenu');
+    await wrapper.vm.$nextTick();
+    const emitted = wrapper.emitted('tag-right-click');
+    expect(emitted).toBeUndefined();
+  });
+
   it('emits tag double click events', async () => {
     expect.assertions(5);
     wrapper.findAll('.g8-tree__node_tag').trigger('dblclick');
     await wrapper.vm.$nextTick();
-    const emitted = wrapper.emitted('tag-dbl-clicked');
+    const emitted = wrapper.emitted('tag-dblclick');
+    expect(emitted).toBeInstanceOf(Array);
+    expect(emitted.length).toBe(1);
+    expect(emitted[0][0].node).toStrictEqual(propsData.item);
+    expect(emitted[0][0].tag).toStrictEqual(propsData.item.tags![0]);
+    expect(emitted[0][0].index).toStrictEqual(0);
+  });
+});
+
+describe('Tree View with right click turned on', () => {
+  beforeEach(() => {
+    propsData = JSON.parse(JSON.stringify(tree));
+    // @ts-ignore
+    propsData.handleRightClick = true;
+    wrapper = mount(G8TreeView, { propsData });
+  });
+
+  it('emits right click events', async () => {
+    expect.assertions(3);
+    wrapper.find('.g8-tree__node_label').trigger('contextmenu');
+    await wrapper.vm.$nextTick();
+    const emitted = wrapper.emitted('right-click');
+    expect(emitted).toBeInstanceOf(Array);
+    expect(emitted.length).toBe(1);
+    expect(emitted[0][0]).toStrictEqual(propsData.item);
+  });
+
+  it('emits tag right click events', async () => {
+    expect.assertions(5);
+    const tags = wrapper.findAll('.g8-tree__node_tag');
+    tags.trigger('contextmenu');
+    await wrapper.vm.$nextTick();
+    const emitted = wrapper.emitted('tag-right-click');
     expect(emitted).toBeInstanceOf(Array);
     expect(emitted.length).toBe(1);
     expect(emitted[0][0].node).toStrictEqual(propsData.item);
