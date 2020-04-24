@@ -63,7 +63,14 @@
         @tag-right-click="$emit('tag-right-click', $event)"
         @tag-dblclick="$emit('tag-dblclick', $event)"
         @state-changed="childrenStateChanged($event)"
-      ></g8-tree-view>
+      >
+        <template
+          v-for="slot in Object.keys($scopedSlots)"
+          :slot="slot"
+          slot-scope="scope"
+          ><slot :name="slot" v-bind="scope"
+        /></template>
+      </g8-tree-view>
     </ul>
   </li>
 </template>

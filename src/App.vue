@@ -42,14 +42,14 @@
             tagDblClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
           "
         >
-          <template v-slot="props">
-            <span :class="{ blue: !props.item.color }">
-              {{ props.item.name }} (default slot)
+          <template #default="{ item }">
+            <span :class="{ blue: !item.color }">
+              {{ item.name }} (default slot)
             </span>
           </template>
-          <template v-slot:tag="props">
-            <span :class="{ blue: !props.tag.color }">
-              {{ props.tag.label }} (tag slot)
+          <template #tag="{ tag }">
+            <span :class="{ blue: !tag.color }">
+              {{ tag.label }} (tag slot)
             </span>
           </template>
         </g8-tree-view>
@@ -102,7 +102,7 @@ export default class App extends Vue {
         key: `key-${i}`,
         name: `name ${i}`,
         color: i % 5,
-        tags: [{ color: i % 5 ? '' : 'blue', label: `tag ${i}` }],
+        tags: [{ color: i % 5, label: `tag ${i}` }],
         children: [],
       };
       for (let j = 1; j < total; j++) {
@@ -110,8 +110,8 @@ export default class App extends Vue {
         child.children!.push({
           key: `key-${i}.${j}`,
           name: `name ${i}.${j}`,
-
-          tags: [{ color: i % 5 ? '' : 'blue', label: `tag ${i}.${j}` }],
+          color: j % 5,
+          tags: [{ color: j % 5, label: `tag ${i}.${j}` }],
         });
       }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
