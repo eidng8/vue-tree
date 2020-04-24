@@ -11,7 +11,7 @@ The DOM structure of this component doesn't change once rendered. Comparing to o
 - This component will have a lag when it is being rendered for the first time. After it is rendered, sub-trees are controlled by CSS, no DOM structure change.
 - `v-if` components will lag whenever sub-trees are expanded, every time they are expanded.
 
-There is an [issue](#24) for this. Check out more detail there.
+There is an [issue](https://github.com/eidng8/vue-tree/issues/24) for this. Check out more detail there.
 
 ## Theming
 
