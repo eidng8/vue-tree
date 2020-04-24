@@ -1,8 +1,16 @@
 # Changelog
 
-## [0.0.26](https://github.com/eidng8/vue-tree/tree/0.0.26) (2020-04-23 UTC)
+## [0.0.27](https://github.com/eidng8/vue-tree/tree/0.0.27) (2020-04-24 UTC)
 
-[Full Changelog](https://github.com/eidng8/vue-tree/compare/0.0.25-2020.04.16-4b5ea82...0.0.26)
+[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.0.26...0.0.27)
+
+#### Implemented features
+
+- add middle & right click support [\#29](https://github.com/eidng8/vue-tree/issues/29)
+
+## [Release-v0.0.26](https://github.com/eidng8/vue-tree/tree/Release-v0.0.26) (2020-04-23)
+
+[Full Changelog](https://github.com/eidng8/vue-tree/compare/0.0.25-2020.04.16-4b5ea82...Release-v0.0.26)
 
 #### Implemented enhancements
 
