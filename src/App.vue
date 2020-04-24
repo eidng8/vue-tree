@@ -41,7 +41,18 @@
           @tag-dblclick="
             tagDblClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
           "
-        ></g8-tree-view>
+        >
+          <template v-slot="props">
+            <span :class="{ blue: !props.item.color }">
+              {{ props.item.name }} (default slot)
+            </span>
+          </template>
+          <template v-slot:tag="props">
+            <span :class="{ blue: !props.tag.color }">
+              {{ props.tag.label }} (tag slot)
+            </span>
+          </template>
+        </g8-tree-view>
       </ul>
     </div>
   </div>
@@ -90,7 +101,8 @@ export default class App extends Vue {
       const child: G8TreeItem = {
         key: `key-${i}`,
         name: `name ${i}`,
-        tags: [{ label: `tag ${i}` }],
+        color: i % 5,
+        tags: [{ color: i % 5 ? '' : 'blue', label: `tag ${i}` }],
         children: [],
       };
       for (let j = 1; j < total; j++) {
@@ -98,7 +110,8 @@ export default class App extends Vue {
         child.children!.push({
           key: `key-${i}.${j}`,
           name: `name ${i}.${j}`,
-          tags: [{ label: `tag ${i}.${j}` }],
+
+          tags: [{ color: i % 5 ? '' : 'blue', label: `tag ${i}.${j}` }],
         });
       }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -136,5 +149,9 @@ span[id] {
   padding: 0 2px;
   border: 1px solid;
   display: inline-block;
+}
+
+.blue {
+  color: blue;
 }
 </style>

@@ -24,7 +24,9 @@
           'g8-tree__checked_some': intermediate,
         }"
       ></span>
-      <span class="g8-tree__node_label_text">{{ item[itemLabel] }}</span>
+      <span class="g8-tree__node_label_text">
+        <slot :item="item">{{ item[itemLabel] }}</slot>
+      </span>
       <span class="g8-tree__node_tags">
         <label
           class="g8-tree__node_tag"
@@ -35,8 +37,9 @@
           @click.middle.stop="tagMiddleClicked(tag, idx)"
           @click.right="tagRightClicked($event, tag, idx)"
           @dblclick.stop="tagDblClicked(tag, idx)"
-          >{{ tag[tagLabel] }}</label
         >
+          <slot name="tag" :tag="tag">{{ tag[tagLabel] }}</slot>
+        </label>
       </span>
     </div>
     <ul v-if="expanded || item.rendered" class="g8-tree__branch">
@@ -54,11 +57,11 @@
         @click.middle.stop="$emit('middle-click', $event)"
         @click.right="$emit('right-click', $event)"
         @dblclick="$emit('dblclick', $event)"
-        @state-changed="childrenStateChanged($event)"
         @tag-click="$emit('tag-click', $event)"
         @tag-middle-click="$emit('tag-middle-click', $event)"
         @tag-right-click="$emit('tag-right-click', $event)"
         @tag-dblclick="$emit('tag-dblclick', $event)"
+        @state-changed="childrenStateChanged($event)"
       ></g8-tree-view>
     </ul>
   </li>

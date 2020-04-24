@@ -9,7 +9,7 @@
  */
 export interface G8TreeItem {
   /**
-   * Just to allow accessing data via index syntax.
+   * Just to allow accessing data via index syntax and arbitrary data to fit in.
    */
   [key: string]: unknown;
 
@@ -49,6 +49,11 @@ export interface G8TreeItem {
  * Node tag data
  */
 export interface G8TreeItemTag {
+  /**
+   * Just to allow accessing data via index syntax and arbitrary data to fit in.
+   */
+  [key: string]: unknown;
+
   /**
    * Tag label.
    */
