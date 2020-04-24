@@ -22,12 +22,16 @@ bash.exe -lc github_changelog_generator || goto ERR
 for /f "tokens=*" %%v in ('node scripts\make-release-note.js') do set VERSION=%%v
 
 git add . || goto ERR
-git commit -m "Release %VERSION%" || goto ERR
-git tag --sign --file=RELEASE.md "Release-v%VERSION%"
-rem Make sure the tag is pushed after the branch so Travis won't miss it
-rem even when auto cancel build is enabled
+git commit -m "Release %VERSION% [ci skip]" || goto ERR
 git push || goto ERR
+git tag --sign -m "%date%" "Release-v%VERSION%"
 git push --tags || goto ERR
+
+git checkout dev
+git merge master
+git commit -m "bring in %VERSION% [ci skip]"
+git push
+
 
 goto END
 
@@ -43,4 +47,5 @@ exit 1
 :END
 cd ..\..
 rd /s /q release
+git pull
 cd "%CWD%"
