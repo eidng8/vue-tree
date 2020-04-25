@@ -20,7 +20,7 @@
     </div>
     <div>
       <button @click="populate()">populate tree</button>
-      <ul class="g8-tree-view g8-tree__highlight_hover">
+      <ul class="g8-tree-view g8-tree__dark g8-tree__highlight_hover">
         <g8-tree-view
           checker="1"
           :item="item"
@@ -43,12 +43,12 @@
           "
         >
           <template #default="{ item }">
-            <span :class="{ blue: !item.color }">
+            <span :class="{ tint: !item.color }">
               {{ item.name }} (default slot)
             </span>
           </template>
           <template #tag="{ tag }">
-            <span :class="{ blue: !tag.color }">
+            <span :class="{ tint: !tag.color }">
               {{ tag.label }} (tag slot)
             </span>
           </template>
@@ -129,11 +129,18 @@ body {
   height: 100%;
 }
 
+html,
+body,
+button,
+#app {
+  color: #888888;
+  background: #333333;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -151,7 +158,7 @@ span[id] {
   display: inline-block;
 }
 
-.blue {
-  color: blue;
+.tint {
+  color: lightseagreen;
 }
 </style>
