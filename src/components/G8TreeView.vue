@@ -24,7 +24,9 @@
           'g8-tree__checked_some': intermediate,
         }"
       ></span>
-      <span class="g8-tree__node_label_text">{{ item[itemLabel] }}</span>
+      <span class="g8-tree__node_label_text">
+        <slot :item="item">{{ item[itemLabel] }}</slot>
+      </span>
       <span class="g8-tree__node_tags">
         <label
           class="g8-tree__node_tag"
@@ -35,8 +37,9 @@
           @click.middle.stop="tagMiddleClicked(tag, idx)"
           @click.right="tagRightClicked($event, tag, idx)"
           @dblclick.stop="tagDblClicked(tag, idx)"
-          >{{ tag[tagLabel] }}</label
         >
+          <slot name="tag" :tag="tag">{{ tag[tagLabel] }}</slot>
+        </label>
       </span>
     </div>
     <ul v-if="expanded || item.rendered" class="g8-tree__branch">
@@ -55,12 +58,19 @@
         @middle-click="$emit('middle-click', $event)"
         @right-click="$emit('right-click', $event)"
         @dblclick="$emit('dblclick', $event)"
-        @state-changed="childrenStateChanged($event)"
         @tag-click="$emit('tag-click', $event)"
         @tag-middle-click="$emit('tag-middle-click', $event)"
         @tag-right-click="$emit('tag-right-click', $event)"
         @tag-dblclick="$emit('tag-dblclick', $event)"
-      ></g8-tree-view>
+        @state-changed="childrenStateChanged($event)"
+      >
+        <template
+          v-for="slot in Object.keys($scopedSlots)"
+          :slot="slot"
+          slot-scope="scope"
+          ><slot :name="slot" v-bind="scope"
+        /></template>
+      </g8-tree-view>
     </ul>
   </li>
 </template>

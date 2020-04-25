@@ -20,7 +20,7 @@
     </div>
     <div>
       <button @click="populate()">populate tree</button>
-      <ul class="g8-tree-view g8-tree__highlight_hover">
+      <ul class="g8-tree-view g8-tree__dark g8-tree__highlight_hover">
         <g8-tree-view
           checker="1"
           :item="item"
@@ -41,7 +41,18 @@
           @tag-dblclick="
             tagDblClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
           "
-        ></g8-tree-view>
+        >
+          <template #default="{ item }">
+            <span :class="{ tint: !item.color }">
+              {{ item.name }} (default slot)
+            </span>
+          </template>
+          <template #tag="{ tag }">
+            <span :class="{ tint: !tag.color }">
+              {{ tag.label }} (tag slot)
+            </span>
+          </template>
+        </g8-tree-view>
       </ul>
     </div>
   </div>
@@ -90,7 +101,8 @@ export default class App extends Vue {
       const child: G8TreeItem = {
         key: `key-${i}`,
         name: `name ${i}`,
-        tags: [{ label: `tag ${i}` }],
+        color: i % 5,
+        tags: [{ color: i % 5, label: `tag ${i}` }],
         children: [],
       };
       for (let j = 1; j < total; j++) {
@@ -98,7 +110,8 @@ export default class App extends Vue {
         child.children!.push({
           key: `key-${i}.${j}`,
           name: `name ${i}.${j}`,
-          tags: [{ label: `tag ${i}.${j}` }],
+          color: j % 5,
+          tags: [{ color: j % 5, label: `tag ${i}.${j}` }],
         });
       }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -116,11 +129,18 @@ body {
   height: 100%;
 }
 
+html,
+body,
+button,
+#app {
+  color: #888888;
+  background: #333333;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -136,5 +156,9 @@ span[id] {
   padding: 0 2px;
   border: 1px solid;
   display: inline-block;
+}
+
+.tint {
+  color: lightseagreen;
 }
 </style>
