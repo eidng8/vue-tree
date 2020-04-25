@@ -65,22 +65,6 @@ export interface G8TreeItemTag {
   hint?: string;
 }
 
-/**
- * Mouse click event of tag
- */
-export type G8TagClickEvent = {
-  /**
-   * Key of the node that triggered the event.
-   */
-  node: G8TreeItem;
-
-  /**
-   * The tag that triggered the event.
-   */
-  tag: G8TreeItemTag;
-
-  /**
-   * Numeric index of the entry in the tag list.
-   */
-  index: number;
-};
+export class G8ClickEvent extends MouseEvent {
+  data?: unknown;
+}

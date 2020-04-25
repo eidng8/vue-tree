@@ -7,49 +7,29 @@
 <template>
   <div id="app">
     <div>
-      <span id="itemClicked">[click] {{ itemClicked }}</span>
-      <span id="itemMiddleClicked">[middle-click] {{ itemMiddleClicked }}</span>
-      <span id="itemRightClicked">[right-click] {{ itemRightClicked }}</span>
-      <span id="itemDblClicked">[dblclick] {{ itemDblClicked }}</span>
-      <span id="tagClicked">[tag-click] {{ tagClicked }} </span>
-      <span id="tagMiddleClicked"
-        >[tag-middle-click] {{ tagMiddleClicked }}
-      </span>
-      <span id="tagRightClicked">[tag-right-click] {{ tagRightClicked }} </span>
-      <span id="tagDblClicked">[tag-dblclick] {{ tagDblClicked }}</span>
+      <span id="itemClicked">{{ itemClicked }}</span>
+      <span id="tagClicked">{{ tagClicked }}</span>
     </div>
     <div>
       <button @click="populate()">populate tree</button>
       <ul class="g8-tree-view g8-tree__dark g8-tree__highlight_hover">
-        <g8-tree-view
-          checker="1"
-          :item="item"
-          :handle-right-click="true"
-          @click="itemClicked = $event.name"
-          @middle-click="itemMiddleClicked = $event.name"
-          @right-click="itemRightClicked = $event.name"
-          @dblclick="itemDblClicked = $event.name"
-          @tag-click="
-            tagClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
-          "
-          @tag-middle-click="
-            tagMiddleClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
-          "
-          @tag-right-click="
-            tagRightClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
-          "
-          @tag-dblclick="
-            tagDblClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
-          "
-        >
+        <g8-tree-view :item="item" :checker="true">
           <template #default="{ item }">
-            <span :class="{ tint: !item.color }">
-              {{ item.name }} (default slot)
+            <span
+              :id="item.key"
+              :class="{ tint: !item.tint }"
+              @click="itemClicked = item.name"
+            >
+              {{ item.name }}
             </span>
           </template>
           <template #tag="{ tag }">
-            <span :class="{ tint: !tag.color }">
-              {{ tag.label }} (tag slot)
+            <span
+              :id="tag.key"
+              :class="{ tint: !tag.tint }"
+              @click="tagClicked = tag.label"
+            >
+              {{ tag.label }}
             </span>
           </template>
         </g8-tree-view>
@@ -68,10 +48,12 @@ import { G8TreeItem, G8TreeView } from './';
   },
 })
 export default class App extends Vue {
-  item: G8TreeItem = {
+  item = {
     key: 'root',
     name: 'Click the button above to populate me.',
-  };
+  } as G8TreeItem;
+
+  tab = 1;
 
   itemClicked = '';
 
@@ -90,33 +72,34 @@ export default class App extends Vue {
   tagDblClicked = '';
 
   populate() {
-    const total = 100;
+    const total = 10;
     this.item = {
       key: 'root',
       name: 'root name',
       tags: [{ label: 'root label' }],
-      children: [],
+      cssClass: [''],
     };
+    const children = [];
     for (let i = 1; i < total; i++) {
       const child: G8TreeItem = {
         key: `key-${i}`,
         name: `name ${i}`,
-        color: i % 5,
-        tags: [{ color: i % 5, label: `tag ${i}` }],
-        children: [],
+        tint: i % 5,
+        tags: [{ tint: i % 5, key: `tag-${i}`, label: `tag ${i}` }],
       };
+      const sub = [];
       for (let j = 1; j < total; j++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        child.children!.push({
+        sub.push({
           key: `key-${i}.${j}`,
           name: `name ${i}.${j}`,
-          color: j % 5,
-          tags: [{ color: j % 5, label: `tag ${i}.${j}` }],
+          tint: j % 5,
+          tags: [{ tint: j % 5, key: `tag-${i}.${j}`, label: `tag ${i}.${j}` }],
         });
       }
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.item.children!.push(child);
+      child.children = sub;
+      children.push(child);
     }
+    this.item.children = children;
   }
 }
 </script>
@@ -149,13 +132,6 @@ button,
     flex: 1;
     overflow: auto;
   }
-}
-
-span[id] {
-  margin: 5px;
-  padding: 0 2px;
-  border: 1px solid;
-  display: inline-block;
 }
 
 .tint {

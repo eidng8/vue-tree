@@ -5,7 +5,7 @@
  */
 
 import G8TreeView from './components/G8TreeView.vue';
-import { G8TagClickEvent, G8TreeItem, G8TreeItemTag } from './components/types';
+import { G8TreeItem, G8TreeItemTag } from './components/types';
 import './components/tree-view.scss';
 
-export { G8TreeView, G8TreeItem, G8TreeItemTag, G8TagClickEvent };
+export { G8TreeView, G8TreeItem, G8TreeItemTag };
