@@ -51,7 +51,7 @@ describe('Tree View events', () => {
     expect(wrapper.find('.g8-tree__node .g8-tree__node').exists()).toBeFalsy();
     wrapper.find('.g8-tree__node_entry').trigger('click');
     await wrapper.vm.$nextTick();
-    expect(changed).toHaveBeenCalled();
+    expect(changed).toHaveBeenCalledTimes(1);
     const emitted = wrapper.emitted('click');
     expect(emitted).toBeInstanceOf(Array);
     expect(emitted.length).toBe(1);
@@ -74,11 +74,12 @@ describe('Tree View events', () => {
       } as ComponentOptions<any>,
       { provide: propsData },
     );
-    expect.assertions(4);
+    expect.assertions(5);
     expect(wrapper.find('.g8-tree__node .g8-tree__node').exists()).toBeFalsy();
     wrapper.find('.g8-tree__node_entry').trigger('click');
     await wrapper.vm.$nextTick();
-    expect(clicked).toHaveBeenCalledWith(
+    expect(clicked).toHaveBeenCalledTimes(1);
+    expect(clicked).toHaveBeenLastCalledWith(
       expect.objectContaining({ data: propsData.item }),
     );
     expect(wrapper.emitted('click')).toBeUndefined();
