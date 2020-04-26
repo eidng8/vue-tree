@@ -5,33 +5,38 @@
   -->
 
 <template>
-  <li class="g8-tree__node" :class="{ 'g8-tree__node_expended': expanded }">
+  <li
+    :id="item[itemId]"
+    class="g8-tree__node"
+    :class="{ 'g8-tree__node_expended': expanded }"
+  >
     <div
-      class="g8-tree__node_label"
+      class="g8-tree__node_entry"
       :class="{ 'g8-tree__branch_label': hasChild }"
       @click="clicked($event)"
     >
-      <span class="g8-tree__toggle"></span>
+      <span class="g8-tree__node_branch_toggle"></span>
       <span
         v-if="checker"
-        class="g8-tree__checker"
+        class="g8-tree__node_entry_checker"
         @click.stop.prevent="setState(!checked)"
         :class="{
-          'g8-tree__checked': checked,
-          'g8-tree__checked_some': intermediate,
+          'g8-tree__node_entry_checker_checked': checked,
+          'g8-tree__node_entry_checker_checked_some': intermediate,
         }"
       ></span>
-      <span class="g8-tree__node_label_text">
+      <span class="g8-tree__node_entry_label">
         <slot :item="item">{{ item[itemLabel] }}</slot>
       </span>
-      <span class="g8-tree__node_tags">
+      <span class="g8-tree__node_entry_tags">
         <label
-          class="g8-tree__node_tag"
+          class="g8-tree__node_entry_tags_tag"
           v-for="(tag, idx) in item[tagsKey]"
           :key="idx"
+          :id="tag[tagId]"
           :title="tag[tagHint]"
         >
-          <slot name="tag" :tag="tag">{{ tag[tagLabel] }}</slot>
+          <slot name="tag" :tag="tag" :item="item">{{ tag[tagLabel] }}</slot>
         </label>
       </span>
     </div>
@@ -41,11 +46,14 @@
         :key="index"
         :item="child"
         :checker="checker"
+        :item-id="itemId"
         :item-label="itemLabel"
         :tags-key="tagsKey"
         :children-key="childrenKey"
+        :tag-id="tagId"
         :tag-label="tagLabel"
         :tag-hint="tagHint"
+        @click="$emit('click', $event)"
         @state-changed="childrenStateChanged($event)"
       >
         <template
@@ -78,6 +86,11 @@ export default class G8TreeView extends Vue {
   /**
    * Key of the field in `item` that holds node label.
    */
+  @Prop({ default: 'id' }) itemId!: string;
+
+  /**
+   * Key of the field in `item` that holds node label.
+   */
   @Prop({ default: 'name' }) itemLabel!: string;
 
   /**
@@ -89,6 +102,11 @@ export default class G8TreeView extends Vue {
    * Key of the field in `item` that holds child nodes array.
    */
   @Prop({ default: 'children' }) childrenKey!: string;
+
+  /**
+   * Key of the field in tags list of `item` that holds tag label.
+   */
+  @Prop({ default: 'id' }) tagId!: string;
 
   /**
    * Key of the field in tags list of `item` that holds tag label.
@@ -166,10 +184,16 @@ export default class G8TreeView extends Vue {
       this.$children.forEach(c => {
         (c as G8TreeView).setState(state);
       });
-    } else if (this.item.children && this.item.children.length) {
+    } else if (
+      this.item[this.childrenKey] &&
+      (this.item[this.childrenKey] as G8TreeItem[]).length
+    ) {
       // descend to all descendant's data and update their states,
       // this is necessary because sub-components have not been created yet.
-      this.item.children.forEach(c => (c.checked = state));
+      this.walkItems(
+        this.item[this.childrenKey] as G8TreeItem[],
+        c => (c.checked = state),
+      );
     }
     /**
      * Checkbox state of the node has changed.
@@ -203,7 +227,7 @@ export default class G8TreeView extends Vue {
    */
   childrenStateChanged(node: G8TreeItem) {
     let checked = 0;
-    const children: G8TreeItem[] = this.item.children as G8TreeItem[];
+    const children: G8TreeItem[] = this.item[this.childrenKey] as G8TreeItem[];
     for (const child of children) {
       if (child.intermediate) {
         this.intermediate = this.item.intermediate = true;
@@ -229,6 +253,15 @@ export default class G8TreeView extends Vue {
       this.item.intermediate = true;
     }
     this.$emit('state-changed', node);
+  }
+
+  private walkItems(item: G8TreeItem[], cb: (entry: G8TreeItem) => void) {
+    item.forEach(entry => {
+      cb(entry);
+      if (entry[this.childrenKey]) {
+        this.walkItems(entry[this.childrenKey] as G8TreeItem[], cb);
+      }
+    });
   }
 }
 </script>

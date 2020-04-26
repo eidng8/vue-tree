@@ -16,7 +16,7 @@ export interface G8TreeItem {
   /**
    * Item name, serves as label, will be rendered as node label.
    */
-  name: string;
+  name?: string;
 
   /**
    * Whether current node is checked.
