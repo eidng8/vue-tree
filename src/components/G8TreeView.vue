@@ -84,7 +84,7 @@ import { G8ClickEvent, G8TreeItem } from './types';
 @Component({ name: 'g8-tree-view' })
 export default class G8TreeView extends Vue {
   /**
-   * Key of the field in `item` that holds node label.
+   * Key of the field in `item` to be used as element's `id` attribute.
    */
   @Prop({ default: 'id' }) itemId!: string;
 
@@ -104,7 +104,8 @@ export default class G8TreeView extends Vue {
   @Prop({ default: 'children' }) childrenKey!: string;
 
   /**
-   * Key of the field in tags list of `item` that holds tag label.
+   * Key of the field in tags list of `item` to be used as tag element's `id`
+   * attribute.
    */
   @Prop({ default: 'id' }) tagId!: string;
 
