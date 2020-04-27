@@ -105,6 +105,8 @@ This component defines only two events, for expanding/collapsing nodes, and chec
 
 ## Theming
 
+#### Colors
+
 The bundled style sheet can be imported from `'g8-vue-tree/dist/g8-vue-tree.css'`. This component provides a dark theme out of box. To use it, just add the `g8-tree__dark` class to the element.
 
 ```html
@@ -123,4 +125,14 @@ $g8-tree-bg: #ccc;
 $g8-tree-fg: #333;
 
 @import '~vue-tree/src/components/tree-view.scss';
+```
+
+#### Fonts
+
+This component deliberately left out `font-family` from CSS. You can use whatever font you like, just add something like below to you styles:
+
+```css
+.g8-tree-view {
+  font-family: 'you favorite font';
+}
 ```
