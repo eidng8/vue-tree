@@ -4,44 +4,55 @@
   - Author: eidng8
   -->
 
+<!--
+  - This is the E2E test page. Please make sure tests are updated accordingly.
+  -->
+
 <template>
   <div id="app">
-    <div>
-      <span id="itemClicked">[click] {{ itemClicked }}</span>
-      <span id="itemMiddleClicked">[middle-click] {{ itemMiddleClicked }}</span>
-      <span id="itemRightClicked">[right-click] {{ itemRightClicked }}</span>
-      <span id="itemDblClicked">[dblclick] {{ itemDblClicked }}</span>
-      <span id="tagClicked">[tag-click] {{ tagClicked }} </span>
-      <span id="tagMiddleClicked"
-        >[tag-middle-click] {{ tagMiddleClicked }}
-      </span>
-      <span id="tagRightClicked">[tag-right-click] {{ tagRightClicked }} </span>
-      <span id="tagDblClicked">[tag-dblclick] {{ tagDblClicked }}</span>
+    <div id="events">
+      <span id="itemClicked">{{ itemClicked }}</span>
+      <span id="tagClicked">{{ tagClicked }}</span>
+      <span id="stateChanged">{{ stateChanged }}</span>
     </div>
     <div>
-      <button @click="populate()">populate tree</button>
-      <ul class="g8-tree-view g8-tree__highlight_hover">
+      <button id="populate" @click="populate()">populate tree</button>
+      <ul class="g8-tree-view g8-tree__dark g8-tree__highlight_hover">
         <g8-tree-view
-          checker="1"
+          item-id="key"
+          item-label="text"
+          tags-key="badges"
+          children-key="nodes"
+          tag-id="key"
+          tag-label="text"
+          tag-hint="tip"
           :item="item"
-          :handle-right-click="true"
-          @click="itemClicked = $event.name"
-          @middle-click="itemMiddleClicked = $event.name"
-          @right-click="itemRightClicked = $event.name"
-          @dblclick="itemDblClicked = $event.name"
-          @tag-click="
-            tagClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
+          :checker="true"
+          @click="
+            itemClicked = `${$event.data.expanded ? '+' : '-'} ${
+              $event.data.item.text
+            }`
           "
-          @tag-middle-click="
-            tagMiddleClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
+          @state-changed="
+            stateChanged = `${$event.text},${
+              $event.checked ? 'checked' : 'unchecked'
+            }`
           "
-          @tag-right-click="
-            tagRightClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
-          "
-          @tag-dblclick="
-            tagDblClicked = `${$event.node.name},${$event.tag.label},${$event.index}`
-          "
-        ></g8-tree-view>
+        >
+          <template #default="{ item }">
+            <span :class="{ tint: !item.tint }">
+              {{ item.text }}
+            </span>
+          </template>
+          <template #tag="{ item, tag }">
+            <span
+              :class="{ tint: !tag.tint }"
+              @click.prevent.stop="tagClicked = `${item.text}, ${tag.text}`"
+            >
+              {{ tag.text }}
+            </span>
+          </template>
+        </g8-tree-view>
       </ul>
     </div>
   </div>
@@ -57,53 +68,54 @@ import { G8TreeItem, G8TreeView } from './';
   },
 })
 export default class App extends Vue {
-  item: G8TreeItem = {
+  item = {
     key: 'root',
-    name: 'Click the button above to populate me.',
-  };
+    text: 'Click the button above to populate me.',
+  } as G8TreeItem;
 
   itemClicked = '';
 
-  itemMiddleClicked = '';
-
-  itemRightClicked = '';
-
-  itemDblClicked = '';
-
   tagClicked = '';
 
-  tagMiddleClicked = '';
-
-  tagRightClicked = '';
-
-  tagDblClicked = '';
+  stateChanged = '';
 
   populate() {
-    const total = 100;
+    const total = 10;
     this.item = {
       key: 'root',
-      name: 'root name',
-      tags: [{ label: 'root label' }],
-      children: [],
+      text: 'root name',
+      badges: [{ text: 'root tag' }],
     };
+    const children = [];
     for (let i = 1; i < total; i++) {
       const child: G8TreeItem = {
         key: `key-${i}`,
-        name: `name ${i}`,
-        tags: [{ label: `tag ${i}` }],
-        children: [],
+        text: `name ${i}`,
+        tint: i % 5,
+        badges: [
+          { tint: i % 5, key: `tag-${i}`, text: `tag ${i}`, tip: `tip ${i}` },
+        ],
       };
+      const sub = [];
       for (let j = 1; j < total; j++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        child.children!.push({
-          key: `key-${i}.${j}`,
-          name: `name ${i}.${j}`,
-          tags: [{ label: `tag ${i}.${j}` }],
+        sub.push({
+          key: `key-${i}-${j}`,
+          text: `name ${i}.${j}`,
+          tint: j % 5,
+          badges: [
+            {
+              tint: j % 5,
+              key: `tag-${i}-${j}`,
+              text: `tag ${i}.${j}`,
+              tip: `tip ${i}.${j}`,
+            },
+          ],
         });
       }
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.item.children!.push(child);
+      child.nodes = sub;
+      children.push(child);
     }
+    this.item.nodes = children;
   }
 }
 </script>
@@ -116,11 +128,18 @@ body {
   height: 100%;
 }
 
+html,
+body,
+button,
+#app {
+  color: #888888;
+  background: #333333;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -131,10 +150,17 @@ body {
   }
 }
 
-span[id] {
-  margin: 5px;
-  padding: 0 2px;
-  border: 1px solid;
-  display: inline-block;
+#events {
+  padding: 2px;
+
+  > * {
+    margin: 0 3px;
+    padding: 0 2px;
+    border: solid 1px;
+  }
+}
+
+.tint {
+  color: lightseagreen;
 }
 </style>

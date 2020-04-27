@@ -4,98 +4,121 @@
  * Author: eidng8
  */
 
-const root = '.g8-tree-view>.g8-tree__node';
-const rootLabel = `${root}>.g8-tree__node_label`;
-const branch2 = `${root}>.g8-tree__branch`;
-const label2 = `${branch2}>.g8-tree__node:nth-child(2)>.g8-tree__node_label`;
-const leaf = '.g8-tree__branch .g8-tree__branch';
+const { labelSelector } = require('../helpers');
 
 module.exports = {
   'basic tests': browser => {
     browser
       .init()
       .waitForElementVisible('#app')
-      .assert // the tree view is rendered
-      .elementPresent('.g8-tree-view')
-      .assert // the root node's text is correct
-      .containsText(
-        '.g8-tree__node_label_text',
-        'Click the button above to populate me.',
-      )
 
-      // this button generates test data
-      .click('button')
-      .assert // root node's text has changed
-      .containsText('.g8-tree__node_label_text', 'root name')
+      // the tree view is rendered
+      .assert.elementPresent('.g8-tree-view')
+      // the root node's text is correct
+      .assert.containsOrMatches(
+        labelSelector('#root'),
+        /Click the button above to populate me\./i,
+      );
 
-      // root node's check state propagates to descendants
-      .click('.g8-tree__checker')
-      .assert.cssClassPresent('.g8-tree__checker', 'g8-tree__checked')
+    browser
+      // generates test data
+      .click('#populate')
+      // root node's text has changed
+      .assert.containsOrMatches(
+        labelSelector('#root'),
+        'root name',
+        '%s label has changed to %s',
+      );
 
-      // clicking the toggle expands the root
-      .click(rootLabel)
-      .assert.cssClassPresent(root, 'g8-tree__node_expended')
-      .assert // click event is fired
-      .containsText('#itemClicked', '[click] root name')
-      .assert // check state is propagated from root node
-      .cssClassPresent(`${label2}>.g8-tree__checker`, 'g8-tree__checked')
+    browser
+      // check root node
+      .clickChecker('#root')
+      .assert.checkerChecked('#root')
+      // state-changed event fired with correct parameters
+      .assert.containsOrMatches('#stateChanged', 'root name,checked');
 
-      // clicking the toggle expands the first branch
-      .click(label2)
-      .assert.elementPresent('.g8-tree__branch .g8-tree__node_expended')
-      .assert // click event is fired
-      .containsText('#itemClicked', '[click] name 2')
+    browser
+      // expands root node
+      .clickLabel('#root')
+      .assert.nodeExpanded('#root')
+      // click event is fired with correct parameters
+      .assert.containsOrMatches('#itemClicked', '+ root name')
+      // checking root also checks all descendants
+      .assert.checkerChecked('#key-1')
+      .assert.checkerChecked('#key-5')
+      .assert.checkerChecked('#key-9');
 
-      // double clicking won't collapse the node
-      .moveToElement(rootLabel, 1, 1)
-      .doubleClick()
-      .assert.cssClassPresent(root, 'g8-tree__node_expended')
-      .assert // double click event is fired
-      .containsText('#itemDblClicked', '[dblclick] root name')
+    browser
+      // expands the the 2nd node
+      .clickLabel('#key-2')
+      .assert.nodeExpanded('#key-2')
+      // click event is fired
+      .assert.containsOrMatches('#itemClicked', 'name 2')
+      // checking root also checks all descendants
+      .assert.checkerChecked('#key-2-1')
+      .assert.checkerChecked('#key-2-5')
+      .assert.checkerChecked('#key-2-9');
 
-      // root node's intermediate state changes to true, if child is unchecked
-      .click(`${label2}>.g8-tree__checker`)
-      .assert.cssClassPresent(
-        `${rootLabel}>.g8-tree__checker`,
-        'g8-tree__checked_some',
-      )
+    browser
+      // root node's intermediate state changes to true, if a child is unchecked
+      .clickChecker('#key-2')
+      .assert.checkerIntermediate('#root')
+      // unchecking a node unchecks all descendants
+      .assert.not.checkerChecked('#key-2')
+      .assert.not.checkerChecked('#key-2-3')
+      .assert.not.checkerChecked('#key-2-8')
+      // state-changed event fired with correct parameters
+      .assert.containsOrMatches('#stateChanged', 'name 2,unchecked');
 
+    browser
       // click event is fired on leaf node
-      .click(`${leaf} .g8-tree__node_label`)
-      .assert.containsText('#itemClicked', '[click] name 2.1')
+      .clickLabel('#key-2-1')
+      .assert.containsOrMatches('#itemClicked', 'name 2.1');
 
-      // double click event is fired on leaf node
-      .moveToElement(`${leaf} .g8-tree__node_label`, 1, 1)
-      .doubleClick()
-      .assert // click event is fired
-      .containsText('#itemDblClicked', '[dblclick] name 2.1')
-
+    browser
       // click event is fired on leaf tag
-      .click(`${leaf} .g8-tree__node_tag:last-child`)
-      .assert // click event is fired
-      .containsText('#tagClicked', '[tag-click] name 2.1,tag 2.1,0')
+      .clickTag('#tag-2-1')
+      .assert.containsOrMatches('#tagClicked', 'name 2.1, tag 2.1');
 
-      // double click event is fired on leaf tag
-      .moveToElement(`${leaf} .g8-tree__node_tag`, 1, 1)
-      .doubleClick()
-      .assert // click event is fired
-      .containsText('#tagDblClicked', '[tag-dblclick] name 2.1,tag 2.1,0')
+    browser
+      // unchecking root node unchecks all descendants
+      .clickChecker('#root')
+      .assert.not.checkerChecked('#root')
+      .assert.not.checkerChecked('#key-3')
+      .assert.not.checkerChecked('#key-9')
+      .assert.not.checkerChecked('#key-2-3')
+      .assert.not.checkerChecked('#key-2-9')
+      // state-changed event fired with correct parameters
+      .assert.containsOrMatches('#stateChanged', 'root name,unchecked');
 
+    browser
+      // checking a node checks all its descendants,
+      // and set's parent's intermediate state
+      .clickChecker('#key-1')
+      .clickLabel('#key-1')
+      .assert.checkerIntermediate('#root')
+      .assert.checkerChecked('#key-1-1')
+      .assert.checkerChecked('#key-1-3')
+      .assert.checkerChecked('#key-1-5')
+      .assert.checkerChecked('#key-1-9')
+      // state-changed event fired with correct parameters
+      .assert.containsOrMatches('#stateChanged', 'name 1,checked');
+
+    browser
       // clicking the toggle collapses the node
-      .click(rootLabel)
-      .assert.not.cssClassPresent(root, 'g8-tree__node_expended')
+      .clickLabel('#key-2')
+      .assert.not.nodeExpanded('#key-2')
+      // click event is fired with correct parameters
+      .assert.containsOrMatches('#itemClicked', '- name 2');
 
-      // click event is fired on root tag
-      .click(`${rootLabel} .g8-tree__node_tag`)
-      .assert // tag-click event is fired
-      .containsText('#tagClicked', '[tag-click] root name,root label,0')
+    // check if slot css class is applied
+    ['#root', '#key-1-5', '#key-5']
+      .map(i => labelSelector(i) + '>span')
+      .forEach(n => browser.assert.cssClassPresent(n, 'tint'));
+    ['#tag-2-5', '#tag-5']
+      .map(i => `${i}>span`)
+      .forEach(n => browser.assert.cssClassPresent(n, 'tint'));
 
-      // double click event is fired on root tag
-      .moveToElement(`${rootLabel} .g8-tree__node_tag`, 1, 1)
-      .doubleClick()
-      .assert // tag-dblclick event is fired
-      .containsText('#tagDblClicked', '[tag-dblclick] root name,root label,0')
-
-      .end();
+    browser.end();
   },
 };

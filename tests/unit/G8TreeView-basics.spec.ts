@@ -21,15 +21,15 @@ describe('Tree View props', () => {
       name: 'name',
       tags: [{ label: 'tag1' }],
     });
-    expect(wrapper.find('.g8-tree__node_label_text').text()).toBe('name');
-    expect(wrapper.find('.g8-tree__node_tag').text()).toBe('tag1');
+    expect(wrapper.find('.g8-tree__node_entry_label').text()).toBe('name');
+    expect(wrapper.find('.g8-tree__node_entry_tags_tag').text()).toBe('tag1');
   });
 
   it('defaults to have no checkbox', () => {
     expect.assertions(1);
     const propsData = { item: { name: 'signal' } };
     const wrapper = shallowMount(G8TreeView, { propsData });
-    expect(wrapper.find('.g8-tree__checker').exists()).toBeFalsy();
+    expect(wrapper.find('.g8-tree__node_entry_checker').exists()).toBeFalsy();
   });
 
   it('turns on checkbox rendering', () => {
@@ -39,7 +39,7 @@ describe('Tree View props', () => {
       item: { name: 'name' },
     };
     let wrapper = shallowMount(G8TreeView, { propsData });
-    expect(wrapper.find('.g8-tree__checker').exists()).toBeTruthy();
+    expect(wrapper.find('.g8-tree__node_entry_checker').exists()).toBeTruthy();
   });
 
   it('defaults to render only top level', () => {
@@ -53,16 +53,18 @@ describe('Tree View props', () => {
     };
     const wrapper = shallowMount(G8TreeView, { propsData });
     expect(wrapper.findAll('.g8-tree__node').length).toBe(1);
-    expect(wrapper.findAll('.g8-tree__node_tag').length).toBe(1);
+    expect(wrapper.findAll('.g8-tree__node_entry_tags_tag').length).toBe(1);
     expect(wrapper.find('.g8-tree__branch').exists()).toBeFalsy();
   });
 
   it('renders using custom props', async () => {
     expect.assertions(4);
     const propsData = {
+      itemId: 'text',
       itemLabel: 'text',
       tagsKey: 'badges',
       childrenKey: 'sub',
+      tagId: 'text',
       tagLabel: 'text',
       tagHint: 'tip',
       item: {
@@ -70,25 +72,25 @@ describe('Tree View props', () => {
         badges: [{ text: 'tag1', tip: 'tip1' }],
         sub: [
           {
-            text: 'node1.1',
-            badges: [{ text: 'tag1.1' }],
-            sub: [{ text: 'node1.1.1' }],
+            text: 'node1-1',
+            badges: [{ text: 'tag1-1' }],
+            sub: [{ text: 'node1-1-1' }],
           },
           {
-            text: 'node1.2',
-            badges: [{ text: 'tag1.2' }],
+            text: 'node1-2',
+            badges: [{ text: 'tag1-2' }],
           },
         ],
       },
     };
     const wrapper = mount(G8TreeView, { propsData });
     expect(wrapper.props('item')).toEqual(propsData.item);
-    expect(wrapper.find('.g8-tree__node_label_text').text()).toBe('node1');
-    expect(wrapper.find('.g8-tree__node_tag').attributes('title')).toBe('tip1');
-    wrapper.find('.g8-tree__node_label').trigger('click');
+    expect(wrapper.find('.g8-tree__node_entry_label').text()).toBe('node1');
+    expect(wrapper.find('#tag1').attributes('title')).toBe('tip1');
+    wrapper.find('.g8-tree__node_entry').trigger('click');
     await wrapper.vm.$nextTick();
-    expect(
-      wrapper.find('.g8-tree__branch .g8-tree__node_label_text').text(),
-    ).toBe('node1.1');
+    wrapper.find('#node1-1>.g8-tree__node_entry').trigger('click');
+    await wrapper.vm.$nextTick();
+    expect(wrapper.find('#node1-1-1').text()).toBe('node1-1-1');
   });
 });

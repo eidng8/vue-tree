@@ -9,14 +9,14 @@
  */
 export interface G8TreeItem {
   /**
-   * Just to allow accessing data via index syntax.
+   * Just to allow accessing data via index syntax and arbitrary data to fit in.
    */
   [key: string]: unknown;
 
   /**
    * Item name, serves as label, will be rendered as node label.
    */
-  name: string;
+  name?: string;
 
   /**
    * Whether current node is checked.
@@ -50,6 +50,11 @@ export interface G8TreeItem {
  */
 export interface G8TreeItemTag {
   /**
+   * Just to allow accessing data via index syntax and arbitrary data to fit in.
+   */
+  [key: string]: unknown;
+
+  /**
    * Tag label.
    */
   label: string;
@@ -60,22 +65,6 @@ export interface G8TreeItemTag {
   hint?: string;
 }
 
-/**
- * Mouse click event of tag
- */
-export type G8TagClickEvent = {
-  /**
-   * Key of the node that triggered the event.
-   */
-  node: G8TreeItem;
-
-  /**
-   * The tag that triggered the event.
-   */
-  tag: G8TreeItemTag;
-
-  /**
-   * Numeric index of the entry in the tag list.
-   */
-  index: number;
-};
+export class G8ClickEvent extends MouseEvent {
+  data?: { expanded: boolean; item: G8TreeItem };
+}

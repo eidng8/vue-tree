@@ -27,10 +27,11 @@ $g8-tree-fg: #333 !default;
 
 .g8-tree__node {
   list-style: none;
-  padding: .1rem 0 .1rem 1rem;
+  padding: 0.1rem 0 0.1rem 1rem;
 }
 
-.g8-tree__node_label {
+.g8-tree__node_entry {
+  width: 100%;
   cursor: pointer;
   border-radius: 4px;
 
@@ -39,18 +40,18 @@ $g8-tree-fg: #333 !default;
   }
 }
 
-.g8-tree__toggle,
-.g8-tree__checker {
-  font-size: .8rem;
+.g8-tree__node_branch_toggle,
+.g8-tree__node_entry_checker {
+  font-size: 0.8rem;
   width: 1rem;
   text-align: center;
 }
 
-.g8-tree__toggle:before {
+.g8-tree__node_branch_toggle:before {
   content: '\2022';
 }
 
-.g8-tree__checker {
+.g8-tree__node_entry_checker {
   position: relative;
   margin-right: 4px;
 
@@ -80,17 +81,17 @@ $g8-tree-fg: #333 !default;
   }
 }
 
-.g8-tree__checked_some:after {
+.g8-tree__node_entry_checker_checked_some:after {
   content: '\2237';
   visibility: visible;
 }
 
-.g8-tree__checked {
-  &.g8-tree__checked_some:after {
+.g8-tree__node_entry_checker_checked {
+  &.g8-tree__node_entry_checker_checked_some:after {
     content: '\2237';
   }
 
-  &.g8-tree__checker:after {
+  &.g8-tree__node_entry_checker:after {
     visibility: visible;
   }
 }
@@ -98,24 +99,24 @@ $g8-tree-fg: #333 !default;
 .g8-tree__branch_label {
   font-weight: bold;
 
-  .g8-tree__toggle:before {
-    padding-right: .5rem;
+  .g8-tree__node_branch_toggle:before {
+    padding-right: 0.5rem;
     content: '\25ba';
   }
 }
 
-.g8-tree__node_tags,
-.g8-tree__node_tag {
+.g8-tree__node_entry_tags,
+.g8-tree__node_entry_tags_tag {
   display: inline-block;
 }
 
-.g8-tree__node_tag {
-  margin-left: .5rem;
-  padding: 0 .2rem;
-  font-size: .6rem;
+.g8-tree__node_entry_tags_tag {
+  margin-left: 0.5rem;
+  padding: 0 0.2rem;
+  font-size: 0.6rem;
   font-weight: normal;
   max-width: 6rem;
-  border-radius: .2rem;
+  border-radius: 0.2rem;
   background: $g8-tree-bg;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -132,12 +133,12 @@ $g8-tree-fg: #333 !default;
     display: block;
   }
 
-  > .g8-tree__node_label > .g8-tree__toggle:before {
+  > .g8-tree__node_entry > .g8-tree__node_branch_toggle:before {
     content: '\25bc';
   }
 }
 
-.g8-tree__highlight_hover .g8-tree__node_label {
+.g8-tree__highlight_hover .g8-tree__node_entry {
   &:hover,
   &:focus {
     background: lighten($g8-tree-bg, 10%);
@@ -147,7 +148,7 @@ $g8-tree-fg: #333 !default;
 .g8-tree-view.g8-tree__dark {
   color: darken($g8-tree-bg, 20%);
 
-  .g8-tree__checker {
+  .g8-tree__node_entry_checker {
     &:before {
       background: lighten($g8-tree-fg, 10%);
     }
@@ -160,7 +161,7 @@ $g8-tree-fg: #333 !default;
     }
   }
 
-  .g8-tree__node_tag {
+  .g8-tree__node_entry_tags_tag {
     background: lighten($g8-tree-fg, 5%);
 
     &:hover,
@@ -169,8 +170,8 @@ $g8-tree-fg: #333 !default;
     }
   }
 
-  .g8-tree__highlight_hover .g8-tree__node_label:hover,
-  .g8-tree__highlight_hover .g8-tree__node_label:focus {
-    background: $g8-tree-fg;
+  &.g8-tree__highlight_hover .g8-tree__node_entry:hover,
+  &.g8-tree__highlight_hover .g8-tree__node_entry:focus {
+    background: lighten($g8-tree-fg, 10%);
   }
 }
