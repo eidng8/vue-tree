@@ -212,7 +212,7 @@ export default class G8TreeView extends Vue {
       this.item.rendered = true;
       this.expanded = !this.expanded;
     }
-    event.data = this.item;
+    event.data = { expanded: this.expanded, item: this.item };
     /**
      * A tree node has been clicked.
      * @param {G8ClickEvent} item

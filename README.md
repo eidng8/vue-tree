@@ -39,7 +39,7 @@ There is an [issue](https://github.com/eidng8/vue-tree/issues/24) for this. Chec
 
 This is the entry's main content slot. Defaults to `{{ item[itemLabel] }}`. The current item entry is exposed as scoped variable `item`.
 
-#### Tag slot
+#### Tag (badge) slot
 
 ```vue
 <label
@@ -54,13 +54,6 @@ This is the entry's main content slot. Defaults to `{{ item[itemLabel] }}`. The 
 ```
 
 This is the entry's tag content slot. Defaults to `{{ tag[tagLabel] }}`. The current item entry is exposed as scoped variable `item`. The current tag is exposed as scoped variable `tag`.
-
-## Events
-
-| Event name | Type | Description |
-| --- | :-: | --- |
-| click | [G8TreeItem](#g8treeitem) | A tree node has been clicked. |
-| state-changed | [G8TreeItem](#g8treeitem) | Checkbox state of the node has changed. |
 
 ## Types
 
@@ -86,11 +79,24 @@ Below is a list of presumable fields, all of them are optional. You can place wh
 | label      | string | Tag label.                                         |
 | hint       | string | Tag tooltip. Visible when mouse hovers on the tag. |
 
-#### G8ClickEvent extends `MouseEvent`
+#### G8ClickEvent
 
-| Field name |           Type            | Description                   |
-| ---------- | :-----------------------: | ----------------------------- |
-| data       | [G8TreeItem](#g8treeitem) | The item triggered the event. |
+extends `MouseEvent`
+
+| Field name | Type | Description |
+| --- | :-: | --- |
+| data | { expanded: boolean, item: [G8TreeItem](#g8treeitem)} | The item triggered the event and if it were expanded (`true`). |
+
+## Events
+
+This component defines only two events, for expanding/collapsing nodes, and checkbox state changes.
+
+| Event name | Type | Description |
+| --- | :-: | --- |
+| click | [G8ClickEvent](#g8clickevent) | A tree node has been clicked. Use the `data.expanded` to determine if the node were expanded (`true`). |
+| state-changed | [G8TreeItem](#g8treeitem) | Checkbox state of the node has changed. |
+
+#### Other events
 
 ## Theming
 

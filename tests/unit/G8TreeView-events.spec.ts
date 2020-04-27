@@ -47,7 +47,7 @@ describe('Tree View events', () => {
       propsData,
       listeners: { click: changed },
     });
-    expect.assertions(7);
+    expect.assertions(8);
     expect(wrapper.find('.g8-tree__node .g8-tree__node').exists()).toBeFalsy();
     wrapper.find('.g8-tree__node_entry').trigger('click');
     await wrapper.vm.$nextTick();
@@ -56,7 +56,8 @@ describe('Tree View events', () => {
     expect(emitted).toBeInstanceOf(Array);
     expect(emitted.length).toBe(1);
     expect(emitted[0][0]).toBeInstanceOf(MouseEvent);
-    expect(emitted[0][0].data).toStrictEqual(propsData.item);
+    expect(emitted[0][0].data.expanded).toBeTruthy();
+    expect(emitted[0][0].data.item).toStrictEqual(propsData.item);
     expect(wrapper.find('.g8-tree__node .g8-tree__node').exists()).toBeTruthy();
   });
 
@@ -80,7 +81,9 @@ describe('Tree View events', () => {
     await wrapper.vm.$nextTick();
     expect(clicked).toHaveBeenCalledTimes(1);
     expect(clicked).toHaveBeenLastCalledWith(
-      expect.objectContaining({ data: propsData.item }),
+      expect.objectContaining({
+        data: { expanded: true, item: propsData.item },
+      }),
     );
     expect(wrapper.emitted('click')).toBeUndefined();
     expect(wrapper.find('.g8-tree__node .g8-tree__node').exists()).toBeTruthy();

@@ -66,5 +66,5 @@ export interface G8TreeItemTag {
 }
 
 export class G8ClickEvent extends MouseEvent {
-  data?: G8TreeItem;
+  data?: { expanded: boolean; item: G8TreeItem };
 }

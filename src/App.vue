@@ -10,9 +10,10 @@
 
 <template>
   <div id="app">
-    <div>
+    <div id="events">
       <span id="itemClicked">{{ itemClicked }}</span>
       <span id="tagClicked">{{ tagClicked }}</span>
+      <span id="stateChanged">{{ stateChanged }}</span>
     </div>
     <div>
       <button id="populate" @click="populate()">populate tree</button>
@@ -27,7 +28,16 @@
           tag-hint="tip"
           :item="item"
           :checker="true"
-          @click="itemClicked = $event.data.text"
+          @click="
+            itemClicked = `${$event.data.expanded ? '+' : '-'} ${
+              $event.data.item.text
+            }`
+          "
+          @state-changed="
+            stateChanged = `${$event.text},${
+              $event.checked ? 'checked' : 'unchecked'
+            }`
+          "
         >
           <template #default="{ item }">
             <span :class="{ tint: !item.tint }">
@@ -63,23 +73,11 @@ export default class App extends Vue {
     text: 'Click the button above to populate me.',
   } as G8TreeItem;
 
-  tab = 1;
-
   itemClicked = '';
-
-  itemMiddleClicked = '';
-
-  itemRightClicked = '';
-
-  itemDblClicked = '';
 
   tagClicked = '';
 
-  tagMiddleClicked = '';
-
-  tagRightClicked = '';
-
-  tagDblClicked = '';
+  stateChanged = '';
 
   populate() {
     const total = 10;
@@ -149,6 +147,16 @@ button,
   > div:last-child {
     flex: 1;
     overflow: auto;
+  }
+}
+
+#events {
+  padding: 2px;
+
+  > * {
+    margin: 0 3px;
+    padding: 0 2px;
+    border: solid 1px;
   }
 }
 
