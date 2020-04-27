@@ -1,8 +1,8 @@
 # Changelog
 
-## [0.1.1](https://github.com/eidng8/vue-tree/tree/0.1.1) (2020-04-27 UTC)
+## [0.1.2](https://github.com/eidng8/vue-tree/tree/0.1.2) (2020-04-27 UTC)
 
-[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.0.27...0.1.1)
+[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.0.27...0.1.2)
 
 #### Implemented enhancements
 
