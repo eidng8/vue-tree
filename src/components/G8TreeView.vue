@@ -53,7 +53,6 @@
         :tag-id="tagId"
         :tag-label="tagLabel"
         :tag-hint="tagHint"
-        :handle-right-click="handleRightClick"
         @click="$emit('click', $event)"
         @state-changed="childrenStateChanged($event)"
       >
