@@ -61,19 +61,21 @@ This is the entry's tag content slot. Defaults to `{{ tag[tagLabel] }}`. The cur
 
 Below is a list of presumable fields, all of them are optional. You can place whatever data you want to a tree item, then use the [props](#props) mentioned above to specify content you want to display.
 
-| Field name | Type | Description |
-| --- | :-: | --- |
-| name | string | Item name, serves as label, will be rendered as node label. |
-| checked | boolean | Whether the node is checked. |
-| intermediate | boolean | Intermediate check box state. Active while some children were checked. |
-| rendered | boolean | Whether the sub-tree of this node has been rendered. |
-| tags | [G8TreeItemTag](#g8treeitemtag)\[] | List of tags. |
-| children | [G8TreeItem](#g8treeitem)\[] | List of child nodes. |
+<!-- prettier-ignore -->
+| Field name   | Type                               | Description                                                            |
+| ------------ | :--------------------------------: | ---------------------------------------------------------------------- |
+| name         | string                             | Item name, serves as label, will be rendered as node label.            |
+| checked      | boolean                            | Whether the node is checked.                                           |
+| intermediate | boolean                            | Intermediate check box state. Active while some children were checked. |
+| rendered     | boolean                            | Whether the sub-tree of this node has been rendered.                   |
+| tags         | [G8TreeItemTag](#g8treeitemtag)\[] | List of tags.                                                          |
+| children     | [G8TreeItem](#g8treeitem)\[]       | List of child nodes.                                                   |
 
 #### G8TreeItemTag
 
 Below is a list of presumable fields, all of them are optional. You can place whatever data you want to tags, then use the [props](#props) mentioned above to specify content you want to display.
 
+<!-- prettier-ignore -->
 | Field name |  Type  | Description                                        |
 | ---------- | :----: | -------------------------------------------------- |
 | label      | string | Tag label.                                         |
@@ -83,18 +85,20 @@ Below is a list of presumable fields, all of them are optional. You can place wh
 
 extends `MouseEvent`
 
-| Field name | Type | Description |
-| --- | :-: | --- |
-| data | { expanded: boolean, item: [G8TreeItem](#g8treeitem)} | The item triggered the event and if it were expanded (`true`). |
+<!-- prettier-ignore -->
+| Field name | Type                                                  | Description                                                    |
+| ---------- | :---------------------------------------------------: | -------------------------------------------------------------- |
+| data       | { expanded: boolean, item: [G8TreeItem](#g8treeitem)} | The item triggered the event and if it were expanded (`true`). |
 
 ## Events
 
 This component defines only two events, for expanding/collapsing nodes, and checkbox state changes.
 
-| Event name | Type | Description |
-| --- | :-: | --- |
-| click | [G8ClickEvent](#g8clickevent) | A tree node has been clicked. Use the `data.expanded` to determine if the node were expanded (`true`). |
-| state-changed | [G8TreeItem](#g8treeitem) | Checkbox state of the node has changed. |
+<!-- prettier-ignore -->
+| Event name    | Type                          | Description                                                                                            |
+| ------------- | :---------------------------: | ------------------------------------------------------------------------------------------------------ |
+| click         | [G8ClickEvent](#g8clickevent) | A tree node has been clicked. Use the `data.expanded` to determine if the node were expanded (`true`). |
+| state-changed | [G8TreeItem](#g8treeitem)     | Checkbox state of the node has changed.                                                                |
 
 #### Other events
 
