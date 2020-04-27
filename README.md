@@ -15,17 +15,18 @@ There is an [issue](https://github.com/eidng8/vue-tree/issues/24) for this. Chec
 
 ## Props
 
-| Prop name | Description | Type | Default |
-| --- | --- | :-: | :-: |
-| item-id | Key of the field in `item` to be used as element's `id` attribute. | string | 'id' |
-| item-label | Key of the field in `item` that holds node label. | string | 'name' |
-| tags-key | Key of the field in `item` that holds tags array. | string | 'tags' |
-| children-key | Key of the field in `item` that holds child nodes array. | string | 'children' |
-| tag-id | Key of the field in tags list of `item` to be used as tag element's `id` attribute. | string | 'id' |
-| tag-label | Key of the field in tags list of `item` that holds tag label. | string | 'label' |
-| tag-hint | Key of the field in tags list of `item` that holds tag tooltip. | string | 'hint' |
-| checker | Whether to add a checkbox before each item,<br>allowing multiple nodes tobe checked. | boolean | false |
-| item | The tree data to be rendered.<br>Please note that data passed **_may_** be mutated by this<br>component to reflect various states of tree nodes.<br>Mutated fields include:<br>- checked<br>- intermediate<br>- rendered | [G8TreeItem](#g8treeitem) |  |
+<!-- prettier-ignore -->
+| Prop name    | Description                                                                          | Type    | Default    |
+| ------------ | ------------------------------------------------------------------------------------ | :-----: | :--------: |
+| item-id      | Key of the field in `item` to be used as element's `id` attribute.                   | string  | 'id'       |
+| item-label   | Key of the field in `item` that holds node label.                                    | string  | 'name'     |
+| tags-key     | Key of the field in `item` that holds tags array.                                    | string  | 'tags'     |
+| children-key | Key of the field in `item` that holds child nodes array.                             | string  | 'children' |
+| tag-id       | Key of the field in tags list of `item` to be used as tag element's `id` attribute.  | string  | 'id'       |
+| tag-label    | Key of the field in tags list of `item` that holds tag label.                        | string  | 'label'    |
+| tag-hint     | Key of the field in tags list of `item` that holds tag tooltip.                      | string  | 'hint'     |
+| checker      | Whether to add a checkbox before each item,<br>allowing multiple nodes tobe checked. | boolean | false      |
+| item         | The tree data to be rendered.<br>Please note that data passed **_may_** be mutated by this<br>component to reflect various states of tree nodes.<br>Mutated fields include:<br>- checked<br>- intermediate<br>- rendered | [G8TreeItem](#g8treeitem) |  |
 
 ## Scoped slots
 
