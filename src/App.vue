@@ -67,6 +67,13 @@ export default class App extends Vue {
   item = {
     key: 'root',
     text: 'Click the button above to populate me.',
+    nodes: [
+      {
+        key: 'sub',
+        text: 'A very long line that goes on' + ' and on'.repeat(20),
+        badges: new Array(10).fill({ text: 'just a badge' }),
+      },
+    ],
   } as G8TreeItem;
 
   itemClicked = '';
