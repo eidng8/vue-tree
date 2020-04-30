@@ -31,8 +31,8 @@ $g8-tree__bg--highlight--secondary--inverse: lighten(
 
 .g8-tree__checker,
 .g8-tree__node__entry__toggle {
-  font-size: 0.8rem;
   width: 1rem;
+  font-size: 0.8rem;
   text-align: center;
 }
 
@@ -96,34 +96,56 @@ $g8-tree__bg--highlight--secondary--inverse: lighten(
 
 .g8-tree__node__entry {
   width: 100%;
+  display: flex;
   cursor: pointer;
+  flex-wrap: nowrap;
   border-radius: 4px;
+  align-items: center;
 
   > * {
-    display: inline-block;
+    min-width: 0;
+    display: block;
+  }
+
+  .g8-tree__checker {
+    flex: 0 0 auto;
   }
 }
 
-.g8-tree__node__entry__toggle:before {
-  content: '\2022';
+.g8-tree__node__entry__toggle {
+  flex: 0 0 auto;
+
+  &:before {
+    content: '\2022';
+  }
 }
 
-.g8-tree__node__entry__tags,
-.g8-tree__node__entry__tags__tag {
-  display: inline-block;
+.g8-tree__node__entry__label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.g8-tree__node__entry__tags {
+  min-width: 0;
+  display: flex;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .g8-tree__node__entry__tags__tag {
-  margin-left: 0.5rem;
+  min-width: 3em;
+  cursor: pointer;
+  overflow: hidden;
   padding: 0 0.2rem;
   font-size: 0.6rem;
+  margin-left: 0.5rem;
   font-weight: normal;
-  max-width: 6rem;
   border-radius: 0.2rem;
-  background: $g8-tree__bg;
-  overflow: hidden;
   text-overflow: ellipsis;
-  cursor: pointer;
+  background: $g8-tree__bg;
 
   &:hover,
   &:focus {
