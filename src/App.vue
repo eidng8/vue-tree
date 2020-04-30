@@ -17,7 +17,7 @@
     </div>
     <div>
       <button id="populate" @click="populate()">populate tree</button>
-      <ul class="g8-tree__view g8-tree__dark g8-tree__highlight_hover">
+      <ul class="g8-tree__view g8-tree__dark g8-tree--highlight-hover">
         <g8-tree-view
           item-id="key"
           item-label="text"

@@ -132,7 +132,7 @@ $g8-tree-fg: #333 !default;
   }
 }
 
-.g8-tree__highlight_hover .g8-tree__node__entry {
+.g8-tree--highlight-hover .g8-tree__node__entry {
   &:hover,
   &:focus {
     background: lighten($g8-tree-bg, 10%);
@@ -164,8 +164,8 @@ $g8-tree-fg: #333 !default;
     }
   }
 
-  &.g8-tree__highlight_hover .g8-tree__node__entry:hover,
-  &.g8-tree__highlight_hover .g8-tree__node__entry:focus {
+  &.g8-tree--highlight-hover .g8-tree__node__entry:hover,
+  &.g8-tree--highlight-hover .g8-tree__node__entry:focus {
     background: lighten($g8-tree-fg, 10%);
   }
 }
