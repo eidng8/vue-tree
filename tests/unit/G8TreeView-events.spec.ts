@@ -68,7 +68,7 @@ describe('Tree View events', () => {
       {
         template: `
           <ul>
-            <g8-tree__view :item="item" @click.prevent="clicked($event)"></g8-tree__view>
+            <g8-tree-view :item="item" @click.prevent="clicked($event)"></g8-tree-view>
           </ul>`,
         inject: ['item', 'clicked'],
         components: { G8TreeView },
