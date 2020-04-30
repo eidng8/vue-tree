@@ -139,7 +139,7 @@ $g8-tree-fg: #333 !default;
   }
 }
 
-.g8-tree__view.g8-tree__dark {
+.g8-tree__view.g8-tree--dark {
   color: darken($g8-tree-bg, 20%);
 
   .g8-tree__checker {
