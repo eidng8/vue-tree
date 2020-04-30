@@ -5,7 +5,7 @@
  */
 
 import { mount } from '@vue/test-utils';
-import { G8TreeItem, G8TreeView } from '../../src';
+import { G8TreeItem, G8VueTree } from '../../src';
 import { ComponentOptions } from 'vue';
 
 const tree = {
@@ -43,7 +43,7 @@ describe('Tree View events', () => {
 
   it('emits click events', async () => {
     const changed = jest.fn();
-    const wrapper = mount(G8TreeView, {
+    const wrapper = mount(G8VueTree, {
       propsData,
       listeners: { click: changed },
     });
@@ -68,10 +68,10 @@ describe('Tree View events', () => {
       {
         template: `
           <ul>
-            <g8-tree-view :item="item" @click.prevent="clicked($event)"></g8-tree-view>
+            <g8-vue-tree :item="item" @click.prevent="clicked($event)"></g8-vue-tree>
           </ul>`,
         inject: ['item', 'clicked'],
-        components: { G8TreeView },
+        components: { G8VueTree },
       } as ComponentOptions<any>,
       { provide: propsData },
     );
@@ -92,7 +92,7 @@ describe('Tree View events', () => {
   it('emits state-change event', async () => {
     const changed = jest.fn();
     propsData.checker = true;
-    const wrapper = mount(G8TreeView, {
+    const wrapper = mount(G8VueTree, {
       propsData,
       listeners: { 'state-changed': changed },
     });
@@ -111,7 +111,7 @@ describe('Tree View events', () => {
   it('emits state-change of intermediate state', async () => {
     const changed = jest.fn();
     propsData.checker = true;
-    const wrapper = mount(G8TreeView, {
+    const wrapper = mount(G8VueTree, {
       propsData,
       listeners: { 'state-changed': changed },
     });

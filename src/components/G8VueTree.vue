@@ -41,7 +41,7 @@
       </span>
     </div>
     <ul v-if="expanded || item.rendered" class="g8-tree__branch">
-      <g8-tree-view
+      <g8-vue-tree
         v-for="(child, index) in item[childrenKey]"
         :key="index"
         :item="child"
@@ -63,7 +63,7 @@
         >
           <slot :name="slot" v-bind="scope" />
         </template>
-      </g8-tree-view>
+      </g8-vue-tree>
     </ul>
   </li>
 </template>
@@ -81,8 +81,8 @@ import { G8ClickEvent, G8TreeItem } from './types';
  * [issue](https://github.com/eidng8/vue-tree/issues/24) about performance
  * problem of large tree data set.
  */
-@Component({ name: 'g8-tree-view' })
-export default class G8TreeView extends Vue {
+@Component({ name: 'g8-vue-tree' })
+export default class G8VueTree extends Vue {
   /**
    * Key of the field in `item` to be used as element's `id` attribute.
    */
@@ -183,7 +183,7 @@ export default class G8TreeView extends Vue {
       // descend to all descendant sub-components and update their states,
       // also triggers their `state-changed` event.
       this.$children.forEach(c => {
-        (c as G8TreeView).setState(state);
+        (c as G8VueTree).setState(state);
       });
     } else if (
       this.item[this.childrenKey] &&

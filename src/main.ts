@@ -4,6 +4,8 @@
  * Author: eidng8
  */
 
+import './components/tree-view.scss';
+
 import Vue from 'vue';
 import App from './App.vue';
 
