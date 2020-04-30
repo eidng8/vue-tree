@@ -33,7 +33,7 @@ There is an [issue](https://github.com/eidng8/vue-tree/issues/24) for this. Chec
 #### Default slot
 
 ```vue
-<span class="g8-tree__node_entry_label">
+<span class="g8-tree__node__entry_label">
   <slot :item="item">{{ item[itemLabel] }}</slot>
 </span>
 ```
@@ -44,7 +44,7 @@ This is the entry's main content slot. Defaults to `{{ item[itemLabel] }}`. The 
 
 ```vue
 <label
-  class="g8-tree__node_entry_tags_tag"
+  class="g8-tree__node__entry_tags_tag"
   v-for="(tag, idx) in item[tagsKey]"
   :key="idx"
   :id="tag[tagId]"
@@ -110,8 +110,8 @@ This component defines only two events, for expanding/collapsing nodes, and chec
 The bundled style sheet can be imported from `'g8-vue-tree/dist/g8-vue-tree.css'`. This component provides a dark theme out of box. To use it, just add the `g8-tree__dark` class to the element.
 
 ```html
-<ul class="g8-tree-view g8-tree__dark">
-  <g8-tree-view></g8-tree-view>
+<ul class="g8-tree__view g8-tree__dark">
+  <g8-tree__view></g8-tree__view>
 </ul>
 ```
 
@@ -132,7 +132,7 @@ $g8-tree-fg: #333;
 This component deliberately left out `font-family` from CSS. You can use whatever font you like, just add something like below to you styles:
 
 ```css
-.g8-tree-view {
+.g8-tree__view {
   font-family: 'you favorite font';
 }
 ```

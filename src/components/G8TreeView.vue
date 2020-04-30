@@ -11,26 +11,26 @@
     :class="{ 'g8-tree__node_expended': expanded }"
   >
     <div
-      class="g8-tree__node_entry"
+      class="g8-tree__node__entry"
       :class="{ 'g8-tree__branch_label': hasChild }"
       @click="clicked($event)"
     >
       <span class="g8-tree__node_branch_toggle"></span>
       <span
         v-if="checker"
-        class="g8-tree__node_entry_checker"
+        class="g8-tree__checker"
         @click.stop.prevent="setState(!checked)"
         :class="{
-          'g8-tree__node_entry_checker_checked': checked,
-          'g8-tree__node_entry_checker_checked_some': intermediate,
+          'g8-tree__checker_checked': checked,
+          'g8-tree__checker_checked_some': intermediate,
         }"
       ></span>
-      <span class="g8-tree__node_entry_label">
+      <span class="g8-tree__node__entry_label">
         <slot :item="item">{{ item[itemLabel] }}</slot>
       </span>
-      <span class="g8-tree__node_entry_tags">
+      <span class="g8-tree__node__entry_tags">
         <label
-          class="g8-tree__node_entry_tags_tag"
+          class="g8-tree__node__entry_tags_tag"
           v-for="(tag, idx) in item[tagsKey]"
           :key="idx"
           :id="tag[tagId]"
