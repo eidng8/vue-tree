@@ -68,10 +68,10 @@ describe('Tree View events', () => {
       {
         template: `
           <ul>
-            <g8-tree-view :item="item" @click.prevent="clicked($event)"></g8-tree-view>
+            <g8-vue-tree :item="item" @click.prevent="clicked($event)"></g8-vue-tree>
           </ul>`,
         inject: ['item', 'clicked'],
-        components: { G8TreeView: G8VueTree },
+        components: { G8VueTree },
       } as ComponentOptions<any>,
       { provide: propsData },
     );
