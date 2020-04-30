@@ -1,8 +1,27 @@
 # Changelog
 
-## [0.1.2](https://github.com/eidng8/vue-tree/tree/0.1.2) (2020-04-27 UTC)
+## [0.2.1](https://github.com/eidng8/vue-tree/tree/0.2.1) (2020-04-30 UTC)
 
-[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.0.27...0.1.2)
+[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.1.2...0.2.1)
+
+#### Implemented enhancements
+
+- \[breaking change\] rename the component and its tag name to match package name [\#51](https://github.com/eidng8/vue-tree/issues/51)
+- add more specific scss variables for different colors \(not related theming\) [\#50](https://github.com/eidng8/vue-tree/issues/50)
+- cater for css overflow ellipsis [\#49](https://github.com/eidng8/vue-tree/issues/49)
+- \[breaking change\] fix css naming according to BEM [\#48](https://github.com/eidng8/vue-tree/issues/48)
+
+#### Fixed bugs
+
+- update typings to match source [\#52](https://github.com/eidng8/vue-tree/issues/52)
+
+## [Release-v0.1.2](https://github.com/eidng8/vue-tree/tree/Release-v0.1.2) (2020-04-27)
+
+[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.1.1...Release-v0.1.2)
+
+## [Release-v0.1.1](https://github.com/eidng8/vue-tree/tree/Release-v0.1.1) (2020-04-27)
+
+[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.0.27...Release-v0.1.1)
 
 #### Implemented enhancements
 
