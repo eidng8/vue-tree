@@ -79,21 +79,15 @@ $g8-tree-fg: #333 !default;
       background: darken($g8-tree-bg, 20%);
     }
   }
-}
 
-.g8-tree__checker--intermediate:after {
-  content: '\2237';
-  visibility: visible;
-}
-
-.g8-tree__checker--checked {
-  &.g8-tree__checker--intermediate:after {
-    content: '\2237';
-  }
-
-  &.g8-tree__checker:after {
+  &.g8-tree__checker--checked:after {
     visibility: visible;
   }
+}
+
+.g8-tree__checker--checked--intermediate:after {
+  content: '\220E';
+  margin-left: -0.05em;
 }
 
 .g8-tree__branch_label {

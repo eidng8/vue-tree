@@ -22,7 +22,7 @@
         @click.stop.prevent="setState(!checked)"
         :class="{
           'g8-tree__checker--checked': checked,
-          'g8-tree__checker--intermediate': intermediate,
+          'g8-tree__checker--checked--intermediate': intermediate,
         }"
       ></span>
       <span class="g8-tree__node__entry_label">
