@@ -5,7 +5,7 @@
  */
 
 import { mount, Wrapper } from '@vue/test-utils';
-import { G8TreeItem, G8TreeView } from '../../src';
+import { G8TreeItem, G8VueTree } from '../../src';
 
 const tree = {
   checker: true,
@@ -34,12 +34,12 @@ const tree = {
   } as G8TreeItem,
 };
 
-let wrapper: Wrapper<G8TreeView>;
+let wrapper: Wrapper<G8VueTree>;
 
 describe('Tree View interactions', () => {
   beforeEach(
     () =>
-      (wrapper = mount(G8TreeView, {
+      (wrapper = mount(G8VueTree, {
         propsData: JSON.parse(JSON.stringify(tree)),
       })),
   );

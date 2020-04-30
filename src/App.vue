@@ -60,11 +60,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { G8TreeItem, G8TreeView } from './';
+import { G8TreeItem, G8VueTree } from './';
 
 @Component({
   components: {
-    G8TreeView,
+    G8TreeView: G8VueTree,
   },
 })
 export default class App extends Vue {

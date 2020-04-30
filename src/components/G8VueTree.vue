@@ -82,7 +82,7 @@ import { G8ClickEvent, G8TreeItem } from './types';
  * problem of large tree data set.
  */
 @Component({ name: 'g8-tree-view' })
-export default class G8TreeView extends Vue {
+export default class G8VueTree extends Vue {
   /**
    * Key of the field in `item` to be used as element's `id` attribute.
    */
@@ -183,7 +183,7 @@ export default class G8TreeView extends Vue {
       // descend to all descendant sub-components and update their states,
       // also triggers their `state-changed` event.
       this.$children.forEach(c => {
-        (c as G8TreeView).setState(state);
+        (c as G8VueTree).setState(state);
       });
     } else if (
       this.item[this.childrenKey] &&
