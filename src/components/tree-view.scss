@@ -20,35 +20,11 @@ $g8-tree-fg: #333 !default;
   }
 }
 
-.g8-tree__branch {
-  padding: 0;
-  display: none;
-}
-
-.g8-tree__node {
-  list-style: none;
-  padding: 0.1rem 0 0.1rem 1rem;
-}
-
-.g8-tree__node__entry {
-  width: 100%;
-  cursor: pointer;
-  border-radius: 4px;
-
-  > * {
-    display: inline-block;
-  }
-}
-
-.g8-tree__node__entry__toggle,
-.g8-tree__checker {
+.g8-tree__checker,
+.g8-tree__node__entry__toggle {
   font-size: 0.8rem;
   width: 1rem;
   text-align: center;
-}
-
-.g8-tree__node__entry__toggle:before {
-  content: '\2022';
 }
 
 .g8-tree__checker {
@@ -90,6 +66,16 @@ $g8-tree-fg: #333 !default;
   margin-left: -0.05em;
 }
 
+.g8-tree__branch {
+  padding: 0;
+  display: none;
+}
+
+.g8-tree__node {
+  list-style: none;
+  padding: 0.1rem 0 0.1rem 1rem;
+}
+
 .g8-tree__node__branch {
   font-weight: bold;
 
@@ -97,6 +83,20 @@ $g8-tree-fg: #333 !default;
     padding-right: 0.5rem;
     content: '\25ba';
   }
+}
+
+.g8-tree__node__entry {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+
+  > * {
+    display: inline-block;
+  }
+}
+
+.g8-tree__node__entry__toggle:before {
+  content: '\2022';
 }
 
 .g8-tree__node__entry__tags,
@@ -164,8 +164,10 @@ $g8-tree-fg: #333 !default;
     }
   }
 
-  &.g8-tree--highlight-hover .g8-tree__node__entry:hover,
-  &.g8-tree--highlight-hover .g8-tree__node__entry:focus {
-    background: lighten($g8-tree-fg, 10%);
+  &.g8-tree--highlight-hover .g8-tree__node__entry {
+    &:hover,
+    &:focus {
+      background: lighten($g8-tree-fg, 10%);
+    }
   }
 }
