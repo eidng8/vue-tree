@@ -8,7 +8,7 @@
   <li
     :id="item[itemId]"
     class="g8-tree__node"
-    :class="{ 'g8-tree__node_expended': expanded }"
+    :class="{ 'g8-tree__node--expended': expanded }"
   >
     <div
       class="g8-tree__node__entry"
@@ -28,9 +28,9 @@
       <span class="g8-tree__node__entry_label">
         <slot :item="item">{{ item[itemLabel] }}</slot>
       </span>
-      <span class="g8-tree__node__entry_tags">
+      <span class="g8-tree__node__entry__tags">
         <label
-          class="g8-tree__node__entry_tags_tag"
+          class="g8-tree__node__entry__tags__tag"
           v-for="(tag, idx) in item[tagsKey]"
           :key="idx"
           :id="tag[tagId]"

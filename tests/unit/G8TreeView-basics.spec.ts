@@ -22,7 +22,9 @@ describe('Tree View props', () => {
       tags: [{ label: 'tag1' }],
     });
     expect(wrapper.find('.g8-tree__node__entry_label').text()).toBe('name');
-    expect(wrapper.find('.g8-tree__node__entry_tags_tag').text()).toBe('tag1');
+    expect(wrapper.find('.g8-tree__node__entry__tags__tag').text()).toBe(
+      'tag1',
+    );
   });
 
   it('defaults to have no checkbox', () => {
@@ -53,7 +55,7 @@ describe('Tree View props', () => {
     };
     const wrapper = shallowMount(G8TreeView, { propsData });
     expect(wrapper.findAll('.g8-tree__node').length).toBe(1);
-    expect(wrapper.findAll('.g8-tree__node__entry_tags_tag').length).toBe(1);
+    expect(wrapper.findAll('.g8-tree__node__entry__tags__tag').length).toBe(1);
     expect(wrapper.find('.g8-tree__branch').exists()).toBeFalsy();
   });
 

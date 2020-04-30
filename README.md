@@ -44,7 +44,7 @@ This is the entry's main content slot. Defaults to `{{ item[itemLabel] }}`. The 
 
 ```vue
 <label
-  class="g8-tree__node__entry_tags_tag"
+  class="g8-tree__node__entry__tags__tag"
   v-for="(tag, idx) in item[tagsKey]"
   :key="idx"
   :id="tag[tagId]"
