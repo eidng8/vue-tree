@@ -22,7 +22,7 @@ module.exports.command = function () {
     .waitForElementVisible('#app')
 
     // the tree view is rendered
-    .assert.elementPresent('.g8-tree-view')
+    .assert.elementPresent('.g8-tree__view')
     // the root node's text is correct
     .assertEntryContains('#root', /Click the button above to populate me\./i)
 

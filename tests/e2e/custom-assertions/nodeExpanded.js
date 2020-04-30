@@ -52,7 +52,7 @@ exports.assertion = function (selector, msg) {
    * @return {Boolean}
    */
   this.evaluate = function (value) {
-    return /.*\bg8-tree__node_expended\b.*/.test(value);
+    return /.*\bg8-tree__node--expended\b.*/.test(value);
   };
 
   /**
