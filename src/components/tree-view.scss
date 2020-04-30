@@ -40,14 +40,14 @@ $g8-tree-fg: #333 !default;
   }
 }
 
-.g8-tree__node_branch_toggle,
+.g8-tree__node__entry__toggle,
 .g8-tree__checker {
   font-size: 0.8rem;
   width: 1rem;
   text-align: center;
 }
 
-.g8-tree__node_branch_toggle:before {
+.g8-tree__node__entry__toggle:before {
   content: '\2022';
 }
 
@@ -81,13 +81,13 @@ $g8-tree-fg: #333 !default;
   }
 }
 
-.g8-tree__checker_checked_some:after {
+.g8-tree__checker--intermediate:after {
   content: '\2237';
   visibility: visible;
 }
 
-.g8-tree__checker_checked {
-  &.g8-tree__checker_checked_some:after {
+.g8-tree__checker--checked {
+  &.g8-tree__checker--intermediate:after {
     content: '\2237';
   }
 
@@ -99,7 +99,7 @@ $g8-tree-fg: #333 !default;
 .g8-tree__branch_label {
   font-weight: bold;
 
-  .g8-tree__node_branch_toggle:before {
+  .g8-tree__node__entry__toggle:before {
     padding-right: 0.5rem;
     content: '\25ba';
   }
@@ -133,7 +133,7 @@ $g8-tree-fg: #333 !default;
     display: block;
   }
 
-  > .g8-tree__node__entry > .g8-tree__node_branch_toggle:before {
+  > .g8-tree__node__entry > .g8-tree__node__entry__toggle:before {
     content: '\25bc';
   }
 }

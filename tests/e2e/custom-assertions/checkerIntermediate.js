@@ -56,7 +56,7 @@ exports.assertion = function (selector, msg) {
    * @return {Boolean}
    */
   this.evaluate = function (value) {
-    return /.*\bg8-tree__checker_checked_some\b.*/.test(value);
+    return /.*\bg8-tree__checker--intermediate\b.*/.test(value);
   };
 
   /**

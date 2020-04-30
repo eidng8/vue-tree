@@ -105,7 +105,7 @@ describe('Tree View events', () => {
     expect(emitted).toBeInstanceOf(Array);
     expect(emitted.length).toBe(1);
     expect(emitted[0][0]).toStrictEqual(propsData.item);
-    expect(checker.is('.g8-tree__checker_checked')).toBeTruthy();
+    expect(checker.is('.g8-tree__checker--checked')).toBeTruthy();
   });
 
   it('emits state-change of intermediate state', async () => {
@@ -140,7 +140,7 @@ describe('Tree View events', () => {
     expect(emitted[0][0]).toStrictEqual(
       propsData.item.children![1].children![0],
     );
-    expect(checker.is('.g8-tree__checker_checked')).toBeTruthy();
+    expect(checker.is('.g8-tree__checker--checked')).toBeTruthy();
     expect(propsData.item.intermediate).toBeTruthy();
     expect(propsData.item.children![1].intermediate).toBeTruthy();
   });

@@ -15,14 +15,14 @@
       :class="{ 'g8-tree__branch_label': hasChild }"
       @click="clicked($event)"
     >
-      <span class="g8-tree__node_branch_toggle"></span>
+      <span class="g8-tree__node__entry__toggle"></span>
       <span
         v-if="checker"
         class="g8-tree__checker"
         @click.stop.prevent="setState(!checked)"
         :class="{
-          'g8-tree__checker_checked': checked,
-          'g8-tree__checker_checked_some': intermediate,
+          'g8-tree__checker--checked': checked,
+          'g8-tree__checker--intermediate': intermediate,
         }"
       ></span>
       <span class="g8-tree__node__entry_label">
