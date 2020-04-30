@@ -90,7 +90,7 @@ $g8-tree-fg: #333 !default;
   margin-left: -0.05em;
 }
 
-.g8-tree__branch_label {
+.g8-tree__node__branch {
   font-weight: bold;
 
   .g8-tree__node__entry__toggle:before {

@@ -12,7 +12,7 @@
   >
     <div
       class="g8-tree__node__entry"
-      :class="{ 'g8-tree__branch_label': hasChild }"
+      :class="{ 'g8-tree__node__branch': hasChild }"
       @click="clicked($event)"
     >
       <span class="g8-tree__node__entry__toggle"></span>
