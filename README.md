@@ -33,7 +33,7 @@ There is an [issue](https://github.com/eidng8/vue-tree/issues/24) for this. Chec
 #### Default slot
 
 ```vue
-<span class="g8-tree__node__entry_label">
+<span class="g8-tree__node__entry__label">
   <slot :item="item">{{ item[itemLabel] }}</slot>
 </span>
 ```

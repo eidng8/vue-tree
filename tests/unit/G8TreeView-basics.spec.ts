@@ -21,7 +21,7 @@ describe('Tree View props', () => {
       name: 'name',
       tags: [{ label: 'tag1' }],
     });
-    expect(wrapper.find('.g8-tree__node__entry_label').text()).toBe('name');
+    expect(wrapper.find('.g8-tree__node__entry__label').text()).toBe('name');
     expect(wrapper.find('.g8-tree__node__entry__tags__tag').text()).toBe(
       'tag1',
     );
@@ -87,7 +87,7 @@ describe('Tree View props', () => {
     };
     const wrapper = mount(G8TreeView, { propsData });
     expect(wrapper.props('item')).toEqual(propsData.item);
-    expect(wrapper.find('.g8-tree__node__entry_label').text()).toBe('node1');
+    expect(wrapper.find('.g8-tree__node__entry__label').text()).toBe('node1');
     expect(wrapper.find('#tag1').attributes('title')).toBe('tip1');
     wrapper.find('.g8-tree__node__entry').trigger('click');
     await wrapper.vm.$nextTick();

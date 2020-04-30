@@ -48,7 +48,7 @@ function entrySelector(selector) {
 function labelSelector(selector) {
   return makeSelectors(
     makeLabelSelectors(selector),
-    '>.g8-tree__node__entry_label',
+    '>.g8-tree__node__entry__label',
   );
 }
 

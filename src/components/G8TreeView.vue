@@ -25,7 +25,7 @@
           'g8-tree__checker--checked--intermediate': intermediate,
         }"
       ></span>
-      <span class="g8-tree__node__entry_label">
+      <span class="g8-tree__node__entry__label">
         <slot :item="item">{{ item[itemLabel] }}</slot>
       </span>
       <span class="g8-tree__node__entry__tags">
