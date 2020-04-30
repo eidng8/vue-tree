@@ -17,8 +17,8 @@
     </div>
     <div>
       <button id="populate" @click="populate()">populate tree</button>
-      <ul class="g8-tree-view g8-tree__dark g8-tree__highlight_hover">
-        <g8-tree-view
+      <ul class="g8-tree__view g8-tree--dark g8-tree--highlight-hover">
+        <g8-vue-tree
           item-id="key"
           item-label="text"
           tags-key="badges"
@@ -52,7 +52,7 @@
               {{ tag.text }}
             </span>
           </template>
-        </g8-tree-view>
+        </g8-vue-tree>
       </ul>
     </div>
   </div>
@@ -60,17 +60,20 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { G8TreeItem, G8TreeView } from './';
+import { G8TreeItem, G8VueTree } from './';
 
-@Component({
-  components: {
-    G8TreeView,
-  },
-})
+@Component({ components: { G8VueTree } })
 export default class App extends Vue {
   item = {
     key: 'root',
     text: 'Click the button above to populate me.',
+    nodes: [
+      {
+        key: 'sub',
+        text: 'A very long line that goes on' + ' and on'.repeat(20),
+        badges: new Array(10).fill({ text: 'just a badge' }),
+      },
+    ],
   } as G8TreeItem;
 
   itemClicked = '';

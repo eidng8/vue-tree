@@ -5,7 +5,7 @@
  */
 
 import { mount } from '@vue/test-utils';
-import { G8TreeItem, G8TreeView } from '../../src';
+import { G8TreeItem, G8VueTree } from '../../src';
 import { ComponentOptions } from 'vue';
 
 const tree = {
@@ -43,13 +43,13 @@ describe('Tree View events', () => {
 
   it('emits click events', async () => {
     const changed = jest.fn();
-    const wrapper = mount(G8TreeView, {
+    const wrapper = mount(G8VueTree, {
       propsData,
       listeners: { click: changed },
     });
     expect.assertions(8);
     expect(wrapper.find('.g8-tree__node .g8-tree__node').exists()).toBeFalsy();
-    wrapper.find('.g8-tree__node_entry').trigger('click');
+    wrapper.find('.g8-tree__node__entry').trigger('click');
     await wrapper.vm.$nextTick();
     expect(changed).toHaveBeenCalledTimes(1);
     const emitted = wrapper.emitted('click');
@@ -68,16 +68,16 @@ describe('Tree View events', () => {
       {
         template: `
           <ul>
-            <g8-tree-view :item="item" @click.prevent="clicked($event)"></g8-tree-view>
+            <g8-vue-tree :item="item" @click.prevent="clicked($event)"></g8-vue-tree>
           </ul>`,
         inject: ['item', 'clicked'],
-        components: { G8TreeView },
+        components: { G8VueTree },
       } as ComponentOptions<any>,
       { provide: propsData },
     );
     expect.assertions(5);
     expect(wrapper.find('.g8-tree__node .g8-tree__node').exists()).toBeFalsy();
-    wrapper.find('.g8-tree__node_entry').trigger('click');
+    wrapper.find('.g8-tree__node__entry').trigger('click');
     await wrapper.vm.$nextTick();
     expect(clicked).toHaveBeenCalledTimes(1);
     expect(clicked).toHaveBeenLastCalledWith(
@@ -92,12 +92,12 @@ describe('Tree View events', () => {
   it('emits state-change event', async () => {
     const changed = jest.fn();
     propsData.checker = true;
-    const wrapper = mount(G8TreeView, {
+    const wrapper = mount(G8VueTree, {
       propsData,
       listeners: { 'state-changed': changed },
     });
     expect.assertions(5);
-    const checker = wrapper.find('.g8-tree__node_entry_checker');
+    const checker = wrapper.find('.g8-tree__checker');
     checker.trigger('click');
     await wrapper.vm.$nextTick();
     expect(changed).toHaveBeenCalled();
@@ -105,31 +105,31 @@ describe('Tree View events', () => {
     expect(emitted).toBeInstanceOf(Array);
     expect(emitted.length).toBe(1);
     expect(emitted[0][0]).toStrictEqual(propsData.item);
-    expect(checker.is('.g8-tree__node_entry_checker_checked')).toBeTruthy();
+    expect(checker.is('.g8-tree__checker--checked')).toBeTruthy();
   });
 
   it('emits state-change of intermediate state', async () => {
     const changed = jest.fn();
     propsData.checker = true;
-    const wrapper = mount(G8TreeView, {
+    const wrapper = mount(G8VueTree, {
       propsData,
       listeners: { 'state-changed': changed },
     });
     expect.assertions(9);
     expect(propsData.item.intermediate).toBeFalsy();
     expect(propsData.item.children![1].intermediate).toBeFalsy();
-    wrapper.find('.g8-tree__node_entry').trigger('click');
+    wrapper.find('.g8-tree__node__entry').trigger('click');
     await wrapper.vm.$nextTick();
     wrapper
-      .findAll('.g8-tree__node '.repeat(2) + '.g8-tree__node_entry')
+      .findAll('.g8-tree__node '.repeat(2) + '.g8-tree__node__entry')
       .trigger('click');
     await wrapper.vm.$nextTick();
     wrapper
-      .find('.g8-tree__node '.repeat(3) + '.g8-tree__node_entry')
+      .find('.g8-tree__node '.repeat(3) + '.g8-tree__node__entry')
       .trigger('click');
     await wrapper.vm.$nextTick();
     const checker = wrapper.find(
-      '.g8-tree__node '.repeat(3) + '.g8-tree__node_entry_checker',
+      '.g8-tree__node '.repeat(3) + '.g8-tree__checker',
     );
     checker.trigger('click');
     await wrapper.vm.$nextTick();
@@ -140,7 +140,7 @@ describe('Tree View events', () => {
     expect(emitted[0][0]).toStrictEqual(
       propsData.item.children![1].children![0],
     );
-    expect(checker.is('.g8-tree__node_entry_checker_checked')).toBeTruthy();
+    expect(checker.is('.g8-tree__checker--checked')).toBeTruthy();
     expect(propsData.item.intermediate).toBeTruthy();
     expect(propsData.item.children![1].intermediate).toBeTruthy();
   });

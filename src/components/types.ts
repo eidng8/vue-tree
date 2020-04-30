@@ -65,6 +65,22 @@ export interface G8TreeItemTag {
   hint?: string;
 }
 
+/**
+ * Fired when a node is clicked.
+ */
 export class G8ClickEvent extends MouseEvent {
-  data?: { expanded: boolean; item: G8TreeItem };
+  /**
+   * Data about the clicked node
+   */
+  data!: {
+    /**
+     * Whether the node has been expanded after the click.
+     */
+    expanded: boolean;
+
+    /**
+     * The data item associated with the clicked node.
+     */
+    item: G8TreeItem;
+  };
 }

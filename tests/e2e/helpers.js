@@ -13,7 +13,7 @@ function makeLabelSelectors(selector) {
   return selector
     .split(',')
     .map(s => s.trim())
-    .map(s => (s ? `${s}>` : '') + '.g8-tree__node_entry');
+    .map(s => (s ? `${s}>` : '') + '.g8-tree__node__entry');
 }
 
 /**
@@ -30,10 +30,7 @@ function makeSelectors(selectors, sub) {
  * @return {string}
  */
 function checkerSelector(selector) {
-  return makeSelectors(
-    makeLabelSelectors(selector),
-    '>.g8-tree__node_entry_checker',
-  );
+  return makeSelectors(makeLabelSelectors(selector), '>.g8-tree__checker');
 }
 
 /**
@@ -51,7 +48,7 @@ function entrySelector(selector) {
 function labelSelector(selector) {
   return makeSelectors(
     makeLabelSelectors(selector),
-    '>.g8-tree__node_entry_label',
+    '>.g8-tree__node__entry__label',
   );
 }
 

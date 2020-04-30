@@ -13,7 +13,7 @@ module.exports = {
       .waitForElementVisible('#app')
 
       // the tree view is rendered
-      .assert.elementPresent('.g8-tree-view')
+      .assert.elementPresent('.g8-tree__view')
       // the root node's text is correct
       .assert.containsOrMatches(
         labelSelector('#root'),
