@@ -107,10 +107,10 @@ This component defines only two events, for expanding/collapsing nodes, and chec
 
 #### Colors
 
-The bundled style sheet can be imported from `'g8-vue-tree/dist/g8-vue-tree.css'`. This component provides a dark theme out of box. To use it, just add the `g8-tree--dark` class to the element.
+The bundled style sheet can be imported from `'g8-vue-tree/dist/g8-vue-tree.css'`. This component provides a dark theme out of box. To use it, just add the `g8--dark` class to the element.
 
 ```html
-<ul class="g8-tree__view g8-tree--dark">
+<ul class="g8-tree__view g8--dark">
   <g8-tree__view></g8-tree__view>
 </ul>
 ```
