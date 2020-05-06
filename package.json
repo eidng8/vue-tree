@@ -20,7 +20,9 @@
     "vue"
   ],
   "scripts": {
-    "build": "vue-cli-service build --target lib --mode production ./src/index.ts",
+    "build": "npm run build-app && npm run build-sass",
+    "build-app": "vue-cli-service build --target lib --mode production ./src/index.ts",
+    "build-sass": "node-sass --output-style compressed src/components/tree-view.scss > dist/g8-vue-tree.css",
     "docs": "vue-docgen",
     "serve": "vue-cli-service serve",
     "start": "npm run serve",
