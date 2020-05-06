@@ -1,8 +1,16 @@
 # Changelog
 
-## [0.2.1](https://github.com/eidng8/vue-tree/tree/0.2.1) (2020-04-30 UTC)
+## [0.2.2](https://github.com/eidng8/vue-tree/tree/0.2.2) (2020-05-06 UTC)
 
-[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.1.2...0.2.1)
+[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.2.1...0.2.2)
+
+#### Implemented enhancements
+
+- \[breaking change\] unify dark theme css class to `g8--dark` [\#61](https://github.com/eidng8/vue-tree/issues/61)
+
+## [Release-v0.2.1](https://github.com/eidng8/vue-tree/tree/Release-v0.2.1) (2020-04-30)
+
+[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.1.2...Release-v0.2.1)
 
 #### Implemented enhancements
 
