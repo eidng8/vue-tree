@@ -106,7 +106,7 @@ describe('Tree View interactions', () => {
     checkers.at(1).trigger('click');
     await wrapper.vm.$nextTick();
     expect(wrapper.find('.g8-tree__checker').classes()).toContain(
-      'g8-tree__checker--checked--intermediate',
+      'g8-tree__checker--intermediate',
     );
   });
 
@@ -121,7 +121,7 @@ describe('Tree View interactions', () => {
     checkers.at(1).trigger('click');
     await wrapper.vm.$nextTick();
     expect(wrapper.find('.g8-tree__checker').classes()).toContain(
-      'g8-tree__checker--checked--intermediate',
+      'g8-tree__checker--intermediate',
     );
     expect(wrapper.findAll('.g8-tree__checker--checked').length).toBe(2);
   });
@@ -140,9 +140,7 @@ describe('Tree View interactions', () => {
     // check last node = set root & 2nd branch to intermediate
     checkers.at(checkers.length - 1).trigger('click');
     await wrapper.vm.$nextTick();
-    expect(
-      wrapper.findAll('.g8-tree__checker--checked--intermediate').length,
-    ).toBe(2);
+    expect(wrapper.findAll('.g8-tree__checker--intermediate').length).toBe(2);
     // check root node = check all
     checkers.at(0).trigger('click');
     await wrapper.vm.$nextTick();
@@ -150,16 +148,12 @@ describe('Tree View interactions', () => {
     // uncheck last node = set root & 2nd branch to intermediate
     checkers.at(checkers.length - 1).trigger('click');
     await wrapper.vm.$nextTick();
-    expect(
-      wrapper.findAll('.g8-tree__checker--checked--intermediate').length,
-    ).toBe(2);
+    expect(wrapper.findAll('.g8-tree__checker--intermediate').length).toBe(2);
     expect(wrapper.findAll('.g8-tree__checker--checked').length).toBe(4);
     // uncheck 2nd last node = set root & 2nd branch to intermediate
     checkers.at(checkers.length - 2).trigger('click');
     await wrapper.vm.$nextTick();
-    expect(
-      wrapper.findAll('.g8-tree__checker--checked--intermediate').length,
-    ).toBe(1);
+    expect(wrapper.findAll('.g8-tree__checker--intermediate').length).toBe(1);
     expect(wrapper.findAll('.g8-tree__checker--checked').length).toBe(2);
   });
 });

@@ -4,6 +4,8 @@
 
 A Vue tree view component with stable DOM structure. By stable, it means the DOM structure will not change once it is rendered.
 
+[Demo](https://codesandbox.io/s/g8-vue-tree-demo-pwj45?file=/src/App.vue)
+
 ## Performance Consideration
 
 The DOM structure of this component doesn't change once rendered. Comparing to others using `v-if`, which generate sub-nodes while expanded. While working on long list of items, lags will be obvious.
