@@ -70,8 +70,9 @@ $g8-tree__bg--highlight--secondary--inverse: lighten(
   }
 }
 
-.g8-tree__checker--checked--intermediate:after {
+.g8-tree__checker--intermediate:after {
   content: '\220E';
+  visibility: visible;
   margin-left: -0.05em;
 }
 
