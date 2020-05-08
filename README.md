@@ -4,7 +4,7 @@
 
 A Vue tree view component with stable DOM structure. By stable, it means the DOM structure will not change once it is rendered.
 
-[Demo](https://codesandbox.io/s/g8-vue-tree-demo-pwj45)
+[Demo](https://codesandbox.io/s/g8-vue-tree-demo-pwj45?file=/src/App.vue)
 
 ## Performance Consideration
 
