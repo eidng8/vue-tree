@@ -8,7 +8,7 @@
   <li
     :id="item[itemId]"
     class="g8-tree__node"
-    :class="{ 'g8-tree__node--expended': expanded }"
+    :class="{ 'g8-tree__node--expended': hasChild && expanded }"
   >
     <div
       class="g8-tree__node__entry"
@@ -86,44 +86,44 @@ export default class G8VueTree extends Vue {
   /**
    * Key of the field in `item` to be used as element's `id` attribute.
    */
-  @Prop({ default: 'id' }) itemId!: string;
+  @Prop({ default: 'id' }) private itemId!: string;
 
   /**
    * Key of the field in `item` that holds node label.
    */
-  @Prop({ default: 'name' }) itemLabel!: string;
+  @Prop({ default: 'name' }) private itemLabel!: string;
 
   /**
    * Key of the field in `item` that holds tags array.
    */
-  @Prop({ default: 'tags' }) tagsKey!: string;
+  @Prop({ default: 'tags' }) private tagsKey!: string;
 
   /**
    * Key of the field in `item` that holds child nodes array.
    */
-  @Prop({ default: 'children' }) childrenKey!: string;
+  @Prop({ default: 'children' }) private childrenKey!: string;
 
   /**
    * Key of the field in tags list of `item` to be used as tag element's `id`
    * attribute.
    */
-  @Prop({ default: 'id' }) tagId!: string;
+  @Prop({ default: 'id' }) private tagId!: string;
 
   /**
    * Key of the field in tags list of `item` that holds tag label.
    */
-  @Prop({ default: 'label' }) tagLabel!: string;
+  @Prop({ default: 'label' }) private tagLabel!: string;
 
   /**
    * Key of the field in tags list of `item` that holds tag tooltip.
    */
-  @Prop({ default: 'hint' }) tagHint!: string;
+  @Prop({ default: 'hint' }) private tagHint!: string;
 
   /**
    * Whether to add a checkbox before each item, allowing multiple nodes to
    * be checked.
    */
-  @Prop({ default: false }) checker!: boolean;
+  @Prop({ default: false }) private checker!: boolean;
 
   /**
    * The tree data to be rendered. Please note that data passed ***may*** be
@@ -134,39 +134,39 @@ export default class G8VueTree extends Vue {
    * - intermediate
    * - rendered
    */
-  @Prop() item!: G8TreeItem;
+  @Prop() private item!: G8TreeItem;
 
   /**
    * Whether the node is expanded.
    */
-  expanded = false;
+  private expanded = false;
 
   /**
    * Whether the node is checked. This must be a member field in order for
    * binding to work.
    */
-  checked = false;
+  private checked = false;
 
   /**
    * Intermediate check box state. Active while some of the children were
    * checked, but not all were checked. This must be a member field in order for
    * binding to work.
    */
-  intermediate = false;
+  private intermediate = false;
 
   /**
    * Whether the current node has any child.
    */
-  get hasChild(): boolean {
+  private get hasChild(): boolean {
     const children = this.item[this.childrenKey] as G8TreeItem[] | null;
     return children != null && children.length > 0;
   }
 
-  // noinspection JSUnusedGlobalSymbols
+  // noinspection JSUnusedLocalSymbols
   /**
    * Vue life cycle hook {@link https://vuejs.org/v2/api/#created}.
    */
-  created() {
+  private created() {
     this.checked = this.item.checked as boolean;
     this.intermediate = this.item.intermediate as boolean;
   }
@@ -177,7 +177,7 @@ export default class G8VueTree extends Vue {
    * This method emits the `state-changed` event.
    * @param state
    */
-  setState(state: boolean) {
+  private setState(state: boolean) {
     this.checked = this.item.checked = state;
     if (this.$children && this.$children.length) {
       // descend to all descendant sub-components and update their states,
@@ -207,7 +207,7 @@ export default class G8VueTree extends Vue {
    * Handles click event of nodes, expanding/collapsing sub-tree if
    * applicable. This method emits the `click` event.
    */
-  clicked(event: G8ClickEvent) {
+  private clicked(event: G8ClickEvent) {
     if (this.hasChild) {
       this.item.rendered = true;
       this.expanded = !this.expanded;
@@ -226,7 +226,7 @@ export default class G8VueTree extends Vue {
    * `state-changed` event.
    * @param node
    */
-  childrenStateChanged(node: G8TreeItem) {
+  private childrenStateChanged(node: G8TreeItem) {
     let checked = 0;
     const children: G8TreeItem[] = this.item[this.childrenKey] as G8TreeItem[];
     for (const child of children) {
