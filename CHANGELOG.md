@@ -1,8 +1,16 @@
 # Changelog
 
-## [0.2.3](https://github.com/eidng8/vue-tree/tree/0.2.3) (2020-05-08 UTC)
+## [0.2.4](https://github.com/eidng8/vue-tree/tree/0.2.4) (2020-05-15 UTC)
 
-[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.2.2...0.2.3)
+[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.2.3...0.2.4)
+
+#### Fixed bugs
+
+- removing nodes may accidentally cause caret to show up in nodes without child [\#68](https://github.com/eidng8/vue-tree/issues/68)
+
+## [Release-v0.2.3](https://github.com/eidng8/vue-tree/tree/Release-v0.2.3) (2020-05-08)
+
+[Full Changelog](https://github.com/eidng8/vue-tree/compare/Release-v0.2.2...Release-v0.2.3)
 
 #### Implemented enhancements
 
