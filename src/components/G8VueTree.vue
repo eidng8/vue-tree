@@ -8,7 +8,7 @@
   <li
     :id="item[itemId]"
     class="g8-tree__node"
-    :class="{ 'g8-tree__node--expended': expanded }"
+    :class="{ 'g8-tree__node--expended': hasChild && expanded }"
   >
     <div
       class="g8-tree__node__entry"
